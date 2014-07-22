@@ -1,0 +1,264 @@
+ ﻿	.topdiv {
+			border: 0;
+		}
+		
+		.subdiv {
+			border: 0;
+		}
+	
+		li {list-style:none;}
+		
+		.tplbutton {
+			text-align: right;
+		}
+		
+		#bttn .bttnheight {
+			height: 25px !important;
+			padding: 0px;
+			padding-top: 6px;
+			float: left;
+			vertical-align: middle !important;
+		}
+		
+		ul.sortableList {
+			padding-left: 20px;
+			margin: 0px;
+			width: 300px;
+			font-family: Arial, sans-serif;
+		}
+		
+		ul.sortableList li {
+			font-weight: bold;
+			cursor: move;
+			color: grey;
+			padding: 2px 2px;
+			margin: 2px 0px;
+			border: 1px solid #000000;
+			background-image: url("media/style/MODxLight/images/bg/grid_hdr.gif");
+			background-repeat: repeat-x;
+		}
+		
+			#bttn .bttnheight {
+				height: 25px !important;
+				padding: 0px; 
+				padding-top: 6px;
+				float: left;
+				vertical-align:		middle !important;
+			
+			}
+			#bttn a{
+				cursor: 			default !important;
+				font: 				icon !important;
+				color:				black !important;
+				border:				0px !important;
+				padding:			5px 5px 7px 5px!important;
+				white-space:		nowrap !important;
+				vertical-align:		middle !important;
+				background:	transparent !important;
+				text-decoration: none;
+			}
+			
+			#bttn a:hover {
+				border:		1px solid darkgreen !important;
+				padding:			4px 4px 6px 4px !important;		
+				background-image:	url("media/style/MODxLight/images/bg/button_dn.gif") !important;
+				text-decoration: none;
+			}
+			
+			#bttn a img {
+				vertical-align: middle !important;
+			}
+			
+			.go a {
+				cursor: default !important;
+				font: icon !important;
+				color: black !important;
+				border: 0px !important;
+				padding: 5px 5px 7px 5px !important;
+				white-space: nowrap !important;
+				vertical-align: middle !important;
+				background: transparent;
+				text-decoration: none;
+			}
+			
+			.go a:hover {
+				border: 1px solid darkgreen !important;
+				padding: 4px 4px 6px 4px !important;
+				background: url("media/style/MODxLight/images/bg/button_dn.gif");
+				text-decoration: none;
+			}
+			
+			.go a img {
+				vertical-align: middle !important;
+			}
+			
+			
+			.td {
+				border-bottom:1px solid #C0C0C0;
+			}
+
+.pagination {
+	width: auto;
+ 	padding: 5px;
+}
+
+.pagination .disabled {
+    padding: 1px 2px 2px; 
+    margin-right: 1px; 
+    text-decoration: none !important; 
+    color: #808080;
+} 
+
+.pagination .current {
+    /*border: 1px solid black; */
+    padding: 1px 2px 2px; 
+    margin-right: 1px; 
+    text-decoration: none !important; 
+} 
+
+.pagination a, .pagination a:link, .pagination a:visited {
+    padding: 1px 2px 2px; 
+    margin-right: 1px; 
+} 
+
+.pagination a:hover {
+}
+
+.curcol1 {
+background:none;
+}
+
+.grey {
+color:#ABABAB;
+}
+
+.ok {
+	color:green;
+	font-weight:bold;
+}
+
+.error{
+	color:red;
+	font-weight:bold;
+}
+
+/*妰森 ���ᬮ䯢*/
+.Container {
+    padding:0;
+    margin: 0;
+margin-left:-10px;
+
+}
+
+.Container li {
+    list-style: none;
+}
+
+/* indent for all tree children excepts root */
+.Node {
+    background-image : url(/assets/snippets/tsvshop/img/i.gif);
+    background-position : top left;
+    background-repeat : repeat-y;
+    margin-left: 10px;
+}
+
+.IsRoot {
+    margin-left: 0;
+}
+
+/* left vertical line (grid) for all nodes */
+.IsLast {
+    background-image: url(/assets/snippets/tsvshop/img/i_half.gif);
+    background-repeat : no-repeat;
+}
+
+.ExpandOpen .Expand {
+    background-image: url(/assets/snippets/tsvshop/img/expand_minus.gif);
+}
+
+/* closed is higher priority than open */
+.ExpandClosed .Expand {
+    background-image: url(/assets/snippets/tsvshop/img/expand_plus.gif);
+}
+
+/* highest priority */
+.ExpandLeaf .Expand {
+    background-image: url(/assets/snippets/tsvshop/img/expand_leaf.gif);
+}
+
+.Content {
+    min-height: 18px;
+    margin-left:18px;
+}
+
+* html  .Content {
+    height: 18px; 
+}
+
+.Expand {
+    width: 18px;
+    height: 18px;
+    float: left;
+}
+
+.ExpandLoading   {
+    width: 18px;
+    height: 18px;
+    float: left;
+    background-image: url(/assets/snippets/tsvshop/img/expand_loading.gif);
+}
+
+.ExpandOpen .Container {
+	display: block;
+}
+
+.ExpandClosed .Container {
+	display: none;
+}
+
+.ExpandOpen .Expand, .ExpandClosed .Expand {
+	cursor: pointer;
+}
+.ExpandLeaf .Expand {
+	cursor: auto;
+}
+
+.ExpandOpen .Expand, .ExpandClosed .Expand {
+    cursor: pointer; /* ������ ˱ܳɽαr˱ܳȠ*/
+}
+ 
+.ExpandLeaf .Expand {
+    cursor: auto; /* ���ϣϧs��� */
+}
+
+
+img.icon {
+	float:left;
+	margin:0 15px 10px 0;
+}
+
+th.sortable a, th.sortable-text a {
+color:#fff;
+}
+
+.error,
+.notice1, 
+.success    { padding: 5px; margin-bottom: 1em; border: 1px solid #ddd; }
+
+.notice {background: url(/assets/snippets/tsvshop/images/success.png) no-repeat 5px center; padding-left: 27px}
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; background: url(/assets/snippets/tsvshop/images/cross.png) no-repeat 5px center; padding-left: 27px }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; background: url(/assets/snippets/tsvshop/images/error.png) no-repeat 5px center; padding-left: 27px}
+.success    { color: #264409; border-color: #C6D880; background:  #E6EFC2 url(/assets/snippets/tsvshop/images/tick.png) no-repeat 5px center; padding-left: 27px }
+.error a    { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; }
+
+/*tables order*/
+table.grid_table {border-collapse: collapse; width: 100%; margin-top:4px}
+div.header_tables {
+  border:1px solid #8b96a0;border-bottom:none;padding:0px;height:28px;margin-bottom:0;
+}
+div.header_tables div.header_cont{margin:0px;height:28px;line-height:28px;padding-left:8px;text-align:left;background:#88939E url(/manager/media/style/MODxCarbon/images/misc/longbarbg.png) repeat-x left top; color:#fff;}
+
+.aicon {margin-top:2px;margin-bottom:-2px }

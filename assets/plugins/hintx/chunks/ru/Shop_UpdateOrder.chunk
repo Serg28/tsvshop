@@ -1,0 +1,168 @@
+<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+
+
+<h2>Чанк Shop_UpdateOrder - шаблон письма пользователю об обновлении состояния (статуса) заказа</h2>
+<table id="hinttable">
+<thead>
+<td width="200"> Плейсхолдер</td><td>Назначение</td>
+</thead>
+
+
+<tr>
+<td  width="200">[+shop.order.date+]</td>
+<td>Дата отправки письма</td>
+</tr>
+<tr>
+<td>[+shop.order.numorder+]</td>
+<td>Номер заказа</td>
+</tr>
+<tr>
+<td>[+shop.order.fio+]</td>
+<td>ФИО заказчика или Полное наименование организации</td>
+</tr>
+<tr>
+<td>[+shop.order.city+]</td>
+<td>Город заказчика</td>
+</tr>
+<tr>
+<td>[+shop.order.dostavka+]</td>
+<td>Тип доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.order.discountcard+]</td>
+<td>Номер дисконтной карты. Если работа с дисконтными картами отключена, то данный плейсхолдер игнорируется.</td>
+</tr>
+
+<tr>
+<td>[+shop.order.discount+]</td>
+<td>Размер скидки по указанной дисконтной карте. Если работа с дисконтными картами отключена, то данный плейсхолдер игнорируется.</td>
+</tr>
+
+<tr>
+<td>[+shop.order.adress+]</td>
+<td>Адрес</td>
+</tr>
+<tr>
+<td>[+shop.order.region+]</td>
+<td>Область, регион</td>
+</tr>
+
+<tr>
+<td>[+shop.order.province+]</td>
+<td>Район</td>
+</tr>
+<tr>
+<td>[+shop.order.zip+]</td>
+<td>Почтовый индекс</td>
+</tr>
+ 
+<tr>
+<td>[+shop.order.phone+]</td>
+<td>Телефон</td>
+</tr>
+
+<tr>
+<td>[+shop.order.email+]</td>
+<td>E-mail</td>
+</tr>
+<tr>
+<td>[+shop.order.code+]</td>
+<td>Код доступа к заказу, если на сайте используется форма проверки заказа без личного кабинета.</td>
+</tr>
+
+<tr>
+<td>[+shop.order.tracking+]</td>
+<td>Трекинг</td>
+</tr>
+<tr>
+<td>[+shop.order.comments+]</td>
+<td>Комментарии к заказу</td>
+</tr>
+<tr>
+<td>[+shop.order.status+]</td>
+<td>Новый статус заказа</td>
+</tr>
+<tr>
+<td>[+shop.order.sitename+]</td>
+<td>Название вашего сайта или интернет-магазина. Удобно использовать в подписи письма.</td>
+</tr>
+<tr>
+<td>[+shop.order.articul+]</td>
+<td>Артикул товара</td>
+</tr>
+
+<tr>
+<td>[+shop.order.name+]</td>
+<td>Наименование товара</td>
+</tr>
+
+<tr>
+<td width="200">[+shop.order.num+]</td>
+<td>Порядковый номер товара в корзине.  Можно использовать для
+своих нужд, например, пронумеровать товары в корзине.</td>
+</tr>
+
+<tr>
+<td>[+shop.order.quantity+]</td>
+<td>Количество одного наименования товара</td>
+</tr>
+
+<tr>
+<td>[+shop.order.price+]</td>
+<td>Цена одного наименования товара</td>
+</tr>
+
+<tr>
+<td>[+shop.order.subtotal+]</td>
+<td>Подитог стоимости заказа</td>
+</tr>
+
+<tr>
+<td>[+shop.order.shipping+]</td>
+<td>Цена доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.order.shiptype+]</td>
+<td>Тип доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.order.nalog+]</td>
+<td>Налог</td>
+</tr>
+
+<tr>
+<td>[+shop.order.payment+]</td>
+<td>Метод оплаты</td>
+</tr>
+
+<tr>
+<td>[+shop.order.discountnum+]</td>
+<td>Номер дисконтной карты</td>
+</tr>
+<tr>
+<td>[+shop.order.discount+]</td>
+<td>Скидка по данной дисконтной карте</td>
+</tr>
+<tr>
+<td>[+shop.order.discountsize+]</td>
+<td>Итоговая сумма скидки</td>
+</tr>
+<tr>
+<td>[+shop.order.total+]</td>
+<td>Полная стоимость заказа</td>
+</tr>
+
+</table>
+
+<br />

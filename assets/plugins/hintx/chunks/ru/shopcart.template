@@ -1,0 +1,33 @@
+﻿<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+
+<table id="hinttable">
+
+<thead>
+<td width="200"> Плейсхолдер</td><td>Назначение</td>
+</thead>
+
+<tr>
+<td>[+articul+]</td><td>артикул товара</td>
+</tr>
+
+<tr>
+<td>[+price+]</td><td>цена товара без дополнительных опций</td>
+</tr>
+
+<tr>
+<td>[+cart_icon+]</td><td>иконка (фотография) товара</td>
+</tr>
+
+<tr>
+<td>[+usercalc+]</td><td>расчет стоимости товара с дополнительными опциями</td>
+</tr>
+
+<br/>

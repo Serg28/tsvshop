@@ -1,0 +1,175 @@
+<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+
+
+<h2>Чанк Shop_mail_klient - шаблон письма пользователя</h2>
+<table id="hinttable">
+<thead>
+<td width="200"> Плейсхолдер</td><td>Назначение</td>
+</thead>
+
+<tr>
+<td  width="200">[+shop.mail.date+]</td>
+<td>Дата отправки письма</td>
+</tr>
+<tr>
+<td>[+shop.mail.numorder+]</td>
+<td>Номер заказа</td>
+</tr>
+<tr>
+<td>[+shop.mail.fio+]</td>
+<td>ФИО заказчика или Полное наименование организации</td>
+</tr>
+<tr>
+<td>[+shop.mail.city+]</td>
+<td>Город заказчика</td>
+</tr>
+<tr>
+<td>[+shop.mail.dostavka+]</td>
+<td>Тип доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.discountcard+]</td>
+<td>Номер дисконтной карты. Если работа с дисконтными картами отключена, то данный плейсхолдер игнорируется.</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.discount+]</td>
+<td>Размер скидки по указанной дисконтной карте. Если работа с дисконтными картами отключена, то данный плейсхолдер игнорируется.</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.adress+]</td>
+<td>Адрес</td>
+</tr>
+<tr>
+<td>[+shop.mail.region+]</td>
+<td>Область, регион</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.province+]</td>
+<td>Район</td>
+</tr>
+<tr>
+<td>[+shop.mail.zip+]</td>
+<td>Почтовый индекс</td>
+</tr>
+ 
+<tr>
+<td>[+shop.mail.phone+]</td>
+<td>Телефон</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.email+]</td>
+<td>E-mail</td>
+</tr>
+<tr>
+<td>[+shop.mail.code+]</td>
+<td>Код доступа к заказу, если на сайте используется форма проверки заказа без личного кабинета.</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.tracking+]</td>
+<td>Трекинг</td>
+</tr>
+<tr>
+<td>[+shop.mail.comments+]</td>
+<td>Комментарии к заказу</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.articul+]</td>
+<td>Артикул товара</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.name+]</td>
+<td>Наименование товара</td>
+</tr>
+
+<tr>
+<td width="200">[+shop.mail.num+]</td>
+<td>Порядковый номер товара в корзине.  Можно использовать для
+своих нужд, например, пронумеровать товары в корзине.</td>
+</tr>
+
+ <tr>
+	<td width="200">[+shop.mail.id+]</td>
+	<td>ID товара</td>
+	</tr>
+<tr>
+<td>[+shop.mail.quantity+]</td>
+<td>Количество одного наименования товара</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.price+]</td>
+<td>Цена одного наименования товара</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.subtotal+]</td>
+<td>Подитог стоимости заказа</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.shipping+]</td>
+<td>Цена доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.shiptype+]</td>
+<td>Тип доставки</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.nalog+]</td>
+<td>Налог</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.payment+]</td>
+<td>Метод оплаты</td>
+</tr>
+
+<tr>
+<td>[+shop.mail.discountnum+]</td>
+<td>Номер дисконтной карты</td>
+</tr>
+<tr>
+<td>[+shop.mail.discount+]</td>
+<td>Скидка по данной дисконтной карте</td>
+</tr>
+<tr>
+<td>[+shop.mail.discountsize+]</td>
+<td>Итоговая сумма скидки</td>
+</tr>
+<tr>
+<td>[+shop.mail.total+]</td>
+<td>Полная стоимость заказа</td>
+</tr>
+<tr>
+<td>[+shop.mail.monetary+]</td>
+<td>Валюта, например, руб.</td>
+</tr>
+<tr>
+<td>&lt;!--table--&gt; и &lt;!--/table--&gt;</td>
+<td>Выделают часть шаблона, которая будет использоваться для построения списка заказанных товаров. Пример использования смотрите в стандартном чанке Shop_mail_klient</td>
+</tr>
+<tr>
+<td>[+shop.mail.ключ_поля+]</td>
+<td>Значение любого поля формы оформления заказа (чанк Shop_UserForm). Напр., значение поля c name="myfield" вставится вместо плейсхолдера [+shop.mail.myfield+] и т.д.</td>
+</tr>
+</table>
+
+<br/>
