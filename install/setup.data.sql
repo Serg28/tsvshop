@@ -161,6 +161,8 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6,
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
 
 
+REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (13, 'TSVshop');
+
 
 # MODx Database Script for New/Upgrade Installations
 #
@@ -202,10 +204,10 @@ REPLACE INTO `{PREFIX}site_content` (`id`,	`type`,		`contentType`,	`pagetitle`,	
 									(11,	'document',	'text/html',	'Микроволновка', 		'Микроволновка', 		'Микроволновка', 		'', 		'', 				1, 				0, 				0, 				8, 			0, 				'Микроволновка', 		'', 		1, 				11, 	1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Микроволновка', 0, 0, 0, 0, 0, 0, 0), (13,    'document',     'text/html',    'Мои заказы',                'Мои заказы',                'Мои заказы',                '',             '',                             1,                              0,                              0,                              6,                      0,                              'Мои заказы',                '[!TSVoffice? &act=`listorders` &orderpage=`14`!]',             1,                              12,        1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Мои заказы', 0, 0, 0, 0, 0, 0, 0),(14,    'document',     'text/html',    'Просмотр заказа',                'Просмотр заказа',                'Просмотр заказа',                '',             '',                             1,                              0,                              0,                              6,                      0,                              'Просмотр заказа',                '<p><a href=\"[~6~]\">Назад к списку заказов</a></p>[!TSVoffice? &act=`showorder`!]<p><a href=\"[~6~]\">Назад к списку заказов</a></p>',             1,                              12,        1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Просмотр заказа', 0, 0, 0, 0, 0, 0, 0),(15,    'document',     'text/html',    'Редактирование профиля',                'Редактирование профиля',                'Редактирование профиля',                '',             '',                             1,                              0,                              0,                              6,                      0,                              'Редактирование профиля',                '[!TSVoffice? &act=`editprofile`!]',             1,                              12,        1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Редактирование профиля', 0, 0, 0, 0, 0, 0, 0);
 
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
-										(25, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 8, 0, '', 0, '', '', ''),
-										(23, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 8, 0, '', 0, '', '', ''),
-										(24, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 8, 0, '', 0, '', '', ''),
-										(21, 	'text', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 8, 0, '', 0, '', '', ''),
+										(25, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 13, 0, '', 0, '', '', ''),
+										(23, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 13, 0, '', 0, '', '', ''),
+										(24, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 13, 0, '', 0, '', '', ''),
+										(21, 	'text', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 13, 0, '', 0, '', '', ''),
 										(22, 	'richtext', 	'text', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 
 REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`id`, `tmplvarid`, `contentid`, `value`) VALUES
