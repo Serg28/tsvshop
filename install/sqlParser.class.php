@@ -11,7 +11,7 @@ class SqlParser {
     var $connection_charset, $connection_method;
     
     var $TEMPLATE_ITEM, $TEMPLATE_MAIN, $TEMPLATE_INDX, $TEMPLATE_CART;
-    var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE;
+    var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE, $TV_INVEN;
 
 	function SqlParser($host, $user, $password, $db, $prefix='modx_', $adminname, $adminemail, $adminpass, $connection_charset= 'utf8', $managerlanguage='english', $connection_method = 'SET CHARACTER SET', $auto_template_logic = 'parent') {
 		$this->host = $host;
@@ -90,6 +90,8 @@ class SqlParser {
 		$this->TV_ARTCL=!empty($r['id'])?$r['id']:204;
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='cart_icon'"));
 		$this->TV_IMAGE=!empty($r['id'])?$r['id']:205;
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='inventory'"));
+		$this->TV_INVEN=!empty($r['id'])?$r['id']:206;      
 
 
 		// replace {} tags
@@ -117,6 +119,7 @@ class SqlParser {
 		$idata = str_replace('{TV_TMINI}',	$this->TV_TMINI, $idata);
 		$idata = str_replace('{TV_ARTCL}',	$this->TV_ARTCL, $idata);
 		$idata = str_replace('{TV_IMAGE}',	$this->TV_IMAGE, $idata);
+    $idata = str_replace('{TV_INVEN}',	$this->TV_INVEN, $idata);
 		/*$idata = str_replace('{VERSION}', $modx_version, $idata);*/
 
 		$sql_array = explode("\n\n", $idata);
