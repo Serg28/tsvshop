@@ -73,7 +73,6 @@ include_once ($basePath . 'assets/snippets/tsvshop/admin/template/header.inc.php
 //top button
 include_once ($basePath . 'assets/snippets/tsvshop/admin/template/topbutton.inc.php');
 $output.= '
-<div class="sectionHeader">'.$shop_lang['title'].'</div>
 <div class="sectionBody">
     <div class="tab-pane" id="resourcesPane">
         <script type="text/javascript">
