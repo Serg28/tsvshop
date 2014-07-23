@@ -208,6 +208,7 @@ REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 	
 										(23, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 13, 0, '', 0, '', '', ''),
 										(24, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 13, 0, '', 0, '', '', ''),
 										(21, 	'text', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 13, 0, '', 0, '', '', ''),
+										(26, 	'text', 'inventory', 'Кол-во на складе', '', 0, 13, 0, '', 0, '', '', ''),
 										(22, 	'richtext', 	'text', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 
 REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`id`, `tmplvarid`, `contentid`, `value`) VALUES
