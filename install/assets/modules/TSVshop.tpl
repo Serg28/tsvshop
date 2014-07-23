@@ -35,10 +35,13 @@ $tsvshop = array();
 $moduleid = $_GET['id'];
 $modulea = $_GET['a'];
 $act = $_GET['act'];
-include_once ($basePath . 'assets/snippets/tsvshop/admin/lang/' . $modx->config['manager_language'] . '.inc.php');
-require_once ($basePath . MGR_DIR.'/includes/protect.inc.php');
-include_once ($basePath . 'assets/snippets/tsvshop/include/config.inc.php');
-include_once ($basePath . 'assets/snippets/tsvshop/admin/includes/core.inc.php');
+include_once (TSVSHOP_PATH.'admin/lang/' . $modx->config['manager_language'] . '.inc.php');
+require_once ($basePath.'manager/includes/protect.inc.php');
+include_once (TSVSHOP_PATH.'include/config.inc.php');
+include_once (TSVSHOP_PATH.'admin/includes/core.inc.php');
+if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
+   include_once (TSVSHOP_PATH.'include/version.inc.php');
+}
 
 if (!$cache) {
     include_once $basePath . 'assets/snippets/tsvshop/include/cache.class.php';

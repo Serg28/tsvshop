@@ -38,6 +38,9 @@ $tsvshop['tplmailklient'] = !empty($tplmailklient) ? $tplmailklient : "Shop_mail
 $tsvshop['tplsuccess'] = !empty($tplsuccess) ? $tplsuccess : "Shop_FinishText";
 $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateorder : "Shop_UpdateOrder";
 $tsvshop['namesource'] = !empty($namesource) ? $namesource : 'pagetitle';
+if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
+   include_once (TSVSHOP_PATH.'include/version.inc.php');
+}
 
 // для совместимости в версиями 5.0 и ранее
 $table = $modx->getFullTableName( 'shop_order_detail');

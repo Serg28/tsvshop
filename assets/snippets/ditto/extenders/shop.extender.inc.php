@@ -105,7 +105,7 @@ function tsv_TryCalc($cod,$col) {
 if(!function_exists("tsv_CalcPrice"))
 {
 function tsv_CalcPrice($price, $col, $opt) {
-  $opt = (!preg_match("/[^(\w)|(\+)|(\*)|(\-)|(\/)]/",$opt[0])) ? "+".$opt : $opt;
+  //$opt = (!preg_match("/[^(\w)|(\+)|(\*)|(\-)|(\/)]/",$opt[0])) ? "+".$opt : $opt;
 	$price = tsv_TryCalc($price, $col);
 	$opt = str_replace(" ","+", $opt);
 	$opt = str_replace("#","*", $opt);
