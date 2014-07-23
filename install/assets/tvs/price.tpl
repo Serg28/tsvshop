@@ -12,7 +12,7 @@ z/**
  * @internal        @output_widget
  * @internal        @output_widget_params
  * @internal        @lock_tv 0
- * @internal        @template_assignments Карточка товара
+ * @internal        @template_assignments
  * @internal        @modx_category TSVshop
  * @internal        @installset sample
  */
