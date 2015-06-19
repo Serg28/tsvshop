@@ -1,3 +1,3 @@
 <?php
-$tsvshop['version']='5.2rc2';
+$tsvshop['version']='5.2.1 rc2';
 ?>
