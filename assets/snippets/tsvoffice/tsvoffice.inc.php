@@ -300,7 +300,7 @@ function tsv_showorder() {
   global $modx, $tsvshop;
   $dborders = $modx->getFullTableName('shop_order');
   $dborders_details = $modx->getFullTableName('shop_order_detail');
-  $userid=$modx->userLoggedIn();
+  $userid=$modx->getLoginUserID();
   //$userid = $userid['id'];
   $i=explode(":",_filter($_GET['i'],1));
   $n=$i[0];
