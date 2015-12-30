@@ -1,0 +1,41 @@
+<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+<p>
+Все нижеприведенные плейсхолдеры <b>обязательно</b> нужно вставлять <b>внутри</b> формы. Вот ее код:
+<code>
+[!TSVshop? &act=`itemcard`!]
+<form action="index.php" method="post" name="Tovar[*id*]" id="Tovar[*id*]">
+      тут все плейсхолеры и html-код, выводящий цену товара, кнопку добавления в корзину и т.д.
+</form>
+</code>
+</p>
+<table id="hinttable">
+
+<thead>
+<td width="200"> Плейсхолдер</td><td>Назначение</td>
+</thead>
+
+<tr>
+<td>[+tsvoptions+]</td><td>Дополнительные параметры товара</td>
+</tr>
+
+<tr>
+<td>[+tsvprice+]</td><td>Цена товара</td>
+</tr>
+
+<tr>
+<td>[+cart_icon+]</td><td>Иконка (фотография) товара</td>
+</tr>
+
+<tr>
+<td>[+tsvservices+]</td><td>Выводит сервисные данные. Нужно вставлять ниже всех остальных плейсхолдеров. Использовать <b>обязательно</b></td>
+</tr>
+
+<br/>
