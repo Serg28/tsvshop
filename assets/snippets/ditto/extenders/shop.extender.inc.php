@@ -172,12 +172,30 @@ if (!function_exists('sortByParam')) {
     }
 }
 
-if ($GLOBALS['sortByPrice']=='price') {
-  $orderBy['custom'][] = array('price', 'sortByPrice');
-} else {
-  $orderBy['custom'][] = array('tsvshop_param', 'sortByParam');
+/*
+// чтобы включить стандартную сортировку в Ditto, нужно добавить в его вызов &sortByPrice=`none`
+if ($GLOBALS['sortByPrice'] != 'none')
+{
+	if ($GLOBALS['sortByPrice']=='price') {
+	 $orderBy['custom'][] = array('price', 'sortByPrice');
+	} else {
+	 $orderBy['custom'][] = array('tsvshop_param', 'sortByParam');
+	}
+	$ditto->advSort = TRUE; 
 }
-$ditto->advSort = TRUE; 
+*/
+
+//v5.3
+// По-умолчанию работает стандартная сортировка в Ditto
+// Если же указан &sortByPrice=`price` или &sortByPrice=`param`, сортируется по цене или параметрам товара соответственно
+if ($GLOBALS['sortByPrice']!='' && ($GLOBALS['sortByPrice']=='price' || $GLOBALS['sortByPrice']=='param')) {
+  if ($GLOBALS['sortByPrice']=='price') {
+    $orderBy['custom'][] = array('price', 'sortByPrice');
+  } else {
+    $orderBy['custom'][] = array('tsvshop_param', 'sortByParam');
+  }
+  $ditto->advSort = TRUE;
+}
 
 ?>
 
