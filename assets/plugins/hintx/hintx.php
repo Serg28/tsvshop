@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 	function loadhint($type,$id,$lang) {
 		global $modx;
@@ -26,11 +26,11 @@
 	$lang=isset($e->params["lang"])?$e->params["lang"]:"ru";
 	switch ($e->name) {
 		case "OnChunkFormRender":
-			$selector=".sectionBody > TABLE";
+      $selector=".sectionBody";
 			$text=addslashes(loadhint("chunk",$id,$lang));
 			break;
 		case "OnTempFormRender":
-			$selector="#tabTemplate > TABLE";
+      $selector="#tabTemplate";
 			$text=addslashes(loadhint("template",$id,$lang));
 			break;
 		default:
@@ -39,7 +39,7 @@
 	}
 	$text = str_replace("\r","\\r",$text);
 	$text = str_replace("\n","\\n",$text);
-	$jfunc="jQuery('$selector').after('$text');";
+	$jfunc="jQuery('$selector').find('TABLE').after('$text');";
 
 
 // выводим пояснительный текст в редактор
