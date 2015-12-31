@@ -39,7 +39,7 @@ function CryptMessage($message, $password)
   global $modx;
   require_once $modx->config['base_path']."assets/snippets/tsvshop/include/crypt.inc.php";
   $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
-  return xxtea_encrypt($message, $password);
+  return base64_encode(xxtea_encrypt($message, $password));
   }
 }
 
@@ -50,9 +50,13 @@ function DeCryptMessage($message, $password)
   {
   require_once $modx->config['base_path']."assets/snippets/tsvshop/include/crypt.inc.php";
   $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
+  $message = base64_decode($message);
   return xxtea_decrypt($message, $password);
   }
 }
+
+
+
 
 if(!function_exists("getStr"))
 {
@@ -300,8 +304,8 @@ function tsv_showorder() {
   global $modx, $tsvshop;
   $dborders = $modx->getFullTableName('shop_order');
   $dborders_details = $modx->getFullTableName('shop_order_detail');
-  $userid=$modx->userLoggedIn();
-  //$userid = $userid['id'];
+  $userid=$modx->getLoginUserID();
+  
   $i=explode(":",_filter($_GET['i'],1));
   $n=$i[0];
   $c=$i[1];
@@ -319,6 +323,7 @@ function tsv_showorder() {
        foreach ($row as $key => $value) {
           if (in_array($key,explode(",",$tsvshop['SecFields'])))  {
             $value=DeCryptMessage($value, $tsvshop['SecPassword']);
+            //echo "key=".$key.", value=".$value;
           }
           if ($key=="dateorder") {
             $value=date("d.m.Y H:i:s",$value);
