@@ -5,7 +5,10 @@ $tables['sales']="system";
 $tsvshop['dborders']=$modx->getFullTableName('shop_order');
 $tsvshop['dborders_details']=$modx->getFullTableName('shop_order_detail');
 $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateorder : "Shop_UpdateOrder";
-$tsvshop['sysfields'] = "dateorder,status,fio,total,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid";
+//Ниже - список имен полей в таблице заказа shop_order . Служит как проверочный список допустимых полей при добавлении заказа в БД
+//т.е. значение поля в форме заказа не будет добавлено в БД, если названия этого поля нету в данном списке.
+//также этот список служит для формирования списка полей, доступных для шифрования в аддоне модуле TSVshop, аддон Конфигурация, вкладка Безопасность, поле Поля для шифрования
+$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid";
 
 
 function parsetable($res,$filename) {
