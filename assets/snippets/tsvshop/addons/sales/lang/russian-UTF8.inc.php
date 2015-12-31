@@ -25,6 +25,7 @@ $shop_lang['sales_province'] = 'Область';
 $shop_lang['sales_region'] = 'Район';
 $shop_lang['sales_city'] = 'Город';
 $shop_lang['sales_zip'] = 'Индекс';
+$shop_lang['sales_datepay'] = 'Дата оплаты';
 $shop_lang['sales_adress'] = 'Адрес доставки';
 $shop_lang['sales_discountnum'] = '№ диск. карты';
 $shop_lang['sales_discount'] = 'Размер скидки';
