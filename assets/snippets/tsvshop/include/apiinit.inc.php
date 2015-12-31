@@ -19,10 +19,10 @@ if (file_exists($_api_path."assets/cache/siteManager.php")) {
 }
 
 global $modx; 
-
+require_once($_api_path.MGR_DIR.'/includes/protect.inc.php');
 include_once($_api_path.MGR_DIR.'/includes/config.inc.php');
 include_once($_api_path.MGR_DIR.'/includes/document.parser.class.inc.php');
-
+/*
 class MODxAPI extends DocumentParser {
 
 	function MODxAPI() {
@@ -66,9 +66,25 @@ class MODxAPI extends DocumentParser {
 		startCMSSession();
 	}
 }
+*/
+function executeDocument($docid = 0) {
+global $modx;
+		ob_start();
+			ob_start();
+				$tmp = $_REQUEST['id']; // save old id
+				$_REQUEST['id'] = $docid;
+				$modx->executeParser();
+		$html = ob_get_contents();
+		ob_end_clean();
+		$_REQUEST['id'] = $tmp; // restore old id
+		return $html;
+	}
+
+
 session_set_cookie_params("",'/');
 session_name($site_sessionname);
 session_start();
-$modx = new MODxAPI();    
+//$modx = new MODxAPI();    
+$modx = new DocumentParser;   
 
 ?>
