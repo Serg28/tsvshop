@@ -15,6 +15,35 @@ function session($cache) {
   return $session;
 }
 }
+
+//v5.3
+//Функция проверяет, есть ли в БД все поля из списка. Если нет, добавляет недостающие
+if(!function_exists("tsv_AddFieldstoDB"))
+{
+function tsv_AddFieldstoDB($table, $fields) {
+	global $modx;
+  if (empty($table) || empty($fields)) return;
+	$arr=array();
+	$sql = "show columns FROM ".$table;
+	$res = $modx->db->query($sql);
+	$f = $modx->db->makearray($res);
+	foreach ($f as $k=>$v) {
+		$arr[]=$v['Field'];
+	}
+	if (!is_array($fields)) $fields = explode(',',$fields);
+	$newfields = array_diff($fields,array_values($arr));
+  $arr = array();
+  foreach ($newfields as $v) {
+     $arr[]='ADD `'.$v.'` VARCHAR( 70 )';
+  }
+  if(sizeof($arr)>0) {
+    $sql = "ALTER TABLE ".$table." ".implode(',',$arr);
+    $modx->db->query($sql);
+  }
+}
+}
+
+
 $session = (!$session) ? session($cache): $session;
 if(!function_exists("tsv_ConvertPrice"))
 {
@@ -140,12 +169,6 @@ function tsv_GetPrice($cache, $idnum=false) {
         ob_end_flush();
     } else {
         if ($tsvshop['TypeCat'] == "catalog") {
-            //$res = $modx->db->query("SELECT * FROM " . $modx->getFullTableName('test_products') . " WHERE `id` = " . $idnum . " LIMIT 1");
-            //if ($res) {
-            //    $tv = $modx->db->getRow($res);
-            //} else {
-                //$tv = "";
-            //}
             if (file_exists($itemclass)) {
               require_once($itemclass);
               $tv = new Item($idnum);
@@ -161,45 +184,10 @@ function tsv_GetPrice($cache, $idnum=false) {
             } else {
                 $txt = $tv['value'];
             }
-            //if (strpos($txt, "||") !== 0) {  //было
-
-            /*if (strpos($txt, "||") === false) {
-                echo str_replace('\r\n','',$txt);
-            } else {
-                //$pieces = explode("||", $txt);  //было
-                $pieces = explode("||", "||".$txt);
-                $i = 0;
-                $o = "";
-                $o2 = "";
-                foreach($pieces as $value) {
-                    $i++;
-                    if (strlen($value) > 0) {
-                        $pos = strpos($value, "-");
-                        if ($pos != false) {
-                            $tmp = substr($value, 0, $pos);
-                            $o.= "(( " . $tmp . "<=&#36n & ";
-                            $pos2 = strpos($value, "==");
-                            $tmp = substr($value, $pos + 1, $pos2 - $pos - 1);
-                            $o.= $tmp . ">=&#36n)?( ";
-                            $o2.= "))";
-                            $tmp = substr($value, $pos2 + 2);
-                            $o.= $tmp . " ):( ";
-                        } else {
-                            $tmp = $value;
-                            $o.= $tmp;
-                        }
-                    }
-                }
-                unset($tv);
-                unset($value);
-                unset($pieces); */
                 ob_start();
-                //print "=" . $o . $o2;
                 print $txt;
                 $cache->cache("price" . $idnum, 'tsvshop', ob_get_contents());
-                //$cache->cache("price" . $idnum, 'tsvshop', "=" . $o . $o2);
                 ob_end_flush();
-            //}
         }
     }
 }
@@ -277,7 +265,7 @@ function tsv_add_item($cache, $id, $name, $opt, $icon, $qty = 1, $url, $typeitem
         $evt = $modx->invokeEvent("TSVshopOnAddItem",array("item" => $curid));
         //if(is_array($evt)) $return = $evt[0];
         // v5.0.1
-        if(is_array($evt)) $msg = $evt[0];
+        if(is_array($evt) && !empty($evt[0])) $msg = $evt[0];
         
 	}
 	elseif ($validPrice !== true) {
@@ -431,7 +419,7 @@ function tsv_ParseUserForm(&$fields,&$templates) {
     
     // Плагин TSVshopOnUserFormRender
     $evt = $modx->invokeEvent("TSVshopOnUserFormRender",array("tpl" => $tpl));   
-    if (is_array($evt)) $tpl=$evt[0];
+    if (is_array($evt) && !empty($evt[0])) $tpl=$evt[0];
     
     foreach ($folders as $folder) {
       if ($folder != "."  && $folder != ".." ) {
@@ -451,7 +439,7 @@ function tsv_ParseUserForm(&$fields,&$templates) {
     }
     // Плагин TSVshopOnBeforeUserFormRenderComplete
     $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormRenderComplete",array("tpl" => $tpl));   
-    if (is_array($evt)) $tpl=$evt[0];
+    if (is_array($evt) && !empty($evt[0])) $tpl=$evt[0];
     return true;
 }
 }
@@ -492,7 +480,7 @@ function tsv_display_cart($cache, $act="basket") {
     }            
     // плагин TSVshopOnTplCartPrerender
     $evt = $modx->invokeEvent("TSVshopOnTplCartPrerender",array("tpl" => $tpl));   
-    if (is_array($evt)) $tpl=$evt[0];
+    if (is_array($evt) && !empty($evt[0])) $tpl=$evt[0];
     // ---
     $tpl = str_replace("[+shop.basket.monetary+]", $tsvshop['MonetarySymbol'], $tpl);
     $tpl = str_replace("[+shop.basket.checkurl+]", $tsvshop['checkurl'], $tpl);   
@@ -508,7 +496,7 @@ function tsv_display_cart($cache, $act="basket") {
     
     foreach ($folders as $folder) {
       if ($folder != "."  && $folder != ".." ) {
-        if ($tsvshop['addons_'.$folder.'_active']=="yes") {
+        if (isset($tsvshop['addons_'.$folder.'_active']) && $tsvshop['addons_'.$folder.'_active']=="yes") {
           //тут создаем метку по имени аддона
           $piece[$folder] = getStr($tpl, '<!--'.$folder.'-->', '<!--/'.$folder.'-->');
           //$addons[]=$folder;
@@ -637,9 +625,16 @@ function tsv_display_cart($cache, $act="basket") {
 
       $tpl = str_replace("[+shop.basket.total+]", $tot, $tpl);
       $_SESSION[$session]['result']['total'] = $tot;
-            
-     
       $_SESSION[$session]['result']['count'] = $count;
+      
+      //добавлено с v5.3 ----------------------------------------------------
+      //определяем переменную topay - сумма к оплате
+      //по умолчанию она равна сумме всего заказа
+      //но ее можно переопределить.
+      $_SESSION[$session]['result']['topay'] = $_SESSION[$session]['result']['total'];
+      
+      
+       
       
       // Плагин TSVshopOnBeforeUserFormInit
       $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormInit",array("tpl" => $tpl));
@@ -651,6 +646,16 @@ function tsv_display_cart($cache, $act="basket") {
           $tpl = str_replace("[+shop.basket.userform+]",notice(str_replace('%minsum%',$tsvshop['MinimumOrder']." ".$tsvshop['MonetarySymbol'],$shop_lang['strMinimumOrder']), 'error'),$tpl); 
         } else {
           $tpl = str_replace("[+shop.basket.userform+]", '</div>'.$modx->runSnippet("eForm", array('tpl'=>$tsvshop['tpluserform'],'formid'=>'TSVCheckoutForm','eformOnBeforeFormParse'=>'tsv_ParseUserForm','eFormOnBeforeMailSent'=>'tsv_Finish','allowhtml'=>'1','noemail'=>'1','gotoid'=>$tsvshop['backid'])),$tpl);
+          //v5.3
+          //удаляем в шаблоне формы заказа код, используемый аддонами, если они не установлены или неактивны
+          foreach ($folders as $folder) {
+            if ($folder != "."  && $folder != ".." ) {
+              if (!isset($tsvshop['addons_'.$folder.'_active']) || $tsvshop['addons_'.$folder.'_active']!="yes") {
+                // удаляем из чанка вообще строки для аддона. 
+                $tpl = str_replace(getStr($tpl, '<!--'.$folder.'-->', '<!--/'.$folder.'-->'), "", $tpl);
+              }
+            }
+          }
           // Плагин TSVshopOnUserFormComplete
           $evt = $modx->invokeEvent("TSVshopOnUserFormComplete",array("tpl" => $tpl));
           if(is_array($evt) && !empty($evt[0])) $tpl = $evt[0];
@@ -658,6 +663,9 @@ function tsv_display_cart($cache, $act="basket") {
      } else {
         $tpl = str_replace("[+shop.basket.userform+]", "",$tpl);
      }
+     
+     //добавлено с v5.3 ----------------------------------------------------
+     $tpl = str_replace("[+shop.basket.topay+]", $_SESSION[$session]['result']['topay'], $tpl);
      
      //запоминаем основные переменные
      $userid = $modx->getLoginUserID();
@@ -721,14 +729,12 @@ function tsv_Finish(&$fields) {
   if(is_array($evt) && !empty($evt[0])) $fields = $evt[0];
   
   if (sizeof($tsvshop['customfields'])>0) {
+    //v5.3
+    //добавление в БД недостающих полей
+    tsv_AddFieldstoDB ($tsvshop['dborders'], $tsvshop['customfields']);
     foreach ($tsvshop['customfields'] as $cfield) {
       //проверяем кастомные поля на существование
       $cfield=_filter(trim($cfield));
-      $r = @mysql_query("SELECT `".$cfield."` FROM ".$tsvshop['dborders']." WHERE 0");
-      if (!$r) {
-          $sql="ALTER TABLE  ".$tsvshop['dborders']." ADD  `".$cfield."` VARCHAR( 70 ) NOT NULL";
-          $res=$modx->db->query($sql);
-      } 
       
       if (!empty($_SESSION[$session]['result'][$cfield])) {
           $order[$cfield] = _filter($_SESSION[$session]['result'][$cfield]);
@@ -746,33 +752,25 @@ function tsv_Finish(&$fields) {
   
   //формируем поля для данных заказа
   $sf = explode(",",$tsvshop['sysfields']);
+  //v5.3
+  //добавление в БД недостающих полей
+  tsv_AddFieldstoDB ($tsvshop['dborders'], $tsvshop['sysfields']);
   foreach ($sf as $sfield) { 
     $sfield = _filter(trim($sfield));    
     if (!empty($_SESSION[$session]['result'][$sfield])) {
-      //---
       if (in_array($sfield,explode(",",$tsvshop['SecFields']))) {
-        //$_SESSION[$session]['result'][$sfield] = CryptMessage(_filter($_SESSION[$session]['result'][$sfield]), $tsvshop['SecPassword']);
-        //$_SESSION[$session]['result'][$sfield] = _filter(CryptMessage($_SESSION[$session]['result'][$sfield], $tsvshop['SecPassword']),1);
         $_SESSION[$session]['result'][$sfield] = CryptMessage($_SESSION[$session]['result'][$sfield], $tsvshop['SecPassword']);
       }
-      //---
-      //$order[$sfield] = _filter($_SESSION[$session]['result'][$sfield]);
       $order[$sfield] = $_SESSION[$session]['result'][$sfield];
     }
     if (!empty($fields[$sfield])) {
-      //---
       if (in_array($sfield,explode(",",$tsvshop['SecFields']))) { 
-          //$fields[$sfield] = CryptMessage(_filter($fields[$sfield]), $tsvshop['SecPassword']);
-          //$fields[$sfield] = _filter(CryptMessage($fields[$sfield], $tsvshop['SecPassword']),1);
           $fields[$sfield] = CryptMessage($fields[$sfield], $tsvshop['SecPassword']);
       }
-      //---
       if (empty($order[$sfield])) {
-        //$order[$sfield] = _filter($fields[$sfield]);
         $order[$sfield] = $fields[$sfield];
       }
       if (empty($_SESSION[$session]['result'][$sfield])) {
-        //$_SESSION[$session]['result'][$sfield] = _filter($fields[$sfield]);
         $_SESSION[$session]['result'][$sfield] = $fields[$sfield];
       }
     }
@@ -810,7 +808,6 @@ function tsv_Finish(&$fields) {
                               'options' => $_SESSION[$session]['orders'][$i]['opt'],
                               'typeitem' => $_SESSION[$session]['orders'][$i]['typeitem']
                        );
-        //формируем таблицу товаров для письма
        
         //формируем таблицу товаров для письма  v 5.0.1
         foreach ($_SESSION[$session]['orders'][$i] as $key=>$val) {
@@ -912,7 +909,7 @@ function tsv_display_success($cache) {
         $output.=print_r($_SESSION['tsvshopfin']);
     }
     // тут ставим функцию оплаты
-    if ($_SESSION['tsvshopfin']['result']['paytype']=="none" || empty($_SESSION['tsvshopfin']['result']['paytype'])) { 
+    if ($_SESSION['tsvshopfin']['result']['paytype']=="none" || empty($_SESSION['tsvshopfin']['result']['paytype']) || empty($_SESSION['tsvshopfin']['result']['topay'])) { 
       $output = str_replace("[+shop.paylink+]","",$output);
     } else {
         if (!empty($tables['payments'])) {
