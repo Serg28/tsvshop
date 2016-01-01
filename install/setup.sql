@@ -7,9 +7,11 @@
 CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order` (
   `numorder` int(255) NOT NULL AUTO_INCREMENT,
   `dateorder` int(25) NOT NULL,
+  `datepay` int(25) NOT NULL,
   `status` text NOT NULL,
   `fio` blob NOT NULL,
   `total` text NOT NULL,
+  `topay` text NOT NULL,
   `discountnum` text NOT NULL,
   `discount` text NOT NULL,
   `discountsize` text NOT NULL,

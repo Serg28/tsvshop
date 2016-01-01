@@ -71,13 +71,17 @@ class SqlParser {
 			if($s && $e) $idata = str_replace(substr($idata,$s,$e-$s)," Removed non upgradeable items",$idata);
 		}
 		
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Карточка товара'"));
+		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Карточка товара'"));
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара'"));
 		$this->TEMPLATE_ITEM=!empty($r['id'])?$r['id']:101;
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Основной'"));
+		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Основной'"));
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной'"));
 		$this->TEMPLATE_MAIN=!empty($r['id'])?$r['id']:102;
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Главная'"));
+		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Главная'"));
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная'"));
 		$this->TEMPLATE_INDX=!empty($r['id'])?$r['id']:103;
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Корзина'"));
+		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Корзина'"));
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина'"));
 		$this->TEMPLATE_CART=!empty($r['id'])?$r['id']:104;
 		
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='price'"));
