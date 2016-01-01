@@ -1,3 +1,17 @@
+/**
+ * Shop_mail_admin
+ *
+ * Шаблон письма о заказе администратору в TSVshop
+ *
+ * @category	chunk
+ * @version 	5.3
+ * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal  @modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ */
+
+
 Был получен новый заказ. Подробности этого заказа предоставлены ниже.<br /><br />
 
 Дата заказа: [+shop.mail.dateorder+]<br />

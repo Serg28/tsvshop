@@ -1,3 +1,16 @@
+/**
+ * Карточка товара
+ *
+ * Тестовый шаблон для карточки товара в TSVshop
+ *
+ * @category	template
+ * @version 	5.3
+ * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal	@lock_template 0
+ * @internal 	@modx_category TSVshop
+ * @internal  @installset sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ */
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,6 +19,7 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link rel="stylesheet" href="/assets/templates/demoshop/css/style.css" type="text/css" media="screen, projection" />
+  <base href="[(base_url)]" />
 </head>
 
 <body>
@@ -13,7 +27,7 @@
 <div id="wrapper">
 
 	<div id="header">
-		
+		<a href="http://tsvshop.tsv.org.ua" class="logo" ><img src="/assets/templates/demoshop/img/logo.gif" alt="Модуль TSVshop для создания интернет-магазина для MODx" /></a>
 <div id="topmenu">
 [[Wayfinder? &startId=`0` &level=`1`]]
 </div>
@@ -21,6 +35,7 @@
 
 <div id="bread">
 [[Breadcrumbs]]
+<div class="loginlink"><a href="[~6~]">Личный кабинет</a></div>
 </div>
 
 	<div id="middle">
@@ -31,18 +46,16 @@
 <div class="cbox">
 <div  style="float:left; width:200px">
 <center><img src="[*cart_icon*]" width="120" /></center>
+[!TSVshop? &act=`itemcard`!]
 <form action="index.php" method="post" name="Tovar[*id*]" id="Tovar[*id*]">
-[[Shop_option? &docid=`[*id*]`]]
-<input type="hidden" name="formula" value="[*price*]">
-<input type="hidden" name="cart_icon" value="[*cart_icon*]">
-
+[+tsvoptions+]
 <div class="clear"></div>
 <div class="dashed">
-     <span class="left"><span id="price[*id*]" class="price"></span> руб.</span>
+     <span class="left"><span class="price">[+tsvprice+]</span> руб.</span>
      <a href="javascript: void(0);" onclick="AddToCart('[*id*]');return false" class="button right">В корзину</a>
 </div>
 <div class="clear"></div>
-<script type="text/javascript">Ucalc("[*id*]")</script>
+[+tsvservices+]
 </form>
 </div>
 <div style="margin-left:240px">[*content*][*text*]</div>
@@ -59,18 +72,10 @@
 </div>
 </div>
 
-<div class="rbox">
-<h3 class="compare">Сравнить</h3>
-<div class="rbcont">
 
-<div class="dashed"><a class="button right" href="">Сравнить</a></div>
-<div class="clear"></div>
-</div>
-</div>
-			
-		</div><!-- .sidebar#sideRight -->
+</div><!-- .sidebar#sideRight -->
 
-	</div><!-- #middle-->
+</div><!-- #middle-->
 
 </div><!-- #wrapper -->
 

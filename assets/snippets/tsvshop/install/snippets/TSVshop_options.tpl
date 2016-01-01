@@ -1,4 +1,19 @@
-<?php
+/**
+ * TSVshop_options
+ *
+ * Сниппет вывода разных параметров товара, влияющих на цену в TSVshop 
+ *
+ * @category    snippet
+ * @version     5.3
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal    @properties
+ * @internal    @modx_category TSVshop
+ * @internal    @installset base, sample
+ *
+ * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz
+ * -----------------------------------------------------------------------------
+ */
+
 //select=123:синий==0||зеленый==0||красный==0;option=123:синий==0||зеленый==0||красный==0;
 //select=Цвет:синий==0||зеленый==0||красный==0;option=Что_то:минимум==0||стандарт==0||расширенный==0;option=Что-то:минимум==-10||*стандарт ==0||расширенный==0;
 include ($modx->config['base_path'] . 'assets/snippets/tsvshop/include/config.inc.php');
@@ -23,6 +38,11 @@ $tv_txt=$tv_txt['tsvshop_param'];
 }
 $n = strpos($tv_txt, ";");
 $tv_cnt=0;
+
+if (!$n && strlen($tv_txt)>3){
+ $n=strlen($tv_txt);
+}
+
 while ($n!=false){
    $tv_cnt++;
    $n_s=0;
@@ -134,13 +154,9 @@ id=\"radio".$docid."__".$count."\"$selected onclick=\"".$function."\" /> <label 
   break;
 }
 
-echo $o;
-echo "<Br>";
+echo $o."<br>";
 
 $n = strpos($tv_txt, ";");
 }
 
-echo '<input type="hidden" name="OptionText" value="';
-echo $tv_cnt;
-echo '">';
-?>
+echo '<input type="hidden" name="OptionText" value="'.$tv_cnt.'">';

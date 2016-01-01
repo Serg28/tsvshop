@@ -1,3 +1,20 @@
+/**
+ * TSVshop
+ *
+ * Модуль управления магазином TSVshop
+ *
+ * @category	module
+ * @version 	5.3
+ * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal	@properties
+ * @internal	@guid
+ * @internal	@dependencies requires files located at /assets/snippets/tsvshop/
+ * @internal	@modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ */
+
+
 //define('IN_TSVSHOP_MODE','true');
 //-- get theme
 global $theme, $shop_lang, $tables, $addonspath, $basePath, $siteURL, $moduleid, $modulea, $tsvshop, $cache;
@@ -11,7 +28,7 @@ $theme = ($theme['setting_value'] <> '') ? '/' . $theme['setting_value'] : '';
 $basePath = $modx->config['base_path'];
 $siteURL = $modx->config['site_url'];
 $addonspath = $basePath."assets/snippets/tsvshop/addons/";
-$path = $siteURL."manager/index.php"; 
+$path = $siteURL.MGR_DIR."/index.php"; 
 $tables = array(); 
 $tsvshop = array();
 
@@ -20,7 +37,7 @@ $moduleid = $_GET['id'];
 $modulea = $_GET['a'];
 $act = $_GET['act'];
 include_once (TSVSHOP_PATH.'admin/lang/' . $modx->config['manager_language'] . '.inc.php');
-require_once ($basePath.'manager/includes/protect.inc.php');
+require_once ($basePath.MGR_DIR.'/includes/protect.inc.php');
 include_once (TSVSHOP_PATH.'include/config.inc.php');
 include_once (TSVSHOP_PATH.'admin/includes/core.inc.php');
 if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
@@ -32,10 +49,7 @@ if (!$cache) {
     $cache = fileCache::GetInstance(3600,MODX_BASE_PATH.'assets/cache/');
 }
 
-//$tsvshop = $cache->cache('tsvshop','tsvshop');
-//$tsvshop['SecFields'] = (!is_array($tsvshop['SecFields'])) ? explode(",",$tsvshop['SecFields']) : $tsvshop['SecFields'] ;  // Поля таблицы заказов, которые нужно шифровать паролем
 
-//$folders = scandir($addonspath,1);
 if (!$folders = $cache->cache('folders','tsvshop')) {
   $folders = scandir($addonspath,1);
   $cache->cache('folders','tsvshop',$folders);
@@ -48,11 +62,9 @@ foreach ($folders as $folder) {
                      include_once ($lfile);
                  }
                  $file = $addonspath.$folder.'/includes/functions.inc.php';
-                 //if (getConf("addons", $folder."_active")) {
                      if (file_exists($file)) {
                          include_once($file);
                      }
-                 //}
          }
 }
 
@@ -62,7 +74,6 @@ include_once ($basePath . 'assets/snippets/tsvshop/admin/template/header.inc.php
 //top button
 include_once ($basePath . 'assets/snippets/tsvshop/admin/template/topbutton.inc.php');
 $output.= '
-<div class="sectionHeader">'.$shop_lang['title'].'</div>
 <div class="sectionBody">
     <div class="tab-pane" id="resourcesPane">
         <script type="text/javascript">

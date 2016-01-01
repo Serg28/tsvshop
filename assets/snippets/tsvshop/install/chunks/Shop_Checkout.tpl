@@ -1,3 +1,16 @@
+/**
+ * Shop_Checkout
+ *
+ * Шаблон корзины для оформления заказов в TSVshop
+ *
+ * @category	chunk
+ * @version 	5.3
+ * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal  @modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ */
+
 <table class="tsvshop">
 
 <thead>
@@ -22,12 +35,6 @@
 <td class="del"><a href="#" title="Удалить" [+shop.basket.delatributs+]><img src="/assets/templates/demoshop/img/del.png" /></a></td>
 </tr>
 <!--/noempty-->
-
-<!--empty-->
-<tr>
-<td colspan="7"><center><b>Корзина пуста</b></center></td>
-</tr>
-<!--/empty-->
 
 <!--subtotal-->
 <tr class="subtotal">
@@ -61,7 +68,7 @@
 <!--total-->
 <tr class="total">
 <td colspan="4"><b>К оплате:</b></td>
-<td colspan="1">[+shop.basket.total+] [+shop.basket.monetary+]</td>
+<td colspan="1">[+shop.basket.topay+] [+shop.basket.monetary+]</td>
 <td></td>
 </tr>
 <!--/total-->

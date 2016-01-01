@@ -1,3 +1,17 @@
+/**
+ * Shop_mail_klient
+ *
+ * Шаблон письма-подтверждения заказа клиенту в TSVshop
+ *
+ * @category	chunk
+ * @version 	5.3
+ * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
+ * @internal  @modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ */
+
+
 Здравствуйте, [+shop.mail.fio+]<br />
 Ваш заказ был успешно сформирован и отправлен. В самое ближайшее время менеджер свяжется с Вами.<br /><br />
 Внимание! Если Вы будете звонить менеджеру по поводу этого заказа, указывайте, пожалуйста, номер этого заказа: - <b>[+shop.mail.numorder+]</b><br /><br />
