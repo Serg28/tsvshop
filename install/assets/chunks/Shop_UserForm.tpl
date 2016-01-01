@@ -1,13 +1,14 @@
 /**
  * Shop_UserForm
  *
- * Шаблон формы для оформления заказа
+ * Шаблон формы для оформления заказа в TSVshop
  *
  * @category	chunk
- * @version 	4.3
+ * @version 	5.3
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
- * @internal @modx_category TSVshop
- * @internal    @installset base, sample
+ * @internal  @modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
 
 
@@ -42,21 +43,34 @@
 <td width="1%">*</td>
 <td><input type="text" name="email" id="b_email" maxlength="30" size="37" class="text" value="[+shop.basket.email+]" eform="E-mail:email:1"/></td>
 </tr>
+<!--payments-->
 <tr>
 <td valign="top">Метод оплаты: </td>
 <td width="1%"> </td>
 <td>[+shop.basket.fpayments+]</td>
 </tr>
+<!--/payments-->
+<!--discount-->	
 <tr>
 <td valign="top">Дисконтная карта: </td>
 <td width="1%"> </td>
 <td>[+shop.basket.fdiscount+]</td>
 </tr>
+<!--/discount-->
+<!--sertificats-->	
+<tr>
+<td valign="top">Подарочный сертификат: </td>
+<td width="1%"> </td>
+<td>[+shop.basket.fsertificats+]</td>
+</tr>
+<!--/sertificats-->
+<!--shipping-->
 <tr>
 <td valign="top">Метод доставки: </td>
 <td width="1%"> </td>
 <td>[+shop.basket.fshipping+]</td>
 </tr>
+<!--/shipping-->
 
 <tr>
 <td valign="top">Комментарии: </td>

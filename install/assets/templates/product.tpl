@@ -1,14 +1,15 @@
 /**
  * Карточка товара
  *
- * Тестовый шаблон для карточки товара
+ * Тестовый шаблон для карточки товара в TSVshop
  *
  * @category	template
- * @version 	4.3
+ * @version 	5.3
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal	@lock_template 0
  * @internal 	@modx_category TSVshop
- * @internal    @installset sample
+ * @internal  @installset sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -71,18 +72,10 @@
 </div>
 </div>
 
-<div class="rbox">
-<h3 class="compare">Сравнить</h3>
-<div class="rbcont">
 
-<div class="dashed"><a class="button right" href="">Сравнить</a></div>
-<div class="clear"></div>
-</div>
-</div>
-			
-		</div><!-- .sidebar#sideRight -->
+</div><!-- .sidebar#sideRight -->
 
-	</div><!-- #middle-->
+</div><!-- #middle-->
 
 </div><!-- #wrapper -->
 

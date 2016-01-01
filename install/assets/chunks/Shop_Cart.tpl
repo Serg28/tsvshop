@@ -1,13 +1,14 @@
 /**
  * Shop_Cart
  *
- * Шаблон корзины заказов
+ * Шаблон корзины заказов в TSVshop
  *
  * @category	chunk
- * @version 	4.3
+ * @version 	5.3
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
- * @internal @modx_category TSVshop
- * @internal    @installset base, sample
+ * @internal  @modx_category TSVshop
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
 
 
@@ -68,7 +69,7 @@
 <!--total-->
 <tr class="total">
 <td colspan="4"><b>Итого:</b></td>
-<td colspan="1">[+shop.basket.total+] [+shop.basket.monetary+]</td>
+<td colspan="1">[+shop.basket.topay+] [+shop.basket.monetary+]</td>
 <td></td>
 </tr>
 <!--/total-->

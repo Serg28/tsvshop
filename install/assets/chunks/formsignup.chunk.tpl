@@ -4,10 +4,11 @@
  * Шаблон формы регистрации в личном кабинете магазина TSVshop
  *
  * @category	chunk
- * @version 	1.0.1
+ * @version 	1.1
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
- * @internal @modx_category TSVoffice
- * @internal    @installset base, sample
+ * @internal  @modx_category TSVoffice
+ * @internal  @installset base, sample
+ * @author      Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
 
 <!-- #declare:separator <hr> --> 
