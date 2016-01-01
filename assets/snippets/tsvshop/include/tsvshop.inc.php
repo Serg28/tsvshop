@@ -44,9 +44,14 @@ if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
 
 // для совместимости в версиями 5.0 и ранее
 $table = $modx->getFullTableName( 'shop_order_detail');
-  if (!$modx->db->query("SELECT typeitem FROM  ".$table." WHERE 0")){
+  //if (!$modx->db->query("SELECT typeitem FROM  ".$table." WHERE 0")){
+  if ($modx->db->getRecordCount($modx->db->query("show columns FROM ".$table." where `Field` = 'typeitem'"))==0) {
     $res1=$modx->db->query("ALTER TABLE  ".$table." ADD  `typeitem` varchar(10) NOT NULL DEFAULT 'physical'");
   }
+  
+  
+
+  
 
 // DB
 $tsvshop['customfields'] = !empty($customfields) ? explode(",",$customfields) : array(); // кастомные поля для таблицы заказов
