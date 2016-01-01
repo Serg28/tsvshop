@@ -2,16 +2,16 @@
 /**
  * TSVoffice
  *
- * Сниппет для создания личного кабинета  
+ * Сниппет для создания личного кабинета в TSVshop
  *
  * @category    snippet
- * @version     1.0.1
+ * @version     1.1
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVoffice
  * @internal    @installset base, sample
  *
- * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua
+ * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz
  * -----------------------------------------------------------------------------
  */
 

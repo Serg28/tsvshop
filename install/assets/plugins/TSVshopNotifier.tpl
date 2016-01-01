@@ -1,10 +1,10 @@
 /**
  * TSVshopNotifier
  *
- * Отображение новых заказов на главной странице админки MODx (TSVshopNotifier plugin for MODx Evolution)
+ * Отображение новых заказов модуля TSVshop на главной странице админки MODx (TSVshopNotifier plugin for MODx Evolution)
  *
- * @author	   privat_tel@mail.ru, http://tsv.org.ua 
- * @category   plugin
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz
+ * @category  plugin
  * @version 	1.0
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal	@events OnManagerWelcomePrerender
