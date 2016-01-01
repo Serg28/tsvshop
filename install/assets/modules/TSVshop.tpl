@@ -1,16 +1,17 @@
 /**
  * TSVshop
  *
- * Модуль управления магазином
+ * Модуль управления магазином TSVshop
  *
  * @category	module
- * @version 	4.3
+ * @version 	5.3
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal	@properties
  * @internal	@guid
  * @internal	@dependencies requires files located at /assets/snippets/tsvshop/
  * @internal	@modx_category TSVshop
- * @internal    @installset base, sample
+ * @internal  @installset base, sample
+ * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
 
 
@@ -36,7 +37,7 @@ $moduleid = $_GET['id'];
 $modulea = $_GET['a'];
 $act = $_GET['act'];
 include_once (TSVSHOP_PATH.'admin/lang/' . $modx->config['manager_language'] . '.inc.php');
-require_once ($basePath.'manager/includes/protect.inc.php');
+require_once ($basePath.MGR_DIR.'/includes/protect.inc.php');
 include_once (TSVSHOP_PATH.'include/config.inc.php');
 include_once (TSVSHOP_PATH.'admin/includes/core.inc.php');
 if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
