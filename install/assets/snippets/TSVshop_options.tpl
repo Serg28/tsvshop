@@ -1,16 +1,16 @@
 /**
  * TSVshop_options
  *
- * Сниппет вывода разных параметров товара, влияющих на цену
+ * Сниппет вывода разных параметров товара, влияющих на цену в TSVshop 
  *
  * @category    snippet
- * @version     4.4.1
+ * @version     5.3
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVshop
  * @internal    @installset base, sample
  *
- * @author      Coroico <privat_tel@mail.ru>
+ * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz
  * -----------------------------------------------------------------------------
  */
 
@@ -38,6 +38,11 @@ $tv_txt=$tv_txt['tsvshop_param'];
 }
 $n = strpos($tv_txt, ";");
 $tv_cnt=0;
+
+if (!$n && strlen($tv_txt)>3){
+ $n=strlen($tv_txt);
+}
+
 while ($n!=false){
    $tv_cnt++;
    $n_s=0;
