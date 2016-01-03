@@ -262,3 +262,9 @@ div.header_tables {
 div.header_tables div.header_cont{margin:0px;height:28px;line-height:28px;padding-left:8px;text-align:left;background:#88939E url(/manager/media/style/MODxCarbon/images/misc/longbarbg.png) repeat-x left top; color:#fff;}
 
 .aicon {margin-top:2px;margin-bottom:-2px }
+
+#tabTemplate tbody td,
+.sectionBody td,
+.sectionBody th	{
+	vertical-align: middle;
+}
