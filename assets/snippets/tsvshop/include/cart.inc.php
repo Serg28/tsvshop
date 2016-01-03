@@ -16,6 +16,29 @@ function session($cache) {
 }
 }
 
+/*----------------------
+# Функция ищет и удаляет из кода шаблона все блоки, закреплены за аддонами, отключенными или не установленными в данный момент.
+# такие блоки в шаблонах помечены как <!--имя_папки_аддона-->здесь код<!--/имя_папки_аддона-->
+# $tpl - строковая переменная, содержащая код шаблона (чанка или файла), который нужно обработать
+# результат - обработанный код шаблона, который далее можно использовать по своему усмотрению
+------------------------*/
+if (!function_exists("tsv_ClearTplfromLabels")) {
+    function tsv_ClearTplfromLabels($tpl)
+    {
+        global $tsvshop;
+        preg_match_all('/(<!--\/(.*?)-->)/', $tpl, $out);
+        $syslabels = explode(",",$tsvshop['syslabels']);
+        if (!empty($tpl) && is_array($out[2]) && is_array($syslabels)) {
+            foreach ($out[2] as $addon) {
+                if (!tsv_AddonIsOn($addon) && !in_array($addon, $syslabels)) {
+                    $tpl = str_replace(getStr($tpl, '<!--' . $addon . '-->', '<!--/' . $addon . '-->'), "", $tpl);
+                }
+            }
+        }
+        return $tpl;
+    }
+}
+
 //v5.3
 //Функция проверяет, есть ли в БД все поля из списка. Если нет, добавляет недостающие
 if(!function_exists("tsv_AddFieldstoDB"))
@@ -42,7 +65,6 @@ function tsv_AddFieldstoDB($table, $fields) {
   }
 }
 }
-
 
 $session = (!$session) ? session($cache): $session;
 if(!function_exists("tsv_ConvertPrice"))
@@ -418,8 +440,8 @@ function tsv_ParseUserForm(&$fields,&$templates) {
     $tables['payments']=$modx->getFullTableName('shop_payments');
     
     // Плагин TSVshopOnUserFormRender
-    $evt = $modx->invokeEvent("TSVshopOnUserFormRender",array("tpl" => $tpl));   
-    if (is_array($evt) && !empty($evt[0])) $tpl=$evt[0];
+    $evt = $modx->invokeEvent("TSVshopOnUserFormRender",array("tpl" => $templates['tpl']));   
+    if (is_array($evt) && !empty($evt[0])) $templates['tpl']=$evt[0];
     
     foreach ($folders as $folder) {
       if ($folder != "."  && $folder != ".." ) {
@@ -437,9 +459,12 @@ function tsv_ParseUserForm(&$fields,&$templates) {
          $templates['tpl'] = str_replace('[+shop.basket.'.$uk.'+]',stripslashes($uv),$templates['tpl']);
        }
     }
+    //чистим 
+    $templates['tpl'] = call_user_func_array(tsv_ClearTplfromLabels,array($templates['tpl']));
+    
     // Плагин TSVshopOnBeforeUserFormRenderComplete
-    $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormRenderComplete",array("tpl" => $tpl));   
-    if (is_array($evt) && !empty($evt[0])) $tpl=$evt[0];
+    $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormRenderComplete",array("tpl" => $templates['tpl']));   
+    if (is_array($evt) && !empty($evt[0])) $templates['tpl']=$evt[0];
     return true;
 }
 }
@@ -488,12 +513,15 @@ function tsv_display_cart($cache, $act="basket") {
     
  // создаем метки для корзины
     $piece['head'] = getStr($tpl, '<thead>', '</thead>');
-    $piece['noempty'] = getStr($tpl, '<!--noempty-->', '<!--/noempty-->');
-    $piece['empty'] = getStr($tpl, '<!--empty-->', '<!--/empty-->');
-    $piece['subtotal'] = getStr($tpl, '<!--subtotal-->', '<!--/subtotal-->');
-    $piece['total'] = getStr($tpl, '<!--total-->', '<!--/total-->');
-    $piece['buttons'] = getStr($tpl, '<!--buttons-->', '<!--/buttons-->');
+    //$piece['noempty'] = getStr($tpl, '<!--noempty-->', '<!--/noempty-->');
+    //$piece['empty'] = getStr($tpl, '<!--empty-->', '<!--/empty-->');
+    //$piece['subtotal'] = getStr($tpl, '<!--subtotal-->', '<!--/subtotal-->');
+    //$piece['total'] = getStr($tpl, '<!--total-->', '<!--/total-->');
+    //$piece['buttons'] = getStr($tpl, '<!--buttons-->', '<!--/buttons-->');
     
+    $syslabels = explode(",",$tsvshop['syslabels']);
+    
+    /*
     foreach ($folders as $folder) {
       if ($folder != "."  && $folder != ".." ) {
         if (isset($tsvshop['addons_'.$folder.'_active']) && $tsvshop['addons_'.$folder.'_active']=="yes") {
@@ -506,10 +534,22 @@ function tsv_display_cart($cache, $act="basket") {
           $tpl = str_replace($piece[$folder], "", $tpl);
         }
       }
-    }    
-   
+    } 
+    */ 
+    
+      foreach ($syslabels as $folder) {      
+          //тут создаем метку по имени аддона
+          $piece[$folder] = getStr($tpl, '<!--'.$folder.'-->', '<!--/'.$folder.'-->');
+      }
+      foreach ($folders as $folder) {      
+        if (tsv_AddonIsOn($folder)) {
+          //тут создаем метку по имени аддона
+          $piece[$folder] = getStr($tpl, '<!--'.$folder.'-->', '<!--/'.$folder.'-->');
+        } 
+      } 
+
     //  а потом регулярным выражением чистим чанк от всех меток - одним махом 
-    $tpl = preg_replace('/(<!--.*?-->)/' ,"", $tpl);  
+    //$tpl = preg_replace('/(<!--.*?-->)/' ,"", $tpl);  
     
       
     //$count = sizeof($_SESSION[$session]['orders']);
@@ -646,16 +686,6 @@ function tsv_display_cart($cache, $act="basket") {
           $tpl = str_replace("[+shop.basket.userform+]",notice(str_replace('%minsum%',$tsvshop['MinimumOrder']." ".$tsvshop['MonetarySymbol'],$shop_lang['strMinimumOrder']), 'error'),$tpl); 
         } else {
           $tpl = str_replace("[+shop.basket.userform+]", '</div>'.$modx->runSnippet("eForm", array('tpl'=>$tsvshop['tpluserform'],'formid'=>'TSVCheckoutForm','eformOnBeforeFormParse'=>'tsv_ParseUserForm','eFormOnBeforeMailSent'=>'tsv_Finish','allowhtml'=>'1','noemail'=>'1','gotoid'=>$tsvshop['backid'])),$tpl);
-          //v5.3
-          //удаляем в шаблоне формы заказа код, используемый аддонами, если они не установлены или неактивны
-          foreach ($folders as $folder) {
-            if ($folder != "."  && $folder != ".." ) {
-              if (!isset($tsvshop['addons_'.$folder.'_active']) || $tsvshop['addons_'.$folder.'_active']!="yes") {
-                // удаляем из чанка вообще строки для аддона. 
-                $tpl = str_replace(getStr($tpl, '<!--'.$folder.'-->', '<!--/'.$folder.'-->'), "", $tpl);
-              }
-            }
-          }
           // Плагин TSVshopOnUserFormComplete
           $evt = $modx->invokeEvent("TSVshopOnUserFormComplete",array("tpl" => $tpl));
           if(is_array($evt) && !empty($evt[0])) $tpl = $evt[0];
@@ -685,8 +715,11 @@ function tsv_display_cart($cache, $act="basket") {
 
     $evt = $modx->invokeEvent("TSVshopOnTplCartRender",array("tpl" => $tpl));
     if(is_array($evt) && !empty($evt[0])) $tpl = $evt[0];
+    
+    // Чистим чанк от всех меток 
+    $tpl = call_user_func_array(tsv_ClearTplfromLabels,array($tpl));
     $tpl = preg_replace('/(\[\+.*?\+\])/' ,"", $tpl);
-        
+    $tpl = preg_replace('/(<!--.*?-->)/' ,"", $tpl);     
     if (empty($tpl)) {
       return true;
     } else {
