@@ -446,6 +446,66 @@ if (!function_exists("tsv_AddonIsOn")) {
     }
 }
 
+/*----------------------
+# v5.3
+# Функция ищет и удаляет из кода шаблона все блоки, закреплены за аддонами, отключенными или не установленными в данный момент.
+# такие блоки в шаблонах помечены как <!--имя_папки_аддона-->здесь код<!--/имя_папки_аддона-->
+# Принимает:
+# $tpl - строковая переменная, содержащая код шаблона (чанка или файла), который нужно обработать
+# Результат: обработанный код шаблона, который далее можно использовать по своему усмотрению
+------------------------*/
+if (!function_exists("tsv_ClearTplfromLabels")) {
+    function tsv_ClearTplfromLabels($tpl)
+    {
+        global $tsvshop;
+        preg_match_all('/(<!--\/(.*?)-->)/', $tpl, $out);
+        $syslabels = explode(",", $tsvshop['syslabels']);
+        if (!empty($tpl) && is_array($out[2]) && is_array($syslabels)) {
+            foreach ($out[2] as $addon) {
+                if (!tsv_AddonIsOn($addon) && !in_array($addon, $syslabels)) {
+                    $tpl = str_replace(getStr($tpl, '<!--' . $addon . '-->', '<!--/' . $addon . '-->'), "", $tpl);
+                }
+            }
+        }
+        return $tpl;
+    }
+}
+
+/*----------------------
+# v5.3
+# Функция проверяет, есть ли в БД поля из списка. Если нет, добавляет недостающие.
+# Принимает:
+# $table  - строковая переменная с названием таблицы БД, в которой нужно проверить/добавить поля
+# $fields - массив или строка (разделитель - запятая) с названием полей, которые нужно проверить/добавить в указанную таблицу БД
+# Результат: в указанной таблице будут добавлены поля, которые были в списке, но не оказалось в таблице. 
+------------------------*/
+if (!function_exists("tsv_AddFieldstoDB")) {
+    function tsv_AddFieldstoDB($table, $fields)
+    {
+        global $modx;
+        if (empty($table) || empty($fields))
+            return;
+        $arr = array();
+        $sql = "show columns FROM " . $table;
+        $res = $modx->db->query($sql);
+        $f   = $modx->db->makearray($res);
+        foreach ($f as $k => $v) {
+            $arr[] = $v['Field'];
+        }
+        if (!is_array($fields))
+            $fields = explode(',', $fields);
+        $newfields = array_diff($fields, array_values($arr));
+        $arr       = array();
+        foreach ($newfields as $v) {
+            $arr[] = 'ADD `' . $v . '` VARCHAR( 70 )';
+        }
+        if (sizeof($arr) > 0) {
+            $sql = "ALTER TABLE " . $table . " " . implode(',', $arr);
+            $modx->db->query($sql);
+        }
+    }
+}
+
 if(!function_exists("notice"))
 {
 function notice($text, $type) {

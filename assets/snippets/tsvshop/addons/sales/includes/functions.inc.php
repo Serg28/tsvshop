@@ -10,7 +10,7 @@ $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateord
 //также этот список служит для формирования списка полей, доступных для шифрования в аддоне модуле TSVshop, аддон Конфигурация, вкладка Безопасность, поле Поля для шифрования
 $tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid";
 //список меток аддона Заказы, которые используются в чанках Shop_Cart, Shop_Checkout, которые нельзя вырезать.
-$tsvshop['syslabels']="noempty,subtotal,total,buttons,repeat";
+$tsvshop['syslabels']="noempty,empty,subtotal,total,buttons,repeat,full,table";
 
 function parsetable($res,$filename) {
 	global $modx, $shop_lang, $tsvshop, $modulea, $moduleid;
