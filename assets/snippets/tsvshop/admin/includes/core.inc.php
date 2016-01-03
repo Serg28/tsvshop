@@ -425,6 +425,27 @@ function is_install($addon) {
 }
 }
 
+/*----------------------
+# Функция определяет, установлен и активирован ли аддон
+# $addon - строковая переменная с названием папки с аддоном, напр., discount, shipping и т.д.
+# результат - TRUE или FALSE
+------------------------*/
+if (!function_exists("tsv_AddonIsOn")) {
+    function tsv_AddonIsOn($addon)
+    {
+        global $tsvshop, $folders, $tables;
+        if ($addon != "." && $addon != ".." && in_array($addon, $folders)) {
+            if ((isset($tsvshop['addons_' . $addon . '_active']) && $tsvshop['addons_' . $addon . '_active'] == "yes") || $tables[$addon] == "system") {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+}
+
 if(!function_exists("notice"))
 {
 function notice($text, $type) {
