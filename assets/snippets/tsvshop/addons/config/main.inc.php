@@ -15,7 +15,7 @@ $output.= '
 <td>
 <ul class="actionButtons">
                 <li id="Button1"><a href="index.php?a=112&id=' . $moduleid . '"><img src="media/style'.$theme.'/images/icons/refresh.png"> '.$shop_lang['refresh'].'</a></li>
-                <li id="Button1"><a href="#" onclick="getform(\'/manager/index.php\',document.getElementById(\'sconf\'),save_config_ok);"><img src="media/style'.$theme.'/images/icons/save.png"> '.$shop_lang['save'].'</a></li>
+                <li id="Button1"><a href="#" onclick="getform(\'/'.MGR_DIR.'/index.php\',document.getElementById(\'sconf\'),save_config_ok);"><img src="media/style'.$theme.'/images/icons/save.png"> '.$shop_lang['save'].'</a></li>
             </ul>
 </td>
             <td id="report"></td>
@@ -23,7 +23,7 @@ $output.= '
     </table>';
 $output.= '
 <div id="sconf">
-<form action="javascript:getform(\'/manager/index.php\',document.getElementById(\'sconf\'),save_config_ok);" name="sconf">
+<form action="javascript:getform(\'/'.MGR_DIR.'/index.php\',document.getElementById(\'sconf\'),save_config_ok);" name="sconf">
 <input type="hidden" id="a" name="a" value="' . $modulea . '" />
 <input type="hidden" id="id" name="id" value="' . $moduleid . '" />
 <input type="hidden" id="act" name="act" value="saveconfig" />';

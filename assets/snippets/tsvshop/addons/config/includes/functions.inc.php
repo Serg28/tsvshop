@@ -17,7 +17,7 @@ function saveconfig() {
 					setConf("",$key, $value, 1);
 				}
 			}
- 			include_once $modx->config['base_path']."manager/processors/cache_sync.class.processor.php";
+ 			include_once $modx->config['base_path'].MGR_DIR."/processors/cache_sync.class.processor.php";
                			$sync = new synccache();
                 		$sync->setCachepath($modx->config['base_path']."assets/cache/");
                 		$sync->setReport(false);

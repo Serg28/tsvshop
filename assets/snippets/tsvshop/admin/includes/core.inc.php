@@ -153,7 +153,7 @@ function regenConf() {
     fclose($f);
     fclose($js);
     /* Clear Cache of MODx*/
-    include_once $modx->config['base_path']."manager/processors/cache_sync.class.processor.php";
+    include_once $modx->config['base_path'].MGR_DIR."/processors/cache_sync.class.processor.php";
     $sync = new synccache();
     $sync->setCachepath($modx->config['base_path']."assets/cache/");
     $sync->setReport(false);
@@ -351,7 +351,7 @@ if(!function_exists("send_mail"))
 {
 function send_mail($to, $subject, $content, $attach=false) {
 	global $modx, $session, $tsvshop, $shop_lang, $mail;
-	include_once $modx->config['base_path']."manager/includes/controls/class.phpmailer.php";   //путь до класса phpmailer
+	include_once $modx->config['base_path'].MGR_DIR."/includes/controls/class.phpmailer.php";   //путь до класса phpmailer
 	$mail = new PHPMailer(true);
   $mail->CharSet = $modx->config['modx_charset'];
 	$mail->IsHTML(true);

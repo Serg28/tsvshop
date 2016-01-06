@@ -379,6 +379,7 @@ function tsv_showorder() {
 
 if ($act=='editprofile') {
   $uid = $modx->getLoginUserID();
+  $modx->setPlaceholder('manager_folder',MGR_DIR);
   if ($uid) {
     $edittpl = (!empty($edittpl)) ? $edittpl: '@FILE:/assets/snippets/tsvoffice/tpl/editprofile.tpl';
     echo tsv_profile($logouthomeid, $edittpl);
@@ -388,7 +389,8 @@ if ($act=='editprofile') {
 }
 
 
-if ($act=='showorder') {  
+if ($act=='showorder') { 
+  $modx->setPlaceholder('manager_folder',MGR_DIR); 
   $uid = $modx->getLoginUserID();
   if ($uid) {
     echo tsv_showorder();
@@ -400,6 +402,7 @@ if ($act=='showorder') {
 // авторизован ли?
 if ($act=='office' ) {
   $uid = $modx->getLoginUserID();
+  $modx->setPlaceholder('manager_folder',MGR_DIR);
   $yesChunk =(!empty($yesChunk)) ? $yesChunk : '@FILE:assets/snippets/tsvoffice/tpl/tsvoffice.tpl';
   $noChunk = (!empty($noChunk)) ? $noChunk : '@FILE:assets/snippets/tsvoffice/tpl/login.tpl';
   tsv_logout($logouthomeid);
@@ -418,6 +421,7 @@ if ($act=='office' ) {
 }
 
 if ($act=='listorders') {
+  $modx->setPlaceholder('manager_folder',MGR_DIR);
   $uid = $modx->getLoginUserID();
   if ($uid) {
     $orderpage = (!empty($orderpage)) ? $orderpage : $modx->documentIdentifier;
@@ -429,10 +433,12 @@ if ($act=='listorders') {
 // показ формы авторизации
 
 if ($act=='weblogin') {
+   $modx->setPlaceholder('manager_folder',MGR_DIR);
    return $modx->runSnippet('WebLogin',array('loginhomeid'=>$loginhomeid,'logouthomeid'=>$logouthomeid,'pwdreqid'=>$pwdreqid,'pwdactid'=>$pwdactid,'logintext'=>$logintext,'logouttext'=>$logouttext,'tpl'=>$tpl));
 }
 
 if ($act=='websignup') {
+   $modx->setPlaceholder('manager_folder',MGR_DIR);
    return $modx->runSnippet('WebSignup',array('groups'=>$groups,'useCaptchad'=>$useCaptcha,'tpl'=>$tpl));
 }
 

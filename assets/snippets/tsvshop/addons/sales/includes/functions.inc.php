@@ -48,7 +48,7 @@ function parsetable($res,$filename) {
     		    		          $temp = str_replace('[+'.$key.'+]', $value, $temp);
                         }
                         if ($key=="status") {
-                          $temp= str_replace('[+statussel+]','<select name="status" id="chst'.$row['numorder'].'" onchange="chst(\''.((int)$_GET['id']).'\',\''.((int)$_GET['a']).'\',\'/manager/index.php\',document.getElementById(\'chst'.$row['numorder'].'\'),\''.$row['numorder'].'\',updst);return false">'.buildstatus($value, explode("||",$tsvshop['StatusOrder'])).'</select>',$temp);
+                          $temp= str_replace('[+statussel+]','<select name="status" id="chst'.$row['numorder'].'" onchange="chst(\''.((int)$_GET['id']).'\',\''.((int)$_GET['a']).'\',\'/'.MGR_DIR.'/index.php\',document.getElementById(\'chst'.$row['numorder'].'\'),\''.$row['numorder'].'\',updst);return false">'.buildstatus($value, explode("||",$tsvshop['StatusOrder'])).'</select>',$temp);
                         }
                        
                         $status = explode("||",$tsvshop['StatusOrder']);
@@ -255,7 +255,7 @@ function getOrderInfo($idorder) {
 function sendMailUpdate($emails, $subject='', $body, $isHTML=false)
 	{
     global $modx, $session, $tsvshop, $shop_lang, $mail;
-    include $modx->config['base_path'] . "manager/includes/controls/class.phpmailer.php";
+    include $modx->config['base_path'] . MGR_DIR."/includes/controls/class.phpmailer.php";
 	  $mail = new PHPMailer;
 		$mail->Body = $body;
 		$mail->isHTML($isHTML);

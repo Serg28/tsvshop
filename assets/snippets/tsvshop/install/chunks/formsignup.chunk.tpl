@@ -54,7 +54,7 @@
 <tr>
 <td>Код проверки</td>
 <td><span class="orange">*</span></td>
-<td><a href="[+action+]"><img align="top" src="manager/includes/veriword.php" style="border: 1px solid rgb(187, 187, 187); width="148" height="60" alt="Если емть проблемы с отображением кода, кликните по нему для генерации нового кода." style="border: 1px solid #039" /></a></td>
+<td><a href="[+action+]"><img align="top" src="[+manager_folder+]/includes/veriword.php" style="border: 1px solid rgb(187, 187, 187); width="148" height="60" alt="Если емть проблемы с отображением кода, кликните по нему для генерации нового кода." style="border: 1px solid #039" /></a></td>
 </tr>
 
 <tr>

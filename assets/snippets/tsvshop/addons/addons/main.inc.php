@@ -3,7 +3,7 @@ if(IN_MANAGER_MODE!="true") die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please
 $output.= '<div class="tab-page" id="ShopSales">';
 $output.= '<h2 class="tab">'.$shop_lang['addons_title'].'</h2>';
 $output.= '<p><img src="'.TSVSHOP_SURL.'addons/addons/img/addons.png" alt="'.$shop_lang['sales_title'].'" class="icon" style="vertical-align: middle; text-align: left; " />'.$shop_lang['addons_intro'];
-$path = $siteURL."manager/index.php";
+$path = $siteURL.MGR_DIR."/index.php";
 
 $output.= $anotice;  
 $addonstable=parseaddons($addonspath,TSVSHOP_PATH.'addons/addons/tpl/addonstable.tpl', $shop_lang);
