@@ -170,5 +170,5 @@ REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 	
 										({TV_ARTCL}, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 8, 0, '', 0, '', '', ''),
 										({TV_PRICE}, 	'text', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 8, 0, '', 0, '', '', ''),
 		    ({TV_INVEN}, 'text', 'inventory', 'Кол-во на складе', '', 0, 8, 0, '', 0, '', '', ''),
-										({TV_REDIT}, 	'richtext', 	'text', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
+										({TV_REDIT}, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 
