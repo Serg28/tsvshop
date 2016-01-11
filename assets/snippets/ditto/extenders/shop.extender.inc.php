@@ -2,7 +2,7 @@
 $hiddenFields='price,cart_icon';
 
 $placeholders['tsvservices'] = array('id,price,cart_icon,typeitem','tsvservices');
-$placeholders['tsvprice'] = array('id,price','tsvprice');
+$placeholders['tsvprice'] = array('id,price,tsvshop_param','tsvprice');
 $placeholders['tsvoptions'] = array('id','tsvoptions');
 $placeholders['tsvbattr'] = array('id','tsvbutton');
 
