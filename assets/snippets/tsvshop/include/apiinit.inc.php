@@ -86,5 +86,12 @@ session_name($site_sessionname);
 session_start();
 //$modx = new MODxAPI();    
 $modx = new DocumentParser;   
+$modx->db->connect();
+$modx->getSettings();
+$modx->minParserPasses=2;
 
+if (!$cache) {
+    include_once MODX_BASE_PATH.'/assets/snippets/tsvshop/include/cache.class.php';
+    $cache = fileCache::GetInstance(3600,MODX_BASE_PATH.'assets/cache/');
+}
 ?>
