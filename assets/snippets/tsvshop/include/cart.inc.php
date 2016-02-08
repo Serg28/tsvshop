@@ -1061,45 +1061,6 @@ if (!function_exists("tsv_display_success")) {
         return $output;
     }
 }
-/*
-if (!function_exists("tsv_sendMail")) {
-    function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
-    {
-        global $modx, $session, $tsvshop, $shop_lang, $mail;
-        $mail->ClearAddresses();
-        $mail->ClearAttachments();
-        $mail->Body = $body;
-        $mail->isHTML($isHTML);
-        $mail->CharSet  = $modx->config['modx_charset'];
-        $mail->From     = $tsvshop['SmtpFromEmail'];
-        $mail->FromName = $tsvshop['SmtpFromName'];
-        $mail->Subject  = $subject;
-        
-        if ($tsvshop['MailMode'] == "smtp") {
-            $mail->IsSMTP();
-            $mail->Host     = $tsvshop['SmtpHost'];
-            //$mail->SMTPDebug  = $__smtp['debug'];
-            $mail->SMTPAuth = $tsvshop['SmtpAuth'];
-            $mail->Port     = $tsvshop['SmtpPort'];
-            $mail->Username = $tsvshop['SmtpUser'];
-            $mail->Password = $tsvshop['SmtpPass'];
-        } else {
-            $mail->IsMail();
-        }
-        
-        if (is_array($emails)) {
-            foreach ($emails as $name => $email) {
-                $name = (is_string($name)) ? $name : '';
-                $mail->AddAddress($email, $name);
-            }
-        } elseif (is_string($emails)) {
-            $mail->AddAddress($emails);
-        }
-        $mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
-        return ($mail->Send() ? true : false);
-    }
-}
-*/
 
 if (!function_exists("tsv_sendMail")) {
     function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
@@ -1115,6 +1076,8 @@ if (!function_exists("tsv_sendMail")) {
         $modx->mail->FromName = $tsvshop['SmtpFromName'];
         $modx->mail->Subject  = $subject;
         
+        
+        //5.4 Можно добавлять несколько адресов почты, через запятую
         $emails = explode(",",$emails);
         
         if (is_array($emails)) {
