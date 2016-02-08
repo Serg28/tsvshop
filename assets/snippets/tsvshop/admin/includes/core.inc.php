@@ -476,7 +476,7 @@ if (!function_exists("tsv_AddFieldstoDB")) {
     {
         global $modx;
         if (empty($table) || empty($fields))
-            return;
+            return false;
         $arr = array();
         $sql = "show columns FROM " . $table;
         $res = $modx->db->query($sql);
@@ -496,6 +496,7 @@ if (!function_exists("tsv_AddFieldstoDB")) {
             $sql = "ALTER TABLE " . $table . " " . implode(',', $arr);
             $modx->db->query($sql);
         }
+        return true;
     }
 }
 
