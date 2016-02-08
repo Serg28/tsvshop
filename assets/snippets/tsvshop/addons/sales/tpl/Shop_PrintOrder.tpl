@@ -1,3 +1,4 @@
+<!--
 /**
  * Shop_PrintOrder
  *
@@ -10,6 +11,7 @@
  * @internal  @installset base, sample
 * @author     Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
  */
+ -->
  
 <table border="0" cellpadding="2" cellspacing="0" style="width: 100%;">
 <tbody>

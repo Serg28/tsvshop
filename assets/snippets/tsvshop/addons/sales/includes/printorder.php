@@ -19,7 +19,7 @@ defined('IN_TSVSHOP_MODE') or die();
 global $modx, $tsvshop; 
 //require_once(TSVSHOP_PATH.'addons/payments/payments/receipt/functions.inc.php');
 include (TSVSHOP_PATH.'include/config.inc.php');
-$tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "Shop_PrintOrder";
+$tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "@FILE:assets/snippets/tsvshop/addons/sales/tpl/Shop_PrintOrder.tpl";
 
 
 if(!function_exists("propis"))
