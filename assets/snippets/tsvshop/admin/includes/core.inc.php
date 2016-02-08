@@ -351,47 +351,39 @@ if(!function_exists("send_mail"))
 {
 function send_mail($to, $subject, $content, $attach=false) {
 	global $modx, $session, $tsvshop, $shop_lang, $mail;
-	include_once $modx->config['base_path'].MGR_DIR."/includes/controls/class.phpmailer.php";   //путь до класса phpmailer
-	$mail = new PHPMailer(true);
-  $mail->CharSet = $modx->config['modx_charset'];
-	$mail->IsHTML(true);
+	$modx->loadExtension('MODxMailer');
+	$modx->mail->ClearAllRecipients();
+  $modx->mail->ClearAttachments();
+  $modx->mail->CharSet = $modx->config['modx_charset'];
+	$modx->mail->IsHTML(true);
 
 	try {
-     if ($tsvshop['MailMode']=="smtp") {
-			$mail->IsSMTP();
-                	$mail->Host       = $tsvshop['SmtpHost'];
-  			//$mail->SMTPDebug  = $__smtp['debug'];
-  			$mail->SMTPAuth   = $tsvshop['SmtpAuth'];
-  			$mail->Port       = $tsvshop['SmtpPort'];
-  			$mail->Username   = $tsvshop['SmtpUser'];
-  			$mail->Password   = $tsvshop['SmtpPass'];
-		} else {
-			$mail->IsMail();
-		}
-  		$mail->AddAddress($to); //кому письмо
-  		$mail->SetFrom($tsvshop['SmtpFromEmail'], $tsvshop['SmtpFromName']); //от кого (желательно указывать свой реальный e-mail на используемом SMTP сервере
-  		$mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
-  		$mail->Subject = htmlspecialchars($subject);
-  		$mail->MsgHTML($content);
+  	  $modx->mail->AddAddress($to); //кому письмо
+		  $modx->mail->From     = $tsvshop['SmtpFromEmail'];
+      $modx->mail->FromName = $tsvshop['SmtpFromName'];
+		
+  		$modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
+  		$modx->mail->Subject = htmlspecialchars($subject);
+  		$modx->mail->MsgHTML($content);
       if($attach) {  
         // проверяем, является ли переменная с именами прикрепляемых файлов массивом. Если да, то прикрепляем все файлы, иначе - один
         if (is_array($attach)) {
 			     foreach ($attach as $a) {
-				      $mail->AddAttachment($a);
+				      $modx->mail->AddAttachment($a);
 			     }
         } else {
-          $mail->AddAttachment($attach);
+          $modx->mail->AddAttachment($attach);
         }
 		  }
 
-  		$mail->Send();
+  		//$modx->mail->Send();
+      return ($modx->mail->Send() ? true : false);
   		//echo "Message sent Ok!</p>\n";
 	} catch (phpmailerException $e) {
   		//echo $e->errorMessage();
 	} catch (Exception $e) {
   		//echo $e->getMessage();
 	}
-}
 }
 
 if(!function_exists("getfilechmod"))
@@ -497,7 +489,8 @@ if (!function_exists("tsv_AddFieldstoDB")) {
         $newfields = array_diff($fields, array_values($arr));
         $arr       = array();
         foreach ($newfields as $v) {
-            $arr[] = 'ADD `' . $v . '` VARCHAR( 70 )';
+            //$arr[] = 'ADD `' . $v . '` VARCHAR( 70 )';
+            $arr[] = 'ADD `' . $v . '` TEXT';
         }
         if (sizeof($arr) > 0) {
             $sql = "ALTER TABLE " . $table . " " . implode(',', $arr);
