@@ -1,0 +1,236 @@
+<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+
+
+<h2>Чанк Shop_PrintOrder - шаблон печати товарного чека/накладной в TSVshop</h2>
+<table id="hinttable">
+<thead>
+<tr>
+<td width="200" >
+Плейсхолдер
+</td>
+<td  >
+Описание
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td >
+<p>[+shop.order.id+]</p>
+</td>
+<td  >
+<p>ID товара/документа в дереве MODx</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.name+]</p>
+</td>
+<td  >
+<p>Название товара</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.articul+]</p>
+</td>
+<td  >
+<p>Артикул товара (если не задан, то выводится ID документа)</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.price+]</p>
+</td>
+<td  >
+<p>Цена за одну единицу</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.summa+]</p>
+</td>
+<td  >
+<p>Цена все единиц товара (цена*количество)</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.icon+]</p>
+</td>
+<td  >
+<p>Иконка товара</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.qty+]</p>
+</td>
+<td  >
+<p>Количество единиц товара</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.num+]</p>
+</td>
+<td  >
+<p>Порядковый номер товара в списке</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.numorder+]</p>
+</td>
+<td  >
+<p>Номер заказа</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.datecreate+]</p>
+</td>
+<td  >
+<p>Дата формирования квитанции текстом (в виде: 10 сентября 2012 г.)</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.discount+]</p>
+</td>
+<td  >
+<p>Размер скидки</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.discountsize+]</p>
+</td>
+<td  >
+<p>Сумма скидки (уже просчитанная)</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.count+]</p> 
+</td>
+<td >
+<p>Количество (отдельных товаров) позиций товаров в корзине</p>
+</td>
+</tr>
+<tr>
+<td >  
+<p>[+shop.order.totalcount+]</p>
+</td>
+<td  >
+<p>Общее количество всех единиц товаров в корзине</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.subtotal+]</p>
+</td>
+<td  >
+<p>Подитог суммы заказа</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.total+]</p>
+</td>
+<td  >
+<p>Итоговая сумма заказа</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.topay+]</p>
+</td>
+<td  >
+<p>Сумма к оплате (отличается от [+shop.order.total+] тем, что может быть меньше итоговой суммы в случае, если в интернет-магазине установлен аддон Подарочные сертификаты (и подобными) и пользователь может часть суммы заказа оплатить подарочным сертификатом, а оставшуюся часть - банковским платежем. Вот как раз в этом случае [+shop.order.topay+] будет равен <strong>оставшейся</strong> сумме, которую нужно <strong>доплатить</strong>. В то время как [+shop.order.total+] всегда будет равна всей стоимости заказа, независимо от того, оплачен ли заказа частично или полносью. Советуем всегда в качестве суммы <span style="text-decoration: underline;">к оплате</span> использовать именно&nbsp; [+shop.order.topay+])</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.total_propis+]</p>
+</td>
+<td  >
+<p>Итоговая сумма заказа ПРОПИСЬЮ. Т.е. сумма будет написана словами</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.mail.payments+]</p>
+</td>
+<td  >
+<p>Метод оплаты</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.fio+]</p>
+</td>
+<td  >
+<p>ФИО заказчика или название предприятия</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.adress+]</p>
+</td>
+<td  >
+<p>Адрес доставки или предприятия-получателя</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.city+]</p>
+</td>
+<td  >
+<p>Город</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.phone+]</p>
+</td>
+<td  >
+<p>Телефон</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.shiptype+]</p>
+</td>
+<td >
+<p>Метод доставки</p> 
+</td>
+</tr>
+<tr>
+<td >
+<p>[+shop.order.shipping+]</p>
+</td>
+<td  >
+<p>Стоимость доставки</p>
+</td>
+</tr>
+<tr>
+<td >
+<p>&lt;!--table--&gt; &lt;!--/table--&gt;</p>
+</td>
+<td >
+<p>Выделяют область чанка, которая служит для формирования строк таблицы с товарами</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/>
