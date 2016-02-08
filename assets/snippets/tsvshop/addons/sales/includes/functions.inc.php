@@ -25,7 +25,8 @@ function parsetable($res,$filename) {
         $row1=array('url'      => $url,
                     'modulea'  => $modulea,
                     'moduleid' => $moduleid,
-                    'theme'    => $theme
+                    'theme'    => $theme,
+                    'mgrdir'  => MGR_DIR
         );
         
         $tpltr = getStr($tpl, '<!--repeat-->', '<!--/repeat-->');
@@ -79,13 +80,15 @@ function parsetable($res,$filename) {
 //delete selected order
 function delorder($idorder) {
     global $modx, $shop_lang, $tsvshop;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="delorder" && !empty($idorder) && is_numeric(intval($idorder))) {
        		if ($modx->db->query( "
        		   DELETE FROM ".$tsvshop['dborders']." WHERE `numorder` = ".$idorder." LIMIT 1
@@ -105,13 +108,15 @@ function delorder($idorder) {
 //truncate all orders
 function clearorder() {
     global $modx, $shop_lang, $tsvshop;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
-	$output_sales_error="";
+	  $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="clearorders") {
 			if ($modx->db->query( "
 				TRUNCATE TABLE ".$tsvshop['dborders']."
@@ -130,13 +135,15 @@ function clearorder() {
 //delete checked orders
 function checkdelorder() {
     global $modx, $shop_lang, $tsvshop;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
-	$output_sales_error="";
+	  $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="delchecked") {
         	foreach($_GET as $val) {
 				if ($val<>"check_del" && is_numeric($val)) {
@@ -159,13 +166,15 @@ function checkdelorder() {
 //update selected order
 function updateorder($idorder) {
     global $modx, $shop_lang, $tsvshop;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
         if (!empty($act) && $act=="updateorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder !="0") {
           /*if (!empty($_GET['commentadmin'])) {
              $fields = array('status'       => $modx->db->escape($_GET['status']),
@@ -198,14 +207,15 @@ function updateorder($idorder) {
 //update selected order
 function updstorder($idorder) {
     global $modx, $shop_lang, $tsvshop;
-
-    $user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
+    //$user=$modx->userLoggedIn();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
        	if (!empty($act) && $act=="updstorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder !="0") {
             /*
             if (!empty($_GET['commentadmin'])) {
@@ -255,42 +265,32 @@ function getOrderInfo($idorder) {
 function sendMailUpdate($emails, $subject='', $body, $isHTML=false)
 	{
     global $modx, $session, $tsvshop, $shop_lang, $mail;
-    include $modx->config['base_path'] . MGR_DIR."/includes/controls/class.phpmailer.php";
-	  $mail = new PHPMailer;
-		$mail->Body = $body;
-		$mail->isHTML($isHTML);
-		$mail->CharSet = $modx->config['modx_charset'];
-		$mail->From = $tsvshop['SmtpFromEmail'];
-		$mail->FromName = $tsvshop['SmtpFromName'];
-		$mail->Subject = $subject;
+    $modx->loadExtension('MODxMailer');
+		$modx->mail->ClearAllRecipients();
+    $modx->mail->ClearAttachments();
+		$modx->mail->Body = $body;
+		$modx->mail->isHTML($isHTML);
+		$modx->mail->CharSet = $modx->config['modx_charset'];
+		$modx->mail->From = $tsvshop['SmtpFromEmail'];
+		$modx->mail->FromName = $tsvshop['SmtpFromName'];
+		$modx->mail->Subject = $subject;
     
-    if ($tsvshop['MailMode']=="smtp") {
-			$mail->IsSMTP();
-      $mail->Host       = $tsvshop['SmtpHost'];
-  		//$mail->SMTPDebug  = $__smtp['debug'];
-  		$mail->SMTPAuth   = $tsvshop['SmtpAuth'];
-  		$mail->Port       = $tsvshop['SmtpPort'];
-  		$mail->Username   = $tsvshop['SmtpUser'];
-  		$mail->Password   = $tsvshop['SmtpPass'];
-		} else {
-			$mail->IsMail();
-		}
-		
+    		
 		if(is_array($emails))
 		{
 			foreach($emails as $name => $email)
 			{
 				$name = (is_string($name)) ? $name : '';
-				$mail->AddAddress($email, $name);
+				$modx->mail->AddAddress($email, $name);
 			}
 		}
 		elseif(is_string($emails)) {
-		  $mail->AddAddress($emails); 
+		  $modx->mail->AddAddress($emails); 
     }
     //$mail->SetFrom($tsvshop['SmtpFromEmail'], $tsvshop['SmtpFromName']); //от кого (желательно указывать свой реальный e-mail на используемом SMTP сервере
-  	$mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
+  	$modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
 		
-		return ($mail->Send() ? true : false);
+		return ($modx->mail->Send() ? true : false);
 	}
 
 function updateMail($newstatus,$idorder) {
@@ -322,7 +322,8 @@ function updateMail($newstatus,$idorder) {
 
 function vieworder($filename) {
     global $modx, $shop_lang, $theme, $tsvshop, $tables, $moduleid, $modulea;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $out = "";
     $output_sales_notice="";
 	  $output_sales_error="";
@@ -330,7 +331,8 @@ function vieworder($filename) {
     $act=$_GET['act'];
     $id=_filter($_GET['idorder'],1);
     $filename = (empty($filename)) ? TSVSHOP_PATH.'addons/sales/tpl/orderview.tpl' : $filename;
-    if ($user['usertype']=="manager") { 
+    //if ($user['usertype']=="manager") { 
+    if ($user=="manager") {
       if (!empty($act) && $act=="vieworder" && $tables['sales']!="none" && $tsvshop['dborders']!="" && !empty($id) && is_numeric($id)) { 
         if ($res = $modx->db->select('*', $tsvshop['dborders'], 'numorder = "' . $id . '"','numorder','1' )) { 
            $row = $modx->db->getRow($res);
@@ -340,7 +342,8 @@ function vieworder($filename) {
            $row1=array('moduleurl'      => $url,
                        'modulea'  => $modulea,
                        'moduleid' => $moduleid,
-                       'theme'    => $theme
+                       'theme'    => $theme,
+                       'mgrdir'  => MGR_DIR
            );
            
            $tpltr = getStr($tpl, '<!--repeat-->', '<!--/repeat-->');
