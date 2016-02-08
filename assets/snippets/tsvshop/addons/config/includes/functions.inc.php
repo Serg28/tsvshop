@@ -5,11 +5,11 @@ $tables['config']="system";
 
 function saveconfig() {
 	global $shop_lang, $modx;
-
-  $user=$modx->userLoggedIn();
+  $user=$modx->getLoginUserType();
+  //$user=$modx->userLoggedIn();
 	$act=$_GET['act'];
-	
-	if ($user['usertype']=="manager") {
+	//if ($user['usertype']=="manager") {
+	if ($user=="manager") {
 		if  (!empty($act) && $act=="saveconfig") {
 			foreach ($_GET as $key=>$value) {
 				if ($key!="a" && $key!="id" && $key!="act" && $key!="act2"  && $key!="act3")  {
