@@ -202,3 +202,6 @@ body > div div.jGrowl.center {
 	background: url(/assets/snippets/tsvshop/images/loader_ico.gif) no-repeat  10px center; 
 }
 
+.infoclass {
+	background: url(/assets/snippets/tsvshop/images/info_ico.png) no-repeat 10px center;
+}
