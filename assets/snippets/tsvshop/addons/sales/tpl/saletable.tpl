@@ -16,12 +16,12 @@
 <tr>
 	<th width="40"><input type="checkbox" name="checked" onclick="checkedAll(this.checked,'check_del'); void(0);" /></th>
 	<th width="5%"><b>№</b></th>
-	<th width="20%" align="left"><b>[+sales_fio+]</b></th>
+	<th  align="left"><b>[+sales_fio+]</b></th>
 	<th align="left"><b>[+sales_notes+]</b></th>
 
 	<th width="10%" align="center"><b>[+sales_data+]</b></th>
 	<th width="10%" align="center"><b>[+sales_status+]</b></th>
-        <th width="10%" align="right"><b>[+sales_total+]</b></th>
+        <th width="18%" align="right"><nobr><b>[+sales_total+]</b></nobr></th>
         <th align="left" width="1%"></th>
 
 </tr>
@@ -40,8 +40,9 @@
 <td align="center">[+statussel+]</td>
 <td align="right">[+total+]</td>
 <td align="right">
-<nobr><a href="index.php?a=112&id=[+moduleid+]&act=vieworder&idorder=[+numorder+]"><img src="/assets/snippets/tsvshop/addons/sales/img/basket_edit.png" alt="" border="0"  style="margin-top:3px;margin-bottom:-2px"></a>
-<a href="javascript:void(0);" onclick="if (confirm('Удалить заказ [+numorder+]?','Подтвердите удаление:')) document.location='index.php?a=112&id=[+moduleid+]&act=delorder&idorder=[+numorder+]'; return false;"><img src="/assets/snippets/tsvshop/addons/sales/img/basket_delete.png" alt="" border="0"  style="margin-top:3px;margin-left:4px;margin-bottom:-2px"></a>
+<nobr><a href="/[+mgrdir+]/index.php?a=112&id=[+moduleid+]&act=vieworder&idorder=[+numorder+]"><img src="/assets/snippets/tsvshop/addons/sales/img/basket_edit.png" alt="" border="0"  style="margin-top:1px;margin-bottom:-2px"></a>
+<a href="javascript:void(0);" onclick="if (confirm('Удалить заказ [+numorder+]?','Подтвердите удаление:')) document.location='/[+mgrdir+]/index.php?a=112&id=[+moduleid+]&act=delorder&idorder=[+numorder+]'; return false;"><img src="/assets/snippets/tsvshop/addons/sales/img/basket_delete.png" alt="" border="0"  style="margin-top:1px;margin-left:4px;margin-bottom:-2px"></a>
+<a href="/[+mgrdir+]/index.php?a=112&id=[+moduleid+]&act=printorder&i=[+numorder+]:[+code+]" title="[+shop_printorder+]" target="_blank"><img src="/assets/snippets/tsvshop/addons/sales/img/printer.png" alt="[+shop_printorder+]" alt="" border="0"  style="margin-top:0px;margin-left:4px;margin-bottom:-2px" /></a>
 </nobr></td>
 </tr>
 <!--/repeat-->

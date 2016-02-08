@@ -22,7 +22,7 @@
    <tr>
         <td>
         
-			<form action="javascript:getform('/manager/index.php',document.getElementById('myform'),save_order_ok);" name="myform" id="myform">
+			<form action="javascript:getform('/[+mgrdir+]/index.php',document.getElementById('myform'),save_order_ok);" name="myform" id="myform">
 			<input type="hidden" id="a" name="a" value="[+modulea+]" />
 			<input type="hidden" id="id" name="id" value="[+moduleid+]" />
 			<input type="hidden" name="act" value="updateorder" id="act">
@@ -30,7 +30,7 @@
     <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px">
 
     <tr>
-    <td valign="top" width="50%">
+    <td valign="top" width="50%" style="padding:0">
 
 		<table class="TF tsvorder" cellpadding="0" cellspacing="0" width="100%">
     		<tr>
@@ -79,7 +79,7 @@
 		    </table>
 		</td>
 
-		<td valign="top" width="50%">
+		<td valign="top" width="50%" style="padding:0">
 
 			<table class="TF tsvorder" cellpadding="0" cellspacing="0" width="100%">
         <tr>
@@ -103,18 +103,19 @@
 			  </tr>
 		    	<tr>
 		    		<td class="gridAltItem">[+sales_status+]</td>
-		    		<td class="gridItem" style="padding:2px 7px 3px 7px">[+buildstatus+]</td>
+		    		<td class="gridItem" style="padding:1px 7px 2px 7px">[+buildstatus+]</td>
 		    	</tr>
 			    <tr>
 		    		<td class="gridAltItem" valign="top" style="border-bottom:1px solid #D0D0D0">[+sales_notes+]</td>
-		    		<td class="gridItem" style="border-bottom:1px solid #D0D0D0"><textarea name="commentadmin" width="100%" rows="9" style="height:74px; width:98%" id="commentadmin">[+commentadmin+]</textarea></td>
+		    		<td class="gridItem" style="border-bottom:1px solid #D0D0D0"><textarea name="commentadmin" width="100%" rows="9" style="height:66px; width:98%" id="commentadmin">[+commentadmin+]</textarea></td>
 		    	</tr>
           <tr>
-		    <td class="gridAltItem" valign="top" colspan="2" style="border-bottom:1px solid #D0D0D0">
-	            <ul class="actionButtons" style="margin:3px">
-					<li id="Button0"><a href="index.php?a=[+modulea+]&id=[+moduleid+]"><img src="media/style[+theme+]/images/icons/stop.png">[+sales_close+]</a></li>
-					<li id="Button1"><a href="#" onclick="getform('/manager/index.php',document.getElementById('myform'),save_order_ok);return false"><img src="media/style[+theme+]/images/icons/save.png">[+save+]</a> <span name="myspan" id="myspan"></span></li>
+		    <td class="gridAltItem" valign="top" colspan="2" style="border-bottom:1px solid #D0D0D0; padding-bottom:0">
+	            <ul class="actionButtons" style="margin-bottom:-13px">
+					<li id="Button0"><a href="/[+mgrdir+]/index.php?a=[+modulea+]&id=[+moduleid+]"><img src="media/style[+theme+]/images/icons/stop.png">[+sales_close+]</a></li>
+					<li id="Button1"><a href="#" onclick="getform('/[+mgrdir+]/index.php',document.getElementById('myform'),save_order_ok);return false"><img src="media/style[+theme+]/images/icons/save.png">[+save+]</a> <span name="myspan" id="myspan"></span></li>
 					<li id="Button2"><a href="#" onclick="$('#resourcesPane').show();window.print();return false"><img src="media/style[+theme+]/images/tree/application_pdf.png">[+sales_print+]</a></li>
+          <li id="Button2"><a href="/[+mgrdir+]/index.php?a=[+modulea+]&id=[+moduleid+]&act=printorder&i=[+numorder+]:[+code+]" target="_blank"><img src="/assets/snippets/tsvshop/addons/sales/img/printer.png">[+sales_printorder+]</a></li>
 				</ul>
 				<span name="myspan" id="myspan"></span>
             </td>
@@ -148,24 +149,24 @@
 <!--/repeat-->
 
       <tr>
-				<td colspan="4" align="right" class="gridAltItem">[+sales_subtotal+]</td>
+				<td colspan="4" align="left" class="gridAltItem">[+sales_subtotal+]</td>
 				<td class="gridAltItem">[+subtotal+]</td>
 			</tr>
 
 			<tr>
-				<td colspan="4" align="right" class="gridAltItem">[+sales_shipping+]</td>
+				<td colspan="4" align="left" class="gridAltItem">[+sales_shipping+]</td>
 				<td class="gridAltItem">[+shipping+]</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="right" class="gridAltItem">[+sales_tax+]</td>
+				<td colspan="4" align="left" class="gridAltItem">[+sales_tax+]</td>
 				<td class="gridAltItem">[+nalog+]</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="right" class="gridAltItem">[+sales_discount+]</td>
+				<td colspan="4" align="left" class="gridAltItem">[+sales_discount+]</td>
 				<td class="gridAltItem"> - [+discountsize+] ([+discount+])</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="right" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
+				<td colspan="4" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
 				<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" >[+total+]</td>
 			</tr>
       </table>        

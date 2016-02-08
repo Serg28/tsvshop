@@ -14,6 +14,7 @@ $shop_lang['sales_edit'] = 'Редактировать';
 $shop_lang['sales_delete'] = 'Удалить';
 $shop_lang['sales_close'] = 'Закрыть';
 $shop_lang['sales_print'] = 'Печатать';
+$shop_lang['sales_printorder'] = 'Печать накладной';
 $shop_lang['sales_numorder'] = 'Номер заказа';
 $shop_lang['sales_phone'] = 'Контактный телефон';
 $shop_lang['sales_email'] = 'E-mail';
