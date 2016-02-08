@@ -243,12 +243,10 @@ color:#fff;
 
 .error,
 .notice1, 
-.success    { padding: 5px; margin-bottom: 1em; border: 1px solid #ddd; }
-
-.notice {background: url(/assets/snippets/tsvshop/images/success.png) no-repeat 5px center; padding-left: 27px}
+.success    { width:98%; padding: 5px; margin-bottom: 15px; border: 1px solid #ddd; }
 
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; background: url(/assets/snippets/tsvshop/images/cross.png) no-repeat 5px center; padding-left: 27px }
-.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; background: url(/assets/snippets/tsvshop/images/error.png) no-repeat 5px center; padding-left: 27px}
+.notice     { background: #FFF; color: #514721; border-color: #FFD324; margin-right:20px }
 .success    { color: #264409; border-color: #C6D880; background:  #E6EFC2 url(/assets/snippets/tsvshop/images/tick.png) no-repeat 5px center; padding-left: 27px }
 .error a    { color: #8a1f11; }
 .notice a   { color: #514721; }

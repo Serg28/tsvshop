@@ -101,9 +101,6 @@ $typeitem  = ($t=_filter($_REQUEST['typeitem'])) ? $t : 'physical';
 $url = $idnum;
 include_once (TSVSHOP_PATH.'lang/'.$tsvshop['lang'].'.inc.php');
 
-$modx->setPlaceholder('shop.youremail', $tsvshop['SmtpFromEmail']); //  адрес продавца
-//$modx->setPlaceholder('shop.youremail', $tsvshop['youremail']); //  адрес продавца
-
 // Служебные скрипты
 tsv_jsadd("lang/".$tsvshop['lang'].".js");
 tsv_jsadd("js/config.js");

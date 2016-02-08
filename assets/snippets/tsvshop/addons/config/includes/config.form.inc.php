@@ -4,7 +4,9 @@ $output.= '<div class="tab-page" id="ShopSalesMail">';
 $output.= '<h2 class="tab">'.$shop_lang['config_form_mail'].'</h2>';
 
 
-$output.='<table width=100%>';
+$output.='
+<div class="notice">'.$shop_lang['config_mail_title'].'</div><br />
+<table width=100%>';
 
 $output.= '<tr>
               <td nowrap class="warning"><b>'.$shop_lang['config_smtpfromname_title'].'</b></td>

@@ -456,7 +456,6 @@ if (!function_exists("tsv_display_cart")) {
     function tsv_display_cart($cache, $act = "basket")
     {
         global $modx, $session, $tsvshop, $shop_lang, $folders, $tables;
-        
         //$session = session($cache);
         $total     = 0;
         $items     = 0;
@@ -1035,6 +1034,16 @@ if (!function_exists("tsv_display_success")) {
         if ($tsvshop['debug']) {
             $output .= print_r($_SESSION['tsvshopfin']);
         }
+        $emails = array();
+        $from = explode(',',$tsvshop['SmtpFromEmail']);
+        if (is_array($from)) {
+            foreach($from as $f) {
+                   $emails[]='<a href="mailto:'.$f.'">'.$f.'</a>';  
+            }
+        }
+
+        $modx->setPlaceholder('shop.youremail', implode(', ',$emails)); //  адрес продавца
+        
         // тут ставим функцию оплаты
         if ($_SESSION['tsvshopfin']['result']['paytype'] == "none" || empty($_SESSION['tsvshopfin']['result']['paytype']) || empty($_SESSION['tsvshopfin']['result']['topay'])) {
             $output = str_replace("[+shop.paylink+]", "", $output);
@@ -1046,7 +1055,7 @@ if (!function_exists("tsv_display_success")) {
                         include(TSVSHOP_PATH . "addons/payments/payments/" . $payment['code'] . "/proc.inc.php");
                         $paylink = paylink($_SESSION['tsvshopfin']['result'], $tsvshop);
                         //$output = str_replace("[+shop.paylink+]", paylink($_SESSION['tsvshopfin']['result'], $tsvshop), $output);
-                        $output = str_replace("[+shop.paylink+]", $paylink, $tsvshop, $output);
+                        $output = str_replace("[+shop.paylink+]", $paylink, $output);
                     }
                 }
             } else {
@@ -1072,18 +1081,22 @@ if (!function_exists("tsv_sendMail")) {
         $modx->mail->Body = $body;
         $modx->mail->isHTML($isHTML);
         $modx->mail->CharSet  = $modx->config['modx_charset'];
-        $modx->mail->From     = $tsvshop['SmtpFromEmail'];
+        //$modx->mail->From     = $tsvshop['SmtpFromEmail'];
         $modx->mail->FromName = $tsvshop['SmtpFromName'];
         $modx->mail->Subject  = $subject;
         
+        $from = explode(',',$tsvshop['SmtpFromEmail']);
+        if (is_array($from)) {
+               $modx->mail->From = $from[0];
+        }
         
         //5.4 Можно добавлять несколько адресов почты, через запятую
         $emails = explode(",",$emails);
         
         if (is_array($emails)) {
-            foreach ($emails as $name => $email) {
-                $name = (is_string($name)) ? $name : '';
-                $modx->mail->AddAddress($email, $name);
+            foreach ($emails as $email) {
+                //$name = (is_string($name)) ? $name : '';
+                $modx->mail->AddAddress($email);
             }
         } elseif (is_string($emails)) {
             $modx->mail->AddAddress($emails);

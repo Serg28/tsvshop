@@ -417,8 +417,27 @@ if (!function_exists("send_mail")) {
         $modx->mail->CharSet = $modx->config['modx_charset'];
         $modx->mail->IsHTML(true);
         try {
-            $modx->mail->AddAddress($to); //кому письмо
-            $modx->mail->From = $tsvshop['SmtpFromEmail'];
+        
+            //5.4 Можно добавлять несколько адресов почты, через запятую
+            $to = explode(",",$to);
+            
+            if (is_array($to)) {
+                foreach ($to as $email) {
+                    //$name = (is_string($name)) ? $name : '';
+                    $modx->mail->AddAddress($email);
+                }
+            } elseif (is_string($to)) {
+                $modx->mail->AddAddress($to);
+            }
+        
+            $from = explode(',',$tsvshop['SmtpFromEmail']);
+            if (is_array($from)) {
+                   $modx->mail->From = $from[0];
+            }
+            
+            //$modx->mail->AddAddress($to); //кому письмо
+            //$modx->mail->From = $tsvshop['SmtpFromEmail'];
+            
             $modx->mail->FromName = $tsvshop['SmtpFromName'];
             $modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
             $modx->mail->Subject = htmlspecialchars($subject);

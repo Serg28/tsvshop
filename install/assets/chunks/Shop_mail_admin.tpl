@@ -37,7 +37,7 @@ E-mail: [+shop.mail.email+] <br />
 
 <table border="1" width="100%"><tr><th>Артикул</th><th>Название товара</th><th>Кол-во</th><th>Цена</th></tr>
 <!--table-->
-<tr><td>[+shop.mail.articul+]</td><td>[+shop.mail.name+]</td><td>[+shop.mail.quantity+]</td><td>[+shop.mail.price+] [+shop.mail.monetary+]</td></tr>
+<tr><td>[+shop.mail.articul+]</td><td><a href="[+shop.mail.link+]" />[+shop.mail.name+]</a></td><td>[+shop.mail.quantity+]</td><td>[+shop.mail.price+] [+shop.mail.monetary+]</td></tr>
 <!--/table-->
 <tr><td colspan="3">ПОДИТОГ:</td><td colspan="1">[+shop.mail.subtotal+] [+shop.mail.monetary+]</td></tr>
 <tr><td colspan="3">ОТГРУЗКА:</td><td colspan="1">[+shop.mail.shipping+] [+shop.mail.monetary+]</td></tr>
