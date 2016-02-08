@@ -366,7 +366,9 @@ if (!function_exists("tsv_display_infoblock")) {
             $tabletmp = str_replace('[+shop.info.price+]', $price, $tabletmp);
             $tabletmp = str_replace('[+shop.info.summa+]', $summa, $tabletmp);
             $tabletmp = str_replace('[+shop.info.name+]', $_SESSION[$session]['orders'][$i]['name'], $tabletmp);
-            $url      = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($_SESSION[$session]['orders'][$i]['url']) : "&tovar=" . $_SESSION[$session]['orders'][$i]['url'];
+            if (!empty($_SESSION[$session]['orders'][$i]['url'])) {
+              $url      = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($_SESSION[$session]['orders'][$i]['url']) : "&tovar=" . $_SESSION[$session]['orders'][$i]['url'];
+            }
             $tabletmp = str_replace('[+shop.info.num+]', $i, $tabletmp);
             $tabletmp = str_replace('[+shop.info.link+]', str_replace("assets/snippets/tsvshop/include/", "", $url), $tabletmp);
             $tabletmp = str_replace('[+shop.info.delatributs+]', 'onClick="RemoveFromCart(\'' . $i . '\'); return false"', $tabletmp);
@@ -537,6 +539,8 @@ if (!function_exists("tsv_display_cart")) {
                             break;
                         case 'icon':
                             $tabletmp = str_replace('[+shop.basket.iconpath+]', $val, $tabletmp);
+                            $tabletmp = str_replace('[+shop.basket.cart_icon+]', $val, $tabletmp);
+                            $tabletmp = str_replace('[+shop.basket.icon+]', $val, $tabletmp);
                             break;
                         case 'price':
                             $tabletmp = str_replace('[+shop.basket.price+]', $price, $tabletmp);
@@ -551,7 +555,7 @@ if (!function_exists("tsv_display_cart")) {
                             break;
                     }
                 }
-                $tabletmp = str_replace('[+shop.basket.qinput+]', '<input type="text" name="q" size="3" class="nopinput" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);">', $tabletmp);
+                $tabletmp = str_replace('[+shop.basket.qinput+]', '<input type="number" name="q" size="3" class="nopinput" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);">', $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.qatributs+]', 'name="q" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);"', $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.summa+]', $summa, $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.num+]', $i, $tabletmp);
@@ -650,6 +654,8 @@ if (!function_exists("tsv_display_cart")) {
                         'eformOnBeforeFormParse' => 'tsv_ParseUserForm',
                         'eFormOnBeforeMailSent' => 'tsv_Finish',
                         'allowhtml' => '1',
+                        'submitLimit'=>'0',
+						            'protectSubmit'=>'0',
                         'noemail' => '1',
                         'gotoid' => $tsvshop['backid']
                     )), $tpl);
@@ -895,9 +901,22 @@ if (!function_exists("tsv_Finish")) {
                             $tmp  = str_replace("[+shop.mail.price+]", $price, $tmp);
                             $tmp1 = str_replace("[+shop.mail.price+]", $price, $tmp1);
                             break;
+                        case 'icon':
+                            $tmp  = str_replace("[+shop.mail.icon+]", $val, $tmp);
+                            $tmp1 = str_replace("[+shop.mail.icon+]", $val, $tmp1);
+                            $tmp  = str_replace("[+shop.mail.cart_icon+]", $val, $tmp);
+                            $tmp1 = str_replace("[+shop.mail.cart_icon+]", $val, $tmp1);
+                            break;
                         case 'qty':
                             $tmp  = str_replace("[+shop.mail.quantity+]", $val, $tmp);
                             $tmp1 = str_replace("[+shop.mail.quantity+]", $val, $tmp1);
+                            break;
+                        case 'url':
+                            $url      = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($val) : "&tovar=" . $val;
+                            $tmp = str_replace('[+shop.mail.link+]', $url, $tmp);
+                            $tmp1 = str_replace('[+shop.mail.link+]', $url, $tmp1);
+                            $tmp = str_replace('[+shop.mail.url+]', $val, $tmp);
+                            $tmp1 = str_replace('[+shop.mail.url+]', $val, $tmp1);
                             break;
                         default:
                             $tmp  = str_replace("[+shop.mail." . $key . "+]", $val, $tmp);
@@ -958,13 +977,15 @@ if (!function_exists("tsv_Finish")) {
         $strMessageBody1 = preg_replace('/(\[\+.*?\+\])/', '', $strMessageBody1);
         
         //обрабатываем текст писем на сниппеты и чанки
-        $modx->minParserPasses = 2;
-        $strMessageBody        = $modx->evalSnippets($strMessageBody);
-        $strMessageBody1       = $modx->evalSnippets($strMessageBody1);
+        //$modx->minParserPasses = 2;
+        //$strMessageBody        = $modx->evalSnippets($strMessageBody);
+        //$strMessageBody1       = $modx->evalSnippets($strMessageBody1);
+        $strMessageBody        = $modx->parseDocumentSource($strMessageBody);
+        $strMessageBody1       = $modx->parseDocumentSource($strMessageBody1);
         
-        if (empty($tsvshop['SmtpFromEmail'])) {
-            $tsvshop['SmtpFromEmail'] = $tsvshop['youremail'];
-        }
+        //if (empty($tsvshop['SmtpFromEmail'])) {
+        //    $tsvshop['SmtpFromEmail'] = $tsvshop['youremail'];
+        //}
         tsv_sendMail($tsvshop['SmtpFromEmail'], $tsvshop['SubjectMailAdmin'], $strMessageBody, 'true');
         //и клиенту
         if (in_array('email', explode(",", $tsvshop['SecFields']))) {
@@ -998,7 +1019,9 @@ if (!function_exists("tsv_display_success")) {
                 while ($payment = $modx->db->getRow($res)) {
                     if ($_SESSION['tsvshopfin']['result']['paytype'] == $payment['code']) {
                         include(TSVSHOP_PATH . "addons/payments/payments/" . $payment['code'] . "/proc.inc.php");
-                        $output = str_replace("[+shop.paylink+]", paylink($_SESSION['tsvshopfin']['result'], $tsvshop), $output);
+                        $paylink = paylink($_SESSION['tsvshopfin']['result'], $tsvshop);
+                        //$output = str_replace("[+shop.paylink+]", paylink($_SESSION['tsvshopfin']['result'], $tsvshop), $output);
+                        $output = str_replace("[+shop.paylink+]", $paylink, $tsvshop), $output);
                     }
                 }
             } else {
@@ -1013,7 +1036,7 @@ if (!function_exists("tsv_display_success")) {
         return $output;
     }
 }
-
+/*
 if (!function_exists("tsv_sendMail")) {
     function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
     {
@@ -1049,6 +1072,36 @@ if (!function_exists("tsv_sendMail")) {
         }
         $mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
         return ($mail->Send() ? true : false);
+    }
+}
+*/
+
+if (!function_exists("tsv_sendMail")) {
+    function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
+    {
+        global $modx, $session, $tsvshop, $shop_lang, $mail;
+		    $modx->loadExtension('MODxMailer');
+        $modx->mail->ClearAllRecipients();
+        $modx->mail->ClearAttachments();
+        $modx->mail->Body = $body;
+        $modx->mail->isHTML($isHTML);
+        $modx->mail->CharSet  = $modx->config['modx_charset'];
+        $modx->mail->From     = $tsvshop['SmtpFromEmail'];
+        $modx->mail->FromName = $tsvshop['SmtpFromName'];
+        $modx->mail->Subject  = $subject;
+        
+        $emails = explode(",",$emails);
+        
+        if (is_array($emails)) {
+            foreach ($emails as $name => $email) {
+                $name = (is_string($name)) ? $name : '';
+                $modx->mail->AddAddress($email, $name);
+            }
+        } elseif (is_string($emails)) {
+            $modx->mail->AddAddress($emails);
+        }
+        $modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
+        return ($modx->mail->Send() ? true : false);
     }
 }
 
