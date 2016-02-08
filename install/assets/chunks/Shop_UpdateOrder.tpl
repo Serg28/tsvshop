@@ -1,7 +1,7 @@
 /**
  * Shop_UpdateOrder
  *
- * Шаблон корзины заказов в TSVshop
+ * Шаблон письма клиенту об изменении статуса его заказа в TSVshop
  *
  * @category	chunk
  * @version 	5.3
