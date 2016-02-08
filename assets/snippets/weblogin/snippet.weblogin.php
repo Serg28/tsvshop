@@ -51,7 +51,8 @@ if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
 $snipPath = $modx->config['base_path'] . "assets/snippets/";
 
 # check if inside manager
-if ($m = $modx->insideManager()) {
+//if ($m = $modx->insideManager()) {
+if ($m = IN_MANAGER_MODE) {
 	return ''; # don't go any further when inside manager
 }
 
