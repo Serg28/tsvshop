@@ -97,7 +97,7 @@
 </tr>
 <tr>
 <td>[+shop.order.articul+]</td>
-<td>Артикул товара</td>
+<td>Артикул товара (если не задан, берется ID документа)</td>
 </tr>
 
 <tr>
@@ -142,7 +142,7 @@
 </tr>
 
 <tr>
-<td>[+shop.order.payment+]</td>
+<td>[+shop.order.payments+]</td>
 <td>Метод оплаты</td>
 </tr>
 

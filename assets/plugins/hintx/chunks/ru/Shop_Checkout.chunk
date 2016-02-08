@@ -28,7 +28,7 @@ onChange="ChangeQuantity('[+shop.basket.num+]', 4);"  (этот вызов от�
 </tr>
 <tr>
 <td width="200">[+shop.basket.articul+]</td>
-<td>Артикул товара</td>
+<td>Артикул товара (если не задан, берется ID документа)</td>
 </tr>
 <tr>
 <td>[+shop.basket.name+]</td>
