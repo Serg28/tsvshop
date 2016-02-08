@@ -65,13 +65,15 @@ function parseaddons($addonspath, $filename, $shop_lang) {
 //uninstall addon
 function uninstall_addon($addon) {
     global $modx, $shop_lang, $tables;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="addonuninstall" && !empty($addon) && $tables[$addon]!="system") {
 		if ($tables[$addon]!="none") {
       if ($modx->db->query( "DROP TABLE ".$tables[$addon]) && $modx->db->query( "DELETE FROM ".$modx->getFullTableName('shop_conf')." WHERE `module` = 'addons' AND `name` = '".$addon."_active' LIMIT 1")) {
@@ -98,14 +100,16 @@ function uninstall_addon($addon) {
 //install addon
 function install_addon($addon) {
     global $modx, $shop_lang, $addonspath, $tables;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
     $fsql=$addonspath.$addon.'/sql/install.sql.inc.php';
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="addoninstall" && !empty($addon)) {
 	if (file_exists($fsql)) {
         		include_once ($addonspath.$addon.'/sql/install.sql.inc.php');
@@ -135,13 +139,15 @@ function install_addon($addon) {
 //on addon
 function on_addon($addon) {
     global $modx, $shop_lang;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="addonon" && !empty($addon) && $tables[$addon]!="system") {
         	setConf("addons", $addon."_active", "yes", 1);
             $output=notice($shop_lang['addons_on_ok'], 'success');
@@ -153,13 +159,15 @@ function on_addon($addon) {
 //off addon
 function off_addon($addon) {
     global $modx, $shop_lang;
-    $user=$modx->userLoggedIn();
+    //$user=$modx->userLoggedIn();
+    $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
 
-    if ($user['usertype']=="manager") {
+    //if ($user['usertype']=="manager") {
+    if ($user=="manager") {
     	if (!empty($act) && $act=="addonoff" && !empty($addon) && $tables[$addon]!="system") {
             setConf("addons", $addon."_active", "no", 1);
             $output=notice($shop_lang['addons_off_ok'], 'success');
