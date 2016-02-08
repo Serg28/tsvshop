@@ -15,7 +15,7 @@
  */
 
 
-//define('IN_TSVSHOP_MODE','true');
+define('IN_TSVSHOP_MODE','true');
 //-- get theme
 global $theme, $shop_lang, $tables, $addonspath, $basePath, $siteURL, $moduleid, $modulea, $tsvshop, $cache;
 define("TSVSHOP_PATH", MODX_BASE_PATH."assets/snippets/tsvshop/");
@@ -47,6 +47,13 @@ if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
 if (!$cache) {
     include_once $basePath . 'assets/snippets/tsvshop/include/cache.class.php';
     $cache = fileCache::GetInstance(3600,MODX_BASE_PATH.'assets/cache/');
+}
+
+//запуск печати накладной
+if(!empty($_GET['i']) && !empty($_GET['act']) && $_GET['act']=='printorder') {
+	$tsvshop = $cache->cache('tsvshop','tsvshop');
+    require_once(TSVSHOP_PATH.'addons/sales/includes/printorder.php');
+	exit;
 }
 
 
