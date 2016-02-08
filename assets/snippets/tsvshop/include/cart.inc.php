@@ -1046,7 +1046,7 @@ if (!function_exists("tsv_display_success")) {
                         include(TSVSHOP_PATH . "addons/payments/payments/" . $payment['code'] . "/proc.inc.php");
                         $paylink = paylink($_SESSION['tsvshopfin']['result'], $tsvshop);
                         //$output = str_replace("[+shop.paylink+]", paylink($_SESSION['tsvshopfin']['result'], $tsvshop), $output);
-                        $output = str_replace("[+shop.paylink+]", $paylink, $tsvshop), $output);
+                        $output = str_replace("[+shop.paylink+]", $paylink, $tsvshop, $output);
                     }
                 }
             } else {
