@@ -372,6 +372,15 @@ if (!function_exists("tsv_display_infoblock")) {
             $tabletmp = str_replace('[+shop.info.num+]', $i, $tabletmp);
             $tabletmp = str_replace('[+shop.info.link+]', str_replace("assets/snippets/tsvshop/include/", "", $url), $tabletmp);
             $tabletmp = str_replace('[+shop.info.delatributs+]', 'onClick="RemoveFromCart(\'' . $i . '\'); return false"', $tabletmp);
+            
+            //5.4 добавляем TV-параметры, заданные в &tvs. Выводятся вместо [+tv.имятв+]
+            if (is_array($tsvshop['tvs'])) {
+              $tvs = $modx->getTemplateVars($tsvshop['tvs'], '*', $_SESSION[$session]['orders'][$i]['url']);
+              foreach ($tvs as $tv) {
+                 $tabletmp = str_replace('[+tv.' . $tv['name'] . '+]', $tv['value'], $tabletmp);
+              }
+            }
+            
             $tmp .= $tabletmp;
         }
         
@@ -554,6 +563,14 @@ if (!function_exists("tsv_display_cart")) {
                             $tabletmp = str_replace('[+shop.basket.' . $key . '+]', $val, $tabletmp);
                             break;
                     }
+                    //5.4 добавляем TV-параметры, заданные в &tvs. Выводятся вместо [+tv.имятв+]
+                    if (is_array($tsvshop['tvs'])) {
+                      $tvs = $modx->getTemplateVars($tsvshop['tvs'], '*', $_SESSION[$session]['orders'][$i]['url']);
+                      foreach ($tvs as $tv) {
+                         $tabletmp = str_replace('[+tv.' . $tv['name'] . '+]', $tv['value'], $tabletmp);
+                      }
+                    }
+                    
                 }
                 $tabletmp = str_replace('[+shop.basket.qinput+]', '<input type="number" name="q" size="3" class="nopinput" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);">', $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.qatributs+]', 'name="q" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);"', $tabletmp);
@@ -924,6 +941,14 @@ if (!function_exists("tsv_Finish")) {
                             $tmp  = str_replace("[+shop.mail.num+]", $i, $tmp);
                             $tmp1 = str_replace("[+shop.mail.num+]", $i, $tmp1);
                             break;
+                    }
+                    //5.4 добавляем TV-параметры, заданные в &tvs. Выводятся вместо [+tv.имятв+]
+                    if (is_array($tsvshop['tvs'])) {
+                      $tvs = $modx->getTemplateVars($tsvshop['tvs'], '*', $_SESSION[$session]['orders'][$i]['url']);
+                      foreach ($tvs as $tv) {
+                         $tmp = str_replace('[+tv.' . $tv['name'] . '+]', $tv['value'], $tmp);
+                         $tmp1 = str_replace('[+tv.' . $tv['name'] . '+]', $tv['value'], $tmp1);
+                      }
                     }
                 }
                 $tmp  = str_replace("[+shop.mail.summa+]", (tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty']), $tmp);

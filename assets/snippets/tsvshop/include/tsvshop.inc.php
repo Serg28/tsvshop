@@ -42,6 +42,8 @@ $tsvshop['tplmailklient'] = !empty($tplmailklient) ? $tplmailklient : "Shop_mail
 $tsvshop['tplsuccess'] = !empty($tplsuccess) ? $tplsuccess : "Shop_FinishText";
 $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateorder : "Shop_UpdateOrder";
 $tsvshop['namesource'] = !empty($namesource) ? $namesource : 'pagetitle';
+$tsvshop['tvs'] = !empty($tvs) ? explode(",",$tvs) : '';  //список TV-параметров, которые нужно вывести для товара
+//$tsvshop['tvToDB'] = ($tvToDB=='false' || empty($tvToDB)) ? false : true; // добавлять ли эти TV в базу данных при сохранении заказа
 if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
    include_once (TSVSHOP_PATH.'include/version.inc.php');
 }
@@ -52,6 +54,8 @@ $table = $modx->getFullTableName( 'shop_order_detail');
   if ($modx->db->getRecordCount($modx->db->query("show columns FROM ".$table." where `Field` = 'typeitem'"))==0) {
     $res1=$modx->db->query("ALTER TABLE  ".$table." ADD  `typeitem` varchar(10) NOT NULL DEFAULT 'physical'");
   }
+  
+
   
 // DB
 $tsvshop['customfields'] = !empty($customfields) ? explode(",",$customfields) : array(); // кастомные поля для таблицы заказов
