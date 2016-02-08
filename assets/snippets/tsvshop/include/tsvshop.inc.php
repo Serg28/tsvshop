@@ -14,6 +14,9 @@ $tsvshop['backid'] = $backid;
 $tsvshop['maxpr'] = 100; // сколько наименований товаров можно положить в корзину
 $tsvshop['charset'] = $modx->config['modx_charset']; //кодировка письма
 $tsvshop['youremail'] = !empty($youremail) ? $youremail : $modx->config['emailsender'];
+
+$tsvshop['SmtpFromEmail'] = (empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['youremail'] : $tsvshop['SmtpFromEmail'];
+
 $tsvshop['debug'] = !empty($debug) ? $debug : false;
 $tsvshop['lang'] = !empty($lang) ? $lang : $modx->config['manager_language']; // язык системы
 $tsvshop['act'] = !empty($act) ? $act : "basket"; // определяем действие, иначе "Корзина"
@@ -31,6 +34,7 @@ $tsvshop['hideon'] = !empty($hideon) ? explode(",",$hideon) : array();
 $tsvshop['tplcart'] = !empty($tplcart) ? $tplcart : "Shop_Cart";
 $tsvshop['tplcartempty'] = !empty($tplcartempty) ? $tplcartempty : "Shop_Cart_Empty";
 $tsvshop['tplcheckout'] = !empty($tplcheckout) ? $tplcheckout : "Shop_Checkout";
+$tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "Shop_PrintOrder";
 $tsvshop['tplinfoblock'] = !empty($tplinfoblock) ? $tplinfoblock : "Shop_Infoblock";
 $tsvshop['tpluserform'] = !empty($tpluserform) ? $tpluserform : "Shop_UserForm";
 $tsvshop['tplmailadmin'] = !empty($tplmailadmin) ? $tplmailadmin : "Shop_mail_admin";
@@ -49,10 +53,6 @@ $table = $modx->getFullTableName( 'shop_order_detail');
     $res1=$modx->db->query("ALTER TABLE  ".$table." ADD  `typeitem` varchar(10) NOT NULL DEFAULT 'physical'");
   }
   
-  
-
-  
-
 // DB
 $tsvshop['customfields'] = !empty($customfields) ? explode(",",$customfields) : array(); // кастомные поля для таблицы заказов
 
@@ -97,7 +97,8 @@ $typeitem  = ($t=_filter($_REQUEST['typeitem'])) ? $t : 'physical';
 $url = $idnum;
 include_once (TSVSHOP_PATH.'lang/'.$tsvshop['lang'].'.inc.php');
 
-$modx->setPlaceholder('shop.youremail', $tsvshop['youremail']); //  адрес продавца
+$modx->setPlaceholder('shop.youremail', $tsvshop['SmtpFromEmail']); //  адрес продавца
+//$modx->setPlaceholder('shop.youremail', $tsvshop['youremail']); //  адрес продавца
 
 // Служебные скрипты
 tsv_jsadd("lang/".$tsvshop['lang'].".js");
@@ -107,7 +108,7 @@ $modx->regClientCSS(TSVSHOP_SURL."shop.css");
 
 if ($act == "itemcard") {
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
-    $modx->setPlaceholder('tsvservices','<input type="hidden" name="formula" value="[*price*]" /><input type="hidden" name="cart_icon" value="[*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
+    $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="[*typeitem*]" /><input type="hidden" name="formula" value="[*price*]" /><input type="hidden" name="cart_icon" value="[*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
     $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'">[*price*]</span>');
     $modx->setPlaceholder('tsvbattr','onkeypress="return testKey(event)" onChange="Ucalc(\''.$modx->documentIdentifier.'\')"');
     $evt = $modx->invokeEvent("TSVshopOnViewItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat']));
@@ -128,6 +129,10 @@ if ($act == "checkout") {
 
 if ($act == "finish") {
     print tsv_display_success($cache);
+}
+
+if ($act == "printorder") {
+    require_once(TSVSHOP_PATH.'addons/sales/includes/printorder.php');
 }
 
 if ($a == "clear" ) {
