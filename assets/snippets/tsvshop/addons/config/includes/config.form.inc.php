@@ -1,85 +1,10 @@
 <?php
 
-
-
-
 $output.= '<div class="tab-page" id="ShopSalesMail">';
 $output.= '<h2 class="tab">'.$shop_lang['config_form_mail'].'</h2>';
 
 
 $output.='<table width=100%>';
-
-            $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_mailtype_title'].'</b></td>
-              <td ><select id="MailMode" name="MailMode" size="1" class="inputBox">';
-$output.= buildoptions($tsvshop['MailMode'], $MailModeArray);
-$output.= '</select> </td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_mailtype_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
-
-$output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtphost_title'].'</b></td>
-              <td ><input type="text" id="SmtpHost" name="SmtpHost" class="inputBox" value="'.$tsvshop['SmtpHost'].'"></td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_smtphost_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
-$output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpport_title'].'</b></td>
-              <td ><input type="text" id="SmtpPort" name="SmtpPort" class="inputBox" value="' . $tsvshop['SmtpPort'] . '"></td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_smtpport_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
-$output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpuser_title'].'</b></td>
-              <td ><input type="text" id="SmtpUser" name="SmtpUser" class="inputBox" value="' . $tsvshop['SmtpUser'] . '"></td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_smtpuser_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
-$output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtppass_title'].'</b></td>
-              <td ><input type="text" id="SmtpPass" name="SmtpPass" class="inputBox" value="' . $tsvshop['SmtpPass'] . '"></td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_smtppass_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
-$output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpauth_title'].'</b></td>
-              <td ><select name="SmtpAuth" id="SmtpAuth" size="1" class="inputBox">';
-$output.= buildoptions($tsvshop['SmtpAuth'], $SmtpAuthArray);
-$output.= '</select></td>
-            </tr>
-            <tr>
-              <td width="200">&nbsp;</td>
-              <td class="comment">'.$shop_lang['config_smtpauth_intro'].'</td>
-            </tr>
-            <tr>
-              <td colspan="2"><div class="split"></div></td>
-            </tr>';
 
 $output.= '<tr>
               <td nowrap class="warning"><b>'.$shop_lang['config_smtpfromname_title'].'</b></td>
