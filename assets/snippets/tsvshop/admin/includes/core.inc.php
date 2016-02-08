@@ -1,420 +1,510 @@
 <?php
-//--------------------------------------------------------------
-//-----------------------autoconfig-----------------------------
-//--------------------------------------------------------------
 
-//require_once('config.inc.php');
-
+// --------------------------------------------------------------
+// -----------------------autoconfig-----------------------------
+// --------------------------------------------------------------
+// require_once('config.inc.php');
 // --------------------------------------------------- getConf()
-if(!function_exists("getConf"))
-{
-function getConf ($module, $name = '') {
-    global $modx;
 
-    $query = "SELECT name, value FROM ".$modx->getFullTableName('shop_conf')." WHERE module='".$module."'";
-    if ($name != '') $query .= " AND name='".$name."'";
-
-    if (!$result=$modx->db->query($query)) exit('Query failed: '.mysql_error());
-
-    if ($name != '')
-    	if ($modx->db->getRecordCount($result) == 1) {
-            $row = $modx->db->getRow( $result,'num');
+if (!function_exists("getConf")) {
+    function getConf($module, $name = '')
+    {
+        global $modx;
+        $query = "SELECT name, value FROM " . $modx->getFullTableName('shop_conf') . " WHERE module='" . $module . "'";
+        if ($name != '') $query.= " AND name='" . $name . "'";
+        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
+        if ($name != '')
+        if ($modx->db->getRecordCount($result) == 1) {
+            $row = $modx->db->getRow($result, 'num');
             return $row[1];
         }
         else return FALSE;
 
-    // else, return an associative array for the module
-    $ret = FALSE;
-    while ($row = $modx->db->getRow( $result,'num'));
+        // else, return an associative array for the module
+
+        $ret = FALSE;
+        while ($row = $modx->db->getRow($result, 'num'));
         $ret[$row[0]] = $row[1];
+        return $ret;
+    }
+}
 
-    return $ret;
-}
-}
 // ------------------------------------------------------------ setConf()
-if(!function_exists("setConf"))
-{
-function setConf ($module, $name, $value, $exported = 0) {
-    global $modx;
-    if (is_array($value)) {print_r($value);$value=implode(",",$value);}
-    
-    $query = "REPLACE INTO ".$modx->getFullTableName('shop_conf')." VALUES".
-             "('".$module."', '".$name."', '".$modx->db->escape($value).
-             "', '".$exported."')";
-    if (!$result=$modx->db->query($query)) exit('Query failed: '.mysql_error());
 
-    if ($exported == 1)
-        regenConf();
+if (!function_exists("setConf")) {
+    function setConf($module, $name, $value, $exported = 0)
+    {
+        global $modx;
+        if (is_array($value)) {
+            print_r($value);
+            $value = implode(",", $value);
+        }
+
+        $query = "REPLACE INTO " . $modx->getFullTableName('shop_conf') . " VALUES" . "('" . $module . "', '" . $name . "', '" . $modx->db->escape($value) . "', '" . $exported . "')";
+        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
+        if ($exported == 1) regenConf();
+    }
 }
-}
+
 // ---------------------------------------------------------- clearConf()
-if(!function_exists("clearConf"))
-{
-function clearConf($module, $name) {
-    global $modx;
 
-    // Check existence and value of exported
-    $query = "SELECT exported FROM ".$modx->getFullTableName('shop_conf')." WHERE module='".$module."' AND ".
-             "name='".$name."'";
-    if (!$result=$modx->db->query($query)) exit('Query failed: '.mysql_error());
-    if ($modx->db->getRecordCount($result) != 1) return FALSE;
+if (!function_exists("clearConf")) {
+    function clearConf($module, $name)
+    {
+        global $modx;
 
-    $row = $modx->db->getRow( $result,'num');
+        // Check existence and value of exported
 
-    $query = "DELETE FROM ".$modx->getFullTableName('shop_conf')." WHERE module='".$module."' AND name='".$name."'";
-    if (!$result=$modx->db->query($query)) exit('Query failed: '.mysql_error());
-
-    if ($row[0] == 1)
-        regenConf();
+        $query = "SELECT exported FROM " . $modx->getFullTableName('shop_conf') . " WHERE module='" . $module . "' AND " . "name='" . $name . "'";
+        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
+        if ($modx->db->getRecordCount($result) != 1) return FALSE;
+        $row = $modx->db->getRow($result, 'num');
+        $query = "DELETE FROM " . $modx->getFullTableName('shop_conf') . " WHERE module='" . $module . "' AND name='" . $name . "'";
+        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
+        if ($row[0] == 1) regenConf();
+    }
 }
-}
+
 // ---------------------------------------------------------- regenConf()
-if(!function_exists("regenConf"))
-{
-function regenConf() {
-    global $modx;
 
-    $query = "SELECT * FROM ".$modx->getFullTableName('shop_conf')." WHERE exported=1 ORDER BY module, name";
-    if (!$result=$modx->db->query($query)) exit('Query failed: '.mysql_error());
+if (!function_exists("regenConf")) {
+    function regenConf()
+    {
+        global $modx;
+        $query = "SELECT * FROM " . $modx->getFullTableName('shop_conf') . " WHERE exported=1 ORDER BY module, name";
+        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
+        $f = fopen($modx->config['base_path'] . 'assets/snippets/tsvshop/include/config.inc.php', 'w') or die('Can not open config.inc.php for writing!');
+        $js = fopen($modx->config['base_path'] . 'assets/snippets/tsvshop/js/config.js', 'w') or die('Can not open config.inc.php for writing!');
+        fwrite($f, "<?php // This file is automatically generated. Do not edit.\n\n");
+        fwrite($js, "// This file is automatically generated. Do not edit.\n\n");
+        while ($row = $modx->db->getRow($result, 'num')) {
 
-    $f = fopen($modx->config['base_path'].'assets/snippets/tsvshop/include/config.inc.php', 'w')
-        or die('Can not open config.inc.php for writing!');
+            // while ($row = mysql_fetch_row($result)) {
+            // $mod = strtoupper($row[0]);
+            // $nam = strtoupper($row[1]);
 
-    $js = fopen($modx->config['base_path'].'assets/snippets/tsvshop/js/config.js', 'w')
-        or die('Can not open config.inc.php for writing!');
+            $mod = $row[0];
+            $nam = $row[1];
+            $val = $row[2];
 
-    fwrite($f, "<?php // This file is automatically generated. Do not edit.\n\n");
-    fwrite($js, "// This file is automatically generated. Do not edit.\n\n");
+            // write numerics directly
 
-    while ($row = $modx->db->getRow( $result,'num')) {
-    //while ($row = mysql_fetch_row($result)) {
-        //$mod = strtoupper($row[0]);
-        //$nam = strtoupper($row[1]);
-        $mod = $row[0];
-        $nam = $row[1];
-        $val = $row[2];
+            if (is_numeric($val))
 
-        // write numerics directly
-        if (is_numeric($val))
-            //fwrite($f, "define('$mod"."_$nam', $val);\n");
+            // fwrite($f, "define('$mod"."_$nam', $val);\n");
+
             if (!empty($mod)) {
-            	//fwrite($f, "define('$mod"."_$nam', $val);\n");
+
+                // fwrite($f, "define('$mod"."_$nam', $val);\n");
+
                 if (!empty($val)) {
-                	fwrite($f, "\$tsvshop['".$mod."_".$nam."']=".$val.";\n");
-                } else {
-                    fwrite($f, "\$tsvshop['".$mod."_".$nam."']='';\n");
+                    fwrite($f, "\$tsvshop['" . $mod . "_" . $nam . "']=" . $val . ";\n");
                 }
-                //if ($val=="0,00") {$val="'0,00'";}
-                //fwrite($js, $mod."_".$nam."=".$val.";\n");
-            } else {
-            	if (!empty($val)) {
-            		fwrite($f, "\$tsvshop['".$nam."']=".$val.";\n");
-                	if ($val=="0,00") {$val="'0,00'";}
-            		fwrite($js, $nam."=".$val.";\n");
-                } else {
-                    fwrite($f, "\$tsvshop['".$nam."']='';\n");
-                	if ($val=="0,00") {$val="'0,00'";}
-            		fwrite($js, $nam."='';\n");
+                else {
+                    fwrite($f, "\$tsvshop['" . $mod . "_" . $nam . "']='';\n");
+                }
+
+                // if ($val=="0,00") {$val="'0,00'";}
+                // fwrite($js, $mod."_".$nam."=".$val.";\n");
+
+            }
+            else {
+                if (!empty($val)) {
+                    fwrite($f, "\$tsvshop['" . $nam . "']=" . $val . ";\n");
+                    if ($val == "0,00") {
+                        $val = "'0,00'";
+                    }
+
+                    fwrite($js, $nam . "=" . $val . ";\n");
+                }
+                else {
+                    fwrite($f, "\$tsvshop['" . $nam . "']='';\n");
+                    if ($val == "0,00") {
+                        $val = "'0,00'";
+                    }
+
+                    fwrite($js, $nam . "='';\n");
                 }
             }
+            else {
+
+                // escape the single quotes
+
+                $val = str_replace('\'', '\\\'', $val);
+
+                // end-of-php will break the conf.php; replace it:
+
+                $val = str_replace('?' . '>', "?'.'>", $val);
+
+                // fwrite($f,"define('$mod"."_$nam', '$val');\n");
+
+                if (!empty($mod)) {
+
+                    // fwrite($f, "define('$mod"."_$nam', $val);\n");
+
+                    if (!empty($val)) {
+                        fwrite($f, "\$tsvshop['" . $mod . "_" . $nam . "']='" . $val . "';\n");
+                    }
+                    else {
+                        fwrite($f, "\$tsvshop['" . $mod . "_" . $nam . "']='';\n");
+                    }
+
+                    // if ($val=="0,00") {$val="'0,00'";}
+                    // fwrite($js, $mod."_".$nam."=".$val.";\n");
+
+                }
+                else {
+                    if (!empty($val)) {
+                        fwrite($f, "\$tsvshop['" . $nam . "']='" . $val . "';\n");
+                        if ($val == "0,00") {
+                            $val = "0,00";
+                        }
+
+                        fwrite($js, $nam . "='" . $val . "';\n");
+                    }
+                    else {
+                        fwrite($f, "\$tsvshop['" . $nam . "']='';\n");
+                        if ($val == "0,00") {
+                            $val = "'0,00'";
+                        }
+
+                        fwrite($js, $nam . "='';\n");
+                    }
+                }
+            }
+        }
+
+        fwrite($f, '?' . '>');
+        fclose($f);
+        fclose($js);
+        /* Clear Cache of MODx*/
+        include_once $modx->config['base_path'] . MGR_DIR . "/processors/cache_sync.class.processor.php";
+
+        $sync = new synccache();
+        $sync->setCachepath($modx->config['base_path'] . "assets/cache/");
+        $sync->setReport(false);
+        $sync->emptyCache(); // first empty the cache
+
+        // invoke OnSiteRefresh event
+
+        $modx->invokeEvent("OnSiteRefresh");
+    }
+}
+
+// -----------------------------------------------------------
+// ----------------------other--------------------------------
+// -----------------------------------------------------------
+
+if (!function_exists("shop_striptags")) {
+    function shop_striptags($var, $striptags = true)
+    {
+        if ($striptags) {
+            $var = strip_tags($var);
+
+            // $var=strtr($var,"<>%&^[{", "#######");
+
+        }
+
+        if (ini_get('magic_quotes_gpc') == 0) {
+            $var = addslashes($var);
+        }
+
+        return $var;
+    }
+}
+
+if (!function_exists("_filter")) {
+    function _filter($var, $sql = 0)
+    {
+        global $modx;
+        $tmp = array();
+        if (!is_array($var)) {
+            $var = shop_striptags($var);
+            $var = str_replace("\n", " ", $var);
+            $var = str_replace("\r", "", $var);
+
+            // $var = htmlentities($var);
+
+            if ($sql == 1) {
+                $var = $modx->db->escape($var);
+            }
+        }
         else {
-            // escape the single quotes
-            $val = str_replace('\'','\\\'',$val);
-            // end-of-php will break the conf.php; replace it:
-            $val = str_replace('?'.'>', "?'.'>", $val);
+            foreach($var as $k => $v) {
+                $tmp[$k] = _filter($v, $sql);
+            }
 
-            //fwrite($f,"define('$mod"."_$nam', '$val');\n");
+            $var = $tmp;
+            unset($tmp);
+        }
 
-            if (!empty($mod)) {
-            	//fwrite($f, "define('$mod"."_$nam', $val);\n");
-                if (!empty($val)) {
-                	fwrite($f, "\$tsvshop['".$mod."_".$nam."']='".$val."';\n");
-                } else {
-                	fwrite($f, "\$tsvshop['".$mod."_".$nam."']='';\n");
-                }
-                //if ($val=="0,00") {$val="'0,00'";}
-                //fwrite($js, $mod."_".$nam."=".$val.";\n");
-            } else {
-            	if (!empty($val)) {
-            		fwrite($f, "\$tsvshop['".$nam."']='".$val."';\n");
-                	if ($val=="0,00") {$val="0,00";}
-            		fwrite($js, $nam."='".$val."';\n");
-                } else {
-            		fwrite($f, "\$tsvshop['".$nam."']='';\n");
-                	if ($val=="0,00") {$val="'0,00'";}
-            		fwrite($js, $nam."='';\n");
-                }
+        return $var;
+    }
+}
+
+if (!function_exists("CryptMessage")) {
+    function CryptMessage($message, $password)
+    {
+        require_once TSVSHOP_PATH . "include/crypt.inc.php";
+
+        $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
+        /*$iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+        srand();
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+
+        // $crypt_text = mcrypt_encrypt(MCRYPT_BLOWFISH, $password, $message, MCRYPT_MODE_ECB, $iv);
+        // return base64_encode($iv.$crypt_text);   */
+
+        return base64_encode(xxtea_encrypt($message, $password));
+
+        // return $message;
+
+    }
+}
+
+if (!function_exists("DeCryptMessage")) {
+    function DeCryptMessage($message, $password)
+    {
+        require_once TSVSHOP_PATH . "include/crypt.inc.php";
+
+        $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
+        $message = base64_decode($message);
+        /*$iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+        $iv = substr($message, 0, $iv_size);
+        $crypt_text = substr($message, $iv_size);
+        return base64_decode(mcrypt_decrypt(MCRYPT_BLOWFISH, $password, $crypt_text, MCRYPT_MODE_ECB, $iv));  */
+        return xxtea_decrypt($message, $password);
+
+        // return $message;
+
+    }
+}
+
+if (!function_exists("buildoptions")) {
+    function buildoptions($var, $vararray)
+    {
+        $output = "";
+        for ($i = 0; $i < count($vararray); $i++) {
+            if ($vararray[$i]["tip"] == $var) {
+                $output.= "<option value=\"" . $vararray[$i]["tip"] . "\" selected=\"selected\">" . $vararray[$i]["name"] . "</option>";
+            }
+            else {
+                $output.= "<option value=\"" . $vararray[$i]["tip"] . "\">" . $vararray[$i]["name"] . "</option>";
             }
         }
 
+        return $output;
     }
-
-    fwrite($f, '?'.'>');
-    fclose($f);
-    fclose($js);
-    /* Clear Cache of MODx*/
-    include_once $modx->config['base_path'].MGR_DIR."/processors/cache_sync.class.processor.php";
-    $sync = new synccache();
-    $sync->setCachepath($modx->config['base_path']."assets/cache/");
-    $sync->setReport(false);
-    $sync->emptyCache(); // first empty the cache	
-    // invoke OnSiteRefresh event
-    $modx->invokeEvent("OnSiteRefresh");
-}
 }
 
-//-----------------------------------------------------------
-//----------------------other--------------------------------
-//-----------------------------------------------------------
-if(!function_exists("shop_striptags"))
-{
-function shop_striptags($var, $striptags=true)
-      {
-         if( $striptags ) {
-         $var = strip_tags($var);
-         //$var=strtr($var,"<>%&^[{", "#######");
-         }
-         if( ini_get('magic_quotes_gpc') == 0 ){
-              $var = addslashes($var);
-         }
-         return $var;
-      }
-}
-
-if(!function_exists("_filter"))
-{
-function _filter( $var , $sql = 0) {
-  global $modx;
-  $tmp = array();
-  if (!is_array($var)) {  
-	 $var = shop_striptags($var);
-	 $var=str_replace ("\n"," ", $var);
-   $var=str_replace ("\r","", $var);
-	 //$var = htmlentities($var);
-	 if ( $sql == 1) {
-		$var = $modx->db->escape($var);
-	 }
-  } else {
-    foreach ($var as $k=>$v) {
-       $tmp[$k]= _filter( $v , $sql);
-    }
-    $var = $tmp;
-    unset($tmp);
-  }
-	return $var;
-}
-}
-
-if(!function_exists("CryptMessage"))
-{
-function CryptMessage($message, $password)
-  {
-  require_once TSVSHOP_PATH."include/crypt.inc.php";
-  $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
-  /*$iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-  srand();
-  $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-  //$crypt_text = mcrypt_encrypt(MCRYPT_BLOWFISH, $password, $message, MCRYPT_MODE_ECB, $iv);
-  //return base64_encode($iv.$crypt_text);   */
-  return base64_encode(xxtea_encrypt($message, $password));
-  //return $message;
-  }
-}
-
-
-if(!function_exists("DeCryptMessage"))
-{
-function DeCryptMessage($message, $password)
-  {
-  require_once TSVSHOP_PATH."include/crypt.inc.php";
-  $password = (!empty($password)) ? $password : "VhgtYhT65%6ytr";
-  $message = base64_decode($message);
-  /*$iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-  $iv = substr($message, 0, $iv_size);
-  $crypt_text = substr($message, $iv_size);
-  return base64_decode(mcrypt_decrypt(MCRYPT_BLOWFISH, $password, $crypt_text, MCRYPT_MODE_ECB, $iv));  */
-  return xxtea_decrypt($message, $password);
-  //return $message;
-  }
-}
-
-if(!function_exists("buildoptions"))
-{
-function buildoptions($var, $vararray)
-	 {
-	 $output="";
-     for ($i=0; $i<count($vararray); $i++) {
-     	if ($vararray[$i]["tip"] == $var) {
-     		$output.= "<option value=\"".$vararray[$i]["tip"]."\" selected=\"selected\">".$vararray[$i]["name"]."</option>";
-     		} else {$output.= "<option value=\"".$vararray[$i]["tip"]."\">".$vararray[$i]["name"]."</option>";}
-     }
-     return $output;
-}
-}
-
-if(!function_exists("buildmultioptions"))
-{
-function buildmultioptions($var, $vararray)
-	 {
-   global $shop_lang;
-   $active=explode(',',$var);
-   $vararray=explode(',',$vararray);
-	 $output="";
-   foreach($vararray as $val) {
-      if (in_array($val,$active)) {
-        $output.= "<option value=\"".$val."\" selected=\"selected\">".$shop_lang["sales_".$val]."</option>";
-      } else {
-        $output.= "<option value=\"".$val."\" >".$shop_lang["sales_".$val]."</option>";
-      }
-   }
-   return $output;
-   }
-}
-
-if(!function_exists("buildstatus"))
-{
-function buildstatus($var, $vararray)
-     {
-     $output="";
-     for ($i=0; $i<count($vararray); $i++) {
-       $status=explode("==",$vararray[$i]);
-       if ($status[0] == $var) {
-         $output.= "<option value=\"".$status[0]."\" selected=\"selected\">".$status[0]."</option>";
-       } else {$output.= "<option value=\"".$status[0]."\">".$status[0]."</option>";}
-     }
-     return $output;
-}
-}
-
-if(!function_exists("get_file_contents"))
-{
-function get_file_contents($filename) {
-		if (!function_exists('file_get_contents')) {
-			$fhandle = fopen($filename, "r");
-			$fcontents = fread($fhandle, filesize($filename));
-			fclose($fhandle);
-		} else	{
-			$fcontents = file_get_contents($filename);
-		}
-		return $fcontents;
-}
-}
-
-if(!function_exists("getTpl"))
-{
-    function getTpl($tpl){
-	global $modx;
-        $template = "";
-        if(substr($tpl, 0, 6) == "@FILE:"){
-          $tpl_file = $modx->config['base_path'].substr($tpl, 6);
-                $template = get_file_contents($tpl_file);
-        }else if(substr($tpl, 0, 6) == "@CODE:"){
-                $template = substr($tpl, 6);
-        }else if($modx->getChunk($tpl)!= ""){
-                $template = $modx->getChunk($tpl);
-        }else if($res=$modx->db->query("SELECT * FROM ".$modx->getFullTableName('site_htmlsnippets')." WHERE `name` ='".$modx->db->escape($tpl)."' LIMIT 1 ")){
-                $row = $modx->db->getRow($res);
-		            $template = $row['snippet'];
-        }else{
-                $template = false;
+if (!function_exists("buildmultioptions")) {
+    function buildmultioptions($var, $vararray)
+    {
+        global $shop_lang;
+        $active = explode(',', $var);
+        $vararray = explode(',', $vararray);
+        $output = "";
+        foreach($vararray as $val) {
+            if (in_array($val, $active)) {
+                $output.= "<option value=\"" . $val . "\" selected=\"selected\">" . $shop_lang["sales_" . $val] . "</option>";
+            }
+            else {
+                $output.= "<option value=\"" . $val . "\" >" . $shop_lang["sales_" . $val] . "</option>";
+            }
         }
+
+        return $output;
+    }
+}
+
+if (!function_exists("buildstatus")) {
+    function buildstatus($var, $vararray)
+    {
+        $output = "";
+        for ($i = 0; $i < count($vararray); $i++) {
+            $status = explode("==", $vararray[$i]);
+            if ($status[0] == $var) {
+                $output.= "<option value=\"" . $status[0] . "\" selected=\"selected\">" . $status[0] . "</option>";
+            }
+            else {
+                $output.= "<option value=\"" . $status[0] . "\">" . $status[0] . "</option>";
+            }
+        }
+
+        return $output;
+    }
+}
+
+if (!function_exists("get_file_contents")) {
+    function get_file_contents($filename)
+    {
+        if (!function_exists('file_get_contents')) {
+            $fhandle = fopen($filename, "r");
+            $fcontents = fread($fhandle, filesize($filename));
+            fclose($fhandle);
+        }
+        else {
+            $fcontents = file_get_contents($filename);
+        }
+
+        return $fcontents;
+    }
+}
+
+if (!function_exists("getTpl")) {
+    function getTpl($tpl)
+    {
+        global $modx;
+        $template = "";
+        if (substr($tpl, 0, 6) == "@FILE:") {
+            $tpl_file = $modx->config['base_path'] . substr($tpl, 6);
+            $template = get_file_contents($tpl_file);
+        }
+        else
+        if (substr($tpl, 0, 6) == "@CODE:") {
+            $template = substr($tpl, 6);
+        }
+        else
+        if ($modx->getChunk($tpl) != "") {
+            $template = $modx->getChunk($tpl);
+        }
+        else
+        if ($res = $modx->db->query("SELECT * FROM " . $modx->getFullTableName('site_htmlsnippets') . " WHERE `name` ='" . $modx->db->escape($tpl) . "' LIMIT 1 ")) {
+            $row = $modx->db->getRow($res);
+            $template = $row['snippet'];
+        }
+        else {
+            $template = false;
+        }
+
         return $template;
     }
 }
 
-if(!function_exists("setPhx"))
-{
-    function setPhx($name,$value,&$cache) {
-	global $modx;
-	if(!$cache->cache($name, 'tsvshop')) {
-	    $cache->cache($name, 'tsvshop', $value);
-	    $modx->setPlaceholder('shop.'.$name, $value);
-	} else {
-	    $modx->setPlaceholder('shop.'.$name, $value);
-	}
+if (!function_exists("setPhx")) {
+    function setPhx($name, $value, &$cache)
+    {
+        global $modx;
+        if (!$cache->cache($name, 'tsvshop')) {
+            $cache->cache($name, 'tsvshop', $value);
+            $modx->setPlaceholder('shop.' . $name, $value);
+        }
+        else {
+            $modx->setPlaceholder('shop.' . $name, $value);
+        }
     }
 }
 
-if(!function_exists("getStr"))
-{
-function getStr($string, $start, $end){
-	$string = " ".$string;
-	$ini = strpos($string,$start);
-	if ($ini == 0) return "";
-	$ini += strlen($start);
-	$len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
+if (!function_exists("getStr")) {
+    function getStr($string, $start, $end)
+    {
+        $string = " " . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return "";
+        $ini+= strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
 }
 
-if(!function_exists("send_mail"))
-{
-function send_mail($to, $subject, $content, $attach=false) {
-	global $modx, $session, $tsvshop, $shop_lang, $mail;
-	$modx->loadExtension('MODxMailer');
-	$modx->mail->ClearAllRecipients();
-  $modx->mail->ClearAttachments();
-  $modx->mail->CharSet = $modx->config['modx_charset'];
-	$modx->mail->IsHTML(true);
+if (!function_exists("send_mail")) {
+    function send_mail($to, $subject, $content, $attach = false)
+    {
+        global $modx, $session, $tsvshop, $shop_lang, $mail;
+        $modx->loadExtension('MODxMailer');
+        $modx->mail->ClearAllRecipients();
+        $modx->mail->ClearAttachments();
+        $modx->mail->CharSet = $modx->config['modx_charset'];
+        $modx->mail->IsHTML(true);
+        try {
+            $modx->mail->AddAddress($to); //кому письмо
+            $modx->mail->From = $tsvshop['SmtpFromEmail'];
+            $modx->mail->FromName = $tsvshop['SmtpFromName'];
+            $modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
+            $modx->mail->Subject = htmlspecialchars($subject);
+            $modx->mail->MsgHTML($content);
+            if ($attach) {
 
-	try {
-  	  $modx->mail->AddAddress($to); //кому письмо
-		  $modx->mail->From     = $tsvshop['SmtpFromEmail'];
-      $modx->mail->FromName = $tsvshop['SmtpFromName'];
-		
-  		$modx->mail->AddReplyTo($tsvshop['SmtpReplyEmail'], $tsvshop['SmtpFromName']);
-  		$modx->mail->Subject = htmlspecialchars($subject);
-  		$modx->mail->MsgHTML($content);
-      if($attach) {  
-        // проверяем, является ли переменная с именами прикрепляемых файлов массивом. Если да, то прикрепляем все файлы, иначе - один
-        if (is_array($attach)) {
-			     foreach ($attach as $a) {
-				      $modx->mail->AddAttachment($a);
-			     }
-        } else {
-          $modx->mail->AddAttachment($attach);
+                // проверяем, является ли переменная с именами прикрепляемых файлов массивом. Если да, то прикрепляем все файлы, иначе - один
+
+                if (is_array($attach)) {
+                    foreach($attach as $a) {
+                        $modx->mail->AddAttachment($a);
+                    }
+                }
+                else {
+                    $modx->mail->AddAttachment($attach);
+                }
+            }
+
+            // $modx->mail->Send();
+
+            return ($modx->mail->Send() ? true : false);
+
+            // echo "Message sent Ok!</p>\n";
+
         }
-		  }
 
-  		//$modx->mail->Send();
-      return ($modx->mail->Send() ? true : false);
-  		//echo "Message sent Ok!</p>\n";
-	} catch (phpmailerException $e) {
-  		//echo $e->errorMessage();
-	} catch (Exception $e) {
-  		//echo $e->getMessage();
-	}
-}
+        catch(phpmailerException $e) {
 
-if(!function_exists("getfilechmod"))
-{
-function getfilechmod($file) {
-    // права доступа файла
-$fileperms = substr ( decoct ( fileperms ( $file ) ), 2, 6 );
-if ( strlen ( $fileperms ) == '3' ){ $fileperms = '0' . $fileperms; }
-//return "Права доступа к файлу <b>".$file."</b>: " . $fileperms . "<br>\n";
-return $fileperms;
-}
+            // echo $e->errorMessage();
+
+        }
+
+        catch(Exception $e) {
+
+            // echo $e->getMessage();
+
+        }
+    }
 }
 
-if(!function_exists("getfolderchmod"))
-{
-function getfolderchmod($path) {
-    // права доступа к текущей папке
-$fileperms = substr ( decoct ( fileperms ( $path ) ), 2, 6 );
-if ( strlen ( $fileperms ) == '3' ){ $fileperms = '0' . $fileperms; }
-//return "Права доступа к каталогу <b>".$path."</b>: " . $fileperms . "<br>\n";
-return $fileperms;
-}
+if (!function_exists("getfilechmod")) {
+    function getfilechmod($file)
+    {
+
+        // права доступа файла
+
+        $fileperms = substr(decoct(fileperms($file)) , 2, 6);
+        if (strlen($fileperms) == '3') {
+            $fileperms = '0' . $fileperms;
+        }
+
+        // return "Права доступа к файлу <b>".$file."</b>: " . $fileperms . "<br />\n";
+
+        return $fileperms;
+    }
 }
 
-if(!function_exists("is_install"))
-{
-function is_install($addon) {
-	global $tables, $modx;
-  $inst = getConf("addons", $addon."_active");
-  if ($inst=="yes" || $inst=="no" || $tables[$addon] == "system") {return "1";} else {return "0";}
+if (!function_exists("getfolderchmod")) {
+    function getfolderchmod($path)
+    {
+
+        // права доступа к текущей папке
+
+        $fileperms = substr(decoct(fileperms($path)) , 2, 6);
+        if (strlen($fileperms) == '3') {
+            $fileperms = '0' . $fileperms;
+        }
+
+        // return "Права доступа к каталогу <b>".$path."</b>: " . $fileperms . "<br />\n";
+
+        return $fileperms;
+    }
 }
+
+if (!function_exists("is_install")) {
+    function is_install($addon)
+    {
+        global $tables, $modx;
+        $inst = getConf("addons", $addon . "_active");
+        if ($inst == "yes" || $inst == "no" || $tables[$addon] == "system") {
+            return "1";
+        }
+        else {
+            return "0";
+        }
+    }
 }
 
 /*----------------------
@@ -422,6 +512,7 @@ function is_install($addon) {
 # $addon - строковая переменная с названием папки с аддоном, напр., discount, shipping и т.д.
 # результат - TRUE или FALSE
 ------------------------*/
+
 if (!function_exists("tsv_AddonIsOn")) {
     function tsv_AddonIsOn($addon)
     {
@@ -429,10 +520,12 @@ if (!function_exists("tsv_AddonIsOn")) {
         if ($addon != "." && $addon != ".." && in_array($addon, $folders)) {
             if ((isset($tsvshop['addons_' . $addon . '_active']) && $tsvshop['addons_' . $addon . '_active'] == "yes") || $tables[$addon] == "system") {
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -446,6 +539,7 @@ if (!function_exists("tsv_AddonIsOn")) {
 # $tpl - строковая переменная, содержащая код шаблона (чанка или файла), который нужно обработать
 # Результат: обработанный код шаблона, который далее можно использовать по своему усмотрению
 ------------------------*/
+
 if (!function_exists("tsv_ClearTplfromLabels")) {
     function tsv_ClearTplfromLabels($tpl)
     {
@@ -453,12 +547,13 @@ if (!function_exists("tsv_ClearTplfromLabels")) {
         preg_match_all('/(<!--\/(.*?)-->)/', $tpl, $out);
         $syslabels = explode(",", $tsvshop['syslabels']);
         if (!empty($tpl) && is_array($out[2]) && is_array($syslabels)) {
-            foreach ($out[2] as $addon) {
+            foreach($out[2] as $addon) {
                 if (!tsv_AddonIsOn($addon) && !in_array($addon, $syslabels)) {
-                    $tpl = str_replace(getStr($tpl, '<!--' . $addon . '-->', '<!--/' . $addon . '-->'), "", $tpl);
+                    $tpl = str_replace(getStr($tpl, '<!--' . $addon . '-->', '<!--/' . $addon . '-->') , "", $tpl);
                 }
             }
         }
+
         return $tpl;
     }
 }
@@ -469,106 +564,116 @@ if (!function_exists("tsv_ClearTplfromLabels")) {
 # Принимает:
 # $table  - строковая переменная с названием таблицы БД, в которой нужно проверить/добавить поля
 # $fields - массив или строка (разделитель - запятая) с названием полей, которые нужно проверить/добавить в указанную таблицу БД
-# Результат: в указанной таблице будут добавлены поля, которые были в списке, но не оказалось в таблице. 
+# Результат: в указанной таблице будут добавлены поля, которые были в списке, но не оказалось в таблице.
 ------------------------*/
+
 if (!function_exists("tsv_AddFieldstoDB")) {
     function tsv_AddFieldstoDB($table, $fields)
     {
         global $modx;
-        if (empty($table) || empty($fields))
-            return false;
+        if (empty($table) || empty($fields)) return false;
         $arr = array();
         $sql = "show columns FROM " . $table;
         $res = $modx->db->query($sql);
-        $f   = $modx->db->makearray($res);
-        foreach ($f as $k => $v) {
+        $f = $modx->db->makearray($res);
+        foreach($f as $k => $v) {
             $arr[] = $v['Field'];
         }
-        if (!is_array($fields))
-            $fields = explode(',', $fields);
+
+        if (!is_array($fields)) $fields = explode(',', $fields);
         $newfields = array_diff($fields, array_values($arr));
-        $arr       = array();
-        foreach ($newfields as $v) {
-            //$arr[] = 'ADD `' . $v . '` VARCHAR( 70 )';
+        $arr = array();
+        foreach($newfields as $v) {
+
+            // $arr[] = 'ADD `' . $v . '` VARCHAR( 70 )';
+
             $arr[] = 'ADD `' . $v . '` TEXT';
         }
+
         if (sizeof($arr) > 0) {
             $sql = "ALTER TABLE " . $table . " " . implode(',', $arr);
             $modx->db->query($sql);
         }
+
         return true;
     }
 }
 
-if(!function_exists("notice"))
-{
-function notice($text, $type) {
-	if (!empty($text)) {
-        	if ($type=="notice") {
-                	return '<div class="notice">'.$text.'</div>';
-                }
-                if ($type=="error") {
-                	return '<div class="error">'.$text.'</div>';
-                }
-                if ($type=="success") {
-                	return '<div class="success">'.$text.'</div>';
-                }
+if (!function_exists("notice")) {
+    function notice($text, $type)
+    {
+        if (!empty($text)) {
+            if ($type == "notice") {
+                return '<div class="notice">' . $text . '</div>';
+            }
+
+            if ($type == "error") {
+                return '<div class="error">' . $text . '</div>';
+            }
+
+            if ($type == "success") {
+                return '<div class="success">' . $text . '</div>';
+            }
         }
-}
-}
-if(!function_exists("tsv_jsadd"))
-{
-function tsv_jsadd($file) {
-  global $jsfiles;
-  $jsfiles[]=$file;
-}
+    }
 }
 
-if(!function_exists("tsv_minregjs"))
-{
-function tsv_minregjs() {
-  global $modx, $jsfiles;
-  $data="";
-  if (is_array($jsfiles)) {
-    array_unique($jsfiles);
-    foreach ($jsfiles as $file) {
-      if (file_exists(TSVSHOP_PATH.$file)) {   
-        $data.=get_file_contents(TSVSHOP_PATH.$file);
-      }
-    } 
-    $fn=md5($data);
-    $filename=TSVSHOP_PATH.'cache/'.$fn.'.js';
-    if (!file_exists($filename)) {
-    
-      if($handle = opendir(TSVSHOP_PATH.'cache/')) {
-            while(false !== ($file = readdir($handle)))
-                if($file != "." && $file != "..") unlink(TSVSHOP_PATH.'cache/'.$file);
-            closedir($handle);
-      }
-      
-      require TSVSHOP_PATH.'include/jsmin5.php';
-      $data= JSMin::minify($data);
-    
-      $tmp=fopen($filename,"w");
-      @flock($tmp, LOCK_EX);
-	    fwrite($tmp, $data);
-      flock($tmp, LOCK_UN);
-	    fclose($tmp);
+if (!function_exists("tsv_jsadd")) {
+    function tsv_jsadd($file)
+    {
+        global $jsfiles;
+        $jsfiles[] = $file;
+    }
+}
 
-      $modx->regClientStartupScript(TSVSHOP_SURL.'cache/'.$fn.'.js');	 
-    } else {
-      $modx->regClientStartupScript(TSVSHOP_SURL.'cache/'.$fn.'.js');
+if (!function_exists("tsv_minregjs")) {
+    function tsv_minregjs()
+    {
+        global $modx, $jsfiles;
+        $data = "";
+        if (is_array($jsfiles)) {
+            array_unique($jsfiles);
+            foreach($jsfiles as $file) {
+                if (file_exists(TSVSHOP_PATH . $file)) {
+                    $data.= get_file_contents(TSVSHOP_PATH . $file);
+                }
+            }
+
+            $fn = md5($data);
+            $filename = TSVSHOP_PATH . 'cache/' . $fn . '.js';
+            if (!file_exists($filename)) {
+                if ($handle = opendir(TSVSHOP_PATH . 'cache/')) {
+                    while (false !== ($file = readdir($handle)))
+                    if ($file != "." && $file != "..") unlink(TSVSHOP_PATH . 'cache/' . $file);
+                    closedir($handle);
+                }
+
+                require TSVSHOP_PATH . 'include/jsmin5.php';
+
+                $data = JSMin::minify($data);
+                $tmp = fopen($filename, "w");
+                @flock($tmp, LOCK_EX);
+                fwrite($tmp, $data);
+                flock($tmp, LOCK_UN);
+                fclose($tmp);
+                $modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+            }
+            else {
+                $modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+            }
+        }
+        else {
+            foreach($jsfiles as $file) {
+                if (file_exists(TSVSHOP_PATH . $file)) {
+                    $modx->regClientStartupScript(TSVSHOP_SURL . $file);
+                }
+            }
+        }
+
+        unset($jsfiles);
+        unset($data);
+        unset($fn);
     }
-  } else {
-    foreach ($jsfiles as $file) {
-      if (file_exists(TSVSHOP_PATH.$file)) {
-        $modx->regClientStartupScript(TSVSHOP_SURL.$file);
-      }
-    }
-  }
-  unset($jsfiles);
-  unset($data);
-  unset($fn);
 }
-}
+
 ?>
