@@ -52,6 +52,8 @@ if (!$cache) {
 //запуск печати накладной
 if(!empty($_GET['i']) && !empty($_GET['act']) && $_GET['act']=='printorder') {
 	$tsvshop = $cache->cache('tsvshop','tsvshop');
+    //шаблон можно переопределить, задав его здесь в $tplprintorder
+    //т.е. $tplprintorder='файл шаблона/имя чанка';
     require_once(TSVSHOP_PATH.'addons/sales/includes/printorder.php');
 	exit;
 }
