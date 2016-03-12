@@ -176,13 +176,7 @@ function updateorder($idorder) {
     //if ($user['usertype']=="manager") {
     if ($user=="manager") {
         if (!empty($act) && $act=="updateorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder !="0") {
-          /*if (!empty($_GET['commentadmin'])) {
-             $fields = array('status'       => $modx->db->escape($_GET['status']),
-		              'commentadmin' => $modx->db->escape($_GET['commentadmin'])
-             );
-          } else {
-             $fields = array('status'       => $modx->db->escape($_GET['status']));
-          }*/
+          if ($_GET['status'] == "Оплачено") $fields['datepay'] = time();
           //---v5.2rc2----
           $sysfielad = explode(',',$tsvshop['sysfields']);
           foreach ($_GET as $key => $value) {
@@ -217,15 +211,7 @@ function updstorder($idorder) {
     //if ($user['usertype']=="manager") {
     if ($user=="manager") {
        	if (!empty($act) && $act=="updstorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder !="0") {
-            /*
-            if (!empty($_GET['commentadmin'])) {
-             $fields = array('status'       => $modx->db->escape($_GET['status']),
-		              'commentadmin' => $modx->db->escape($_GET['commentadmin'])
-             );
-	          } else {
-	           $fields = array('status'       => $modx->db->escape($_GET['status']));
-	          }
-            */
+            if ($_GET['status'] == "Оплачено") $fields['datepay'] = time();
             //---v5.2rc2----
             $sysfielad = explode(',',$tsvshop['sysfields']);
             foreach ($_GET as $key => $value) {

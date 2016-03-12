@@ -28,7 +28,7 @@ function propis($price) {
   global $tsvshop;
   //цена прописью
     $price = (isset($price)) ? $price : '0';
-    $price = number_format($price, 2, ',', '');
+    $price = number_format((double)$price, 2, ',', '');
     $point = strpos($price, ',');
     //отделяем рубли от копеек
     if(!empty($point))

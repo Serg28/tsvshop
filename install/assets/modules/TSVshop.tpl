@@ -61,8 +61,15 @@ if(!empty($_GET['i']) && !empty($_GET['act']) && $_GET['act']=='printorder') {
 
 if (!$folders = $cache->cache('folders','tsvshop')) {
   $folders = scandir($addonspath,1);
+  //выставляем аддон Заказы первым в списке
+  $sales = array_search('sales', $folders);
+  if ($sales!=0) {
+   $folders[$sales] = $folders[0];
+   $folders[0] = 'sales';
+  }
   $cache->cache('folders','tsvshop',$folders);
 }
+
 
 foreach ($folders as $folder) {
          if ($folder != "."  && $folder != ".." ) {

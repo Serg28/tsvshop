@@ -1087,7 +1087,7 @@ if (!function_exists("tsv_sendMail")) {
         
         $from = explode(',',$tsvshop['SmtpFromEmail']);
         if (is_array($from)) {
-               $modx->mail->From = $from[0];
+               $modx->mail->From = trim($from[0]);
         }
         
         //5.4 Можно добавлять несколько адресов почты, через запятую
@@ -1096,7 +1096,7 @@ if (!function_exists("tsv_sendMail")) {
         if (is_array($emails)) {
             foreach ($emails as $email) {
                 //$name = (is_string($name)) ? $name : '';
-                $modx->mail->AddAddress($email);
+                $modx->mail->AddAddress(trim($email));
             }
         } elseif (is_string($emails)) {
             $modx->mail->AddAddress($emails);

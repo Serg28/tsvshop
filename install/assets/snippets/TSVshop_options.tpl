@@ -96,7 +96,7 @@ switch($format){
                $item =substr($item,1);
              };
 
-	     $options .= "\n  <option value=\"".$itemvalue."==".$item."\"$selected>$item</option>";
+	     $options .= "\n  <option value=\"".$itemvalue."==".$item."\" $selected>$item</option>";
     }
 	  $o = !empty($options) ? "\n<select $subnameAttr class=\"addparam\" name=\"".$tvname."\" onchange=\"".$function."\">$options\n</select>\n" : "";
   break;
@@ -117,7 +117,7 @@ switch($format){
                $item =substr($item,1);
             };
 	    $output .= "\n  $otag<label><input $subnameAttr class=\"addparam\" type=\"radio\" name=\"".
-	    	$tvname."\" value=\"".$itemvalue."==".$item."\" id=\"radio".$docid."__".$count."\"$selected onclick=\"".
+	    	$tvname."\" value=\"".$itemvalue."==".$item."\" id=\"radio".$docid."__".$count."\" $selected onclick=\"".
 	    	$function."\" /> $item ";
 	    	// если вместо разницы в цене вписать переопределение цены:
 	    	// например price=100
@@ -148,7 +148,7 @@ switch($format){
         };
 	    $output .= "\n  $otag<input $subnameAttr class=\"addparam\" type=\"checkbox\" name=\"".$tvname."\" value=\"".$itemvalue."==".$item."\"
 
-id=\"radio".$docid."__".$count."\"$selected onclick=\"".$function."\" /> <label for=\"radio".$docid."__$count\">$item</label>$ctag";
+id=\"radio".$docid."__".$count."\" $selected onclick=\"".$function."\" /> <label for=\"radio".$docid."__$count\">$item</label>$ctag";
     }
     $o = $output."\n";
   break;
