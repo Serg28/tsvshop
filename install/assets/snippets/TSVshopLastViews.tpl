@@ -4,7 +4,7 @@
  * Сниппет истории просмотренных товаров для TSVshop
  *
  * @category    snippet
- * @version     5.4.1
+ * @version     5.4
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVshop
@@ -34,12 +34,16 @@
 * &templateID = список ИД шаблонов страницы, к которым применять историю
 * &tpl = имя чанка с контейнером, куда выводится наименования ресурсов
 * &itemTpl = имя чанка, выводящего каждое наименование ресурса
+* &limit = кол-во выводимых в истории ресурсов (по-умолчанию 5)
+* &toPH = если равно 1, то выводит результат выполнения сниппета в плейсхолдер id.output  (id - это то, что указано в &id)
 */
 
 $docid = $modx->documentIdentifier;
-$tpl = isset($tpl) ? $modx->getChunk($tpl) : '<div class="recent">[+count_recent+][+lines+]</div>';
+$tpl = isset($tpl) ? $modx->getChunk($tpl) : '<div class="recent">[+count_recent+]<ul>[+lines+]</ul></div>';
 $templateID = isset($templateID) ? $templateID : '4';
-$id = isset($id) ? $id : md5($templateID);
+$id = isset($id) ? $id : '';
+$prefix = isset($id) ? $id.'.' : '';
+$toPH = isset($toPH) ? $toPH : '0';
 $mode = isset($mode) ? $mode : 'ids'; // ids - выводит только ИД документов через запятую, иначе - сформированный HTML-код
 $itemTpl = isset($itemTpl) ? $modx->getChunk($itemTpl) : '<li><a target="_blank" href="[~[+itemId+]~]">[+itemPageTitle+]</a></li>';
 $limit = isset($limit) ? $limit : 5;
@@ -90,21 +94,20 @@ if (is_array($_SESSION[$id.'goods']['viewed']))
 	}
 
 	$count = count($SV);
-	$modx->setPlaceholder('count_recent', $count);
-	$modx->setPlaceholder('lines', $tp);
-	$modx->setPlaceholder('unset', $unset);
+	$modx->setPlaceholder($prefix.'count_recent', $count);
+	$modx->setPlaceholder($prefix.'lines', $tp);
+	$modx->setPlaceholder($prefix.'unset', $unset);
 	$output = $tpl;
 }
 
 if (!empty($SV))
 {
-	
-	if ($mode=='ids' || empty($mode)) {
-		return implode(',',$SV);
-	} else if ($mode=='html') {
-	    return $output;
-	} else if ($mode=='save') {
-		return;
-	} else return;
+  if ($mode=='ids' || empty($mode)) {
+    return ($toPH) ? $modx->setPlaceholder($prefix.'output',$res) : $res;
+  } else if ($mode=='html') {
+    return ($toPH) ? $modx->setPlaceholder($prefix.'output',$output) : $output;
+  } else if ($mode=='save') {
+    return;
+  } else return;
 }
 
