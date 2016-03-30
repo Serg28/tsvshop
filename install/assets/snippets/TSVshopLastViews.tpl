@@ -4,7 +4,7 @@
  * Сниппет истории просмотренных товаров для TSVshop
  *
  * @category    snippet
- * @version     5.4
+ * @version     5.4.1
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVshop
@@ -14,10 +14,13 @@
  * -----------------------------------------------------------------------------
  */
 	
-// error_reporting(E_ALL);
-// session_start();
-
-/*placeholders
+/*
+* ВНИМАНИЕ:
+* Сниппет нужно вызывать на всех страницах, которые нужно учитывать в историю просмотра, а также там, где нужно выводить эту историю.
+* Страница, где нет вызова сниппета, не будет учитываться в историю. Если на ней не нужно выводить историю, а только учесть ее, нужно 
+* указать в вызове сниппет параметр &mode=`save`
+*
+* placeholders
 * [+count_recent+] - кол-во просмотренных ресурсов
 * [+lines+] - наименования
 * [+unset+] - ссылка на сброс истории просмотра
@@ -25,16 +28,13 @@
 * [+itemPageTitle+] - название ресурса pagetitle
 *
 * &id = ИД вызова (при нескольких вызовах сниппета на странице, для предотвращения конфликта)
-* &mode = режим вывода: список ИД (значение: ids) или HTML (любое другое или пусто)
+* &mode = режим вывода: список ИД (значение: ids), 
+		  сформированный html (значение: html), 
+		  ничего не выводит - (значение: save), если нужно только учесть документ в историю, но ничего не выводить
 * &templateID = список ИД шаблонов страницы, к которым применять историю
 * &tpl = имя чанка с контейнером, куда выводится наименования ресурсов
 * &itemTpl = имя чанка, выводящего каждое наименование ресурса
 */
-
-if (!defined('MODX_BASE_PATH'))
-{
-	die('What are you doing? Get out of here!');
-}
 
 $docid = $modx->documentIdentifier;
 $tpl = isset($tpl) ? $modx->getChunk($tpl) : '<div class="recent">[+count_recent+][+lines+]</div>';
@@ -98,10 +98,13 @@ if (is_array($_SESSION[$id.'goods']['viewed']))
 
 if (!empty($SV))
 {
-	if ($mode=='ids') {
+	
+	if ($mode=='ids' || empty($mode)) {
 		return implode(',',$SV);
-	} else {
+	} else if ($mode=='html') {
 	    return $output;
-	}
+	} else if ($mode=='save') {
+		return;
+	} else return;
 }
 
