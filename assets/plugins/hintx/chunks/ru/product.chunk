@@ -35,7 +35,7 @@
 </tr>
 <tr>
 <td>[+tsvbattr+]</td>
-<td>Служебный плейсхолдер, который выводит дополнительные атрибуты для поля количества заказанного товара. Используется так: <i>&lt;input type="text" name="qty" value="1" [+tsvbattr+] /&gt;</i>. В результате выводится: <i>&lt;input type="text" name="qty" value="1" onkeypress="return testKey(event)" onChange="UserCalc('[+id+]')" /&gt;</i>. Если вы собираетесь использовать поле Количество, то этот плейсхолдер <b>использовать обязательно</b>.</td>
+<td>Служебный плейсхолдер, который выводит дополнительные атрибуты для поля количества заказанного товара. Используется так: <i>&lt;input type="text" name="qty" value="1" [+tsvbattr+] /&gt;</i>. В результате выводится: <i>&lt;input type="number" name="qty" value="1" onkeypress="return testKey(event)" onChange="UserCalc('[+id+]')" /&gt;</i>. Если вы собираетесь использовать поле Количество, то этот плейсхолдер <b>использовать обязательно</b>.</td>
 </tr>
 
 <br/>
