@@ -96,8 +96,6 @@ $icon	= _filter($_REQUEST['icon']);
 $opt	= _filter($_REQUEST['opt']);
 $qty	= ($q=_filter($_REQUEST['qty'])) ? $q : 1;
 $typeitem  = ($t=_filter($_REQUEST['typeitem'])) ? $t : 'physical';
-//$url	= ($u = _filter($_REQUEST['url'])) ? $u : "&tovar=".$idnum;
-//$url    = (($tsvshop['TypeCat']=='docs' || empty($tsvshop['TypeCat'])) && !empty($idnum)) ? $modx->makeUrl($idnum) : "&tovar=".$idnum;
 $url = $idnum;
 include_once (TSVSHOP_PATH.'lang/'.$tsvshop['lang'].'.inc.php');
 
@@ -108,9 +106,21 @@ tsv_jsadd("js/tsvshop.js");
 $modx->regClientCSS(TSVSHOP_SURL."shop.css");
 
 if ($act == "itemcard") {
+    $dparam     = $modx->getTemplateVar('tsvshop_param', '*', $modx->documentIdentifier);
+    $dprice     = $modx->getTemplateVar('price', '*', $modx->documentIdentifier);
+	  $price = $formula = $dprice['value'];
+
+    $evt = $modx->invokeEvent("TSVshopOnGetPriceItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat'], 'price'=>$price));
+
+	  if (is_array($evt) && !empty($evt[0])) { 
+		  $price = tsv_PriceFormat($evt[0]);
+		  $formula = $price;
+	  }
+    $price = tsv_PriceFormat(tsv_CalcPrice($price, 1, tsv_parseOptions($dparam['value'])));
+
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
-    $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="[*typeitem*]" /><input type="hidden" name="formula" value="[*price*]" /><input type="hidden" name="cart_icon" value="[*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
-    $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'">[*price*]</span>');
+    $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="[*typeitem*]" /><input type="hidden" name="formula" value="'.$formula.'" /><input type="hidden" name="cart_icon" value="[*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
+    $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'">'.$price.'</span>');
     $modx->setPlaceholder('tsvbattr','onkeypress="return testKey(event)" onChange="Ucalc(\''.$modx->documentIdentifier.'\')"');
     $evt = $modx->invokeEvent("TSVshopOnViewItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat']));
 }

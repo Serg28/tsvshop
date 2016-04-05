@@ -158,6 +158,8 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1030','TSVshopOnOrderStatusUpd
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1031','TSVshopOnDeleteItem', 6, 'TSVshop');
 
+REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1032','TSVshopOnGetPriceItemCard', 6, 'TSVshop');
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6, 'TSVshop');
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
