@@ -223,7 +223,7 @@ if (!function_exists("getTpl")) {
     }
 }
 
-// просмотр списка заказов
+// РїСЂРѕСЃРјРѕС‚СЂ СЃРїРёСЃРєР° Р·Р°РєР°Р·РѕРІ
 function tsv_listorders($id)
 {
     global $modx, $tsvshop, $perP;
@@ -238,13 +238,13 @@ function tsv_listorders($id)
         $dbdownloads = $modx->getFullTableName('shop_downloads');
         $dborders_details = $modx->getFullTableName('shop_order_detail');
 			
-        // проверяем, есть ли эта таблица с закачками:
+        // РїСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё СЌС‚Р° С‚Р°Р±Р»РёС†Р° СЃ Р·Р°РєР°С‡РєР°РјРё:
         $istable = $modx->db->query("SHOW TABLES LIKE '%shop_downloads'");
         $isdownloads = $modx->db->getRecordCount($istable);
         // $res = $modx->db->select("*", $dborders, 'userid = "' . $userid . '"','numorder');
         // ---------------
 		
-		//удаление неоплаченного заказа по желанию пользователя
+		//СѓРґР°Р»РµРЅРёРµ РЅРµРѕРїР»Р°С‡РµРЅРЅРѕРіРѕ Р·Р°РєР°Р·Р° РїРѕ Р¶РµР»Р°РЅРёСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		if (!empty($action) && $action=="delorder" && !empty($orderid) && is_numeric($orderid)) {
 			$result1 = $modx->db->delete($dborders, "numorder = ".$orderid);
 			$result2 = $modx->db->delete($dborders_details, "numorder = ".$orderid);
@@ -252,11 +252,11 @@ function tsv_listorders($id)
 			if ($result1 && $result2) {
         $filename = $modx->config['base_path'] . 'assets/snippets/tsvoffice/tpl/successmsg.tpl';
         $otvet = get_file_contents($filename);
-				$otvet=str_replace('[+msg+]','Заказ успешно удален.',$otvet);
+				$otvet=str_replace('[+msg+]','Р—Р°РєР°Р· СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ.',$otvet);
 			} else {
         $filename = $modx->config['base_path'] . 'assets/snippets/tsvoffice/tpl/errormsg.tpl';
         $otvet = get_file_contents($filename);
-				$otvet=str_replace('[+msg+]','Во время удаления заказа произошла ошибка. Попробуйте, пожалуйста, немного позже.',$otvet);
+				$otvet=str_replace('[+msg+]','Р’Рѕ РІСЂРµРјСЏ СѓРґР°Р»РµРЅРёСЏ Р·Р°РєР°Р·Р° РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°. РџРѕРїСЂРѕР±СѓР№С‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РЅРµРјРЅРѕРіРѕ РїРѕР·Р¶Рµ.',$otvet);
 			}
 		}
 		
@@ -300,7 +300,7 @@ function tsv_listorders($id)
                         $value = date("d.m.Y H:i:s", $value);
                     }
                     if ($key == "paylink") {
-                        $value = ($rows['status'] == "Оплачено") ? '' : base64_decode($value);
+                        $value = ($rows['status'] == "РћРїР»Р°С‡РµРЅРѕ") ? '' : base64_decode($value);
                     }
                     $temp = str_replace('[+' . $key . '+]', $value, $temp);
                 }
@@ -308,7 +308,7 @@ function tsv_listorders($id)
                 $sep = (strpos($url, '?')) ? "&" : "?";
                 $param = "i=".$rows['numorder'] . ":" . $rows['code'];
                 $temp = str_replace('[+url+]', $url . $sep . $param, $temp);
-				if ($rows['status'] != "Оплачено") $temp = str_replace('[+button.delete+]', '<a href="'.$url.$sep.'action=delorder&oid='.$rows['numorder'].'"><img src="/assets/snippets/tsvshop/images/cross.png" alt="Удалить заказ"></a>', $temp);
+				if ($rows['status'] != "РћРїР»Р°С‡РµРЅРѕ") $temp = str_replace('[+button.delete+]', '<a href="'.$url.$sep.'action=delorder&oid='.$rows['numorder'].'"><img src="/assets/snippets/tsvshop/images/cross.png" alt="РЈРґР°Р»РёС‚СЊ Р·Р°РєР°Р·"></a>', $temp);
                 // $out.= $temp;
                 // ---------------------------------------------------------------------------------------------
                 // $temp = str_replace($tpltr_links,'',$temp);
@@ -321,7 +321,7 @@ function tsv_listorders($id)
                     foreach($rowlink as $key => $value) {
                         if ($key == "downloadlink") {
                             $result = json_decode($value);
-                            $disabled = ($rows['status'] == "Оплачено") ? '' : 'disabled';
+                            $disabled = ($rows['status'] == "РћРїР»Р°С‡РµРЅРѕ") ? '' : 'disabled';
                             if (is_array($result)) {
                                 $files_array = array();
                                 $files = '';
@@ -333,11 +333,11 @@ function tsv_listorders($id)
                             }
                             else if (!empty($value)) {
                                 $url = ($disabled) ? '' : $modx->config['site_url'] . 'file/download/' . $rowlink['downloadcode'];
-                                $file = '<a href="' . $url . '" class="btn btn-primary btn-sm  ' . $disabled . '">Скачать</a>';
+                                $file = '<a href="' . $url . '" class="btn btn-primary btn-sm  ' . $disabled . '">РЎРєР°С‡Р°С‚СЊ</a>';
                                 $tpltr_links = str_replace('[+links+]', $file, $tpltr_links);
                             }
                             else {
-                                $file = '<a href="' . $url . '" class="btn btn-primary btn-sm  ' . $disabled . '">Скачать</a>';
+                                $file = '<a href="' . $url . '" class="btn btn-primary btn-sm  ' . $disabled . '">РЎРєР°С‡Р°С‚СЊ</a>';
                                 $tpltr_links = str_replace('[+links+]', $file, $tpltr_links);
                             }
                         }
@@ -379,7 +379,7 @@ function tsv_listorders($id)
         ));
     }
 }
-// просмотр конкретного заказа
+// РїСЂРѕСЃРјРѕС‚СЂ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ Р·Р°РєР°Р·Р°
 function tsv_showorder()
 {
     global $modx, $tsvshop;
@@ -408,14 +408,14 @@ function tsv_showorder()
                 if ($key == "dateorder") {
                     $value = date("d.m.Y H:i:s", $value);
                 }
-                // игнорируем дисконтную карту, проверим позже
+                // РёРіРЅРѕСЂРёСЂСѓРµРј РґРёСЃРєРѕРЅС‚РЅСѓСЋ РєР°СЂС‚Сѓ, РїСЂРѕРІРµСЂРёРј РїРѕР·Р¶Рµ
                 if ($key == "discountnum") {
                     $value = '[+discountnum+]';
                 }
                 //
                 $tpl = str_replace('[+' . $key . '+]', $value, $tpl);
             }
-            // Проверим валидна ли дисконтная карта и если её нет в базе выведем предупреждение
+            // РџСЂРѕРІРµСЂРёРј РІР°Р»РёРґРЅР° Р»Рё РґРёСЃРєРѕРЅС‚РЅР°СЏ РєР°СЂС‚Р° Рё РµСЃР»Рё РµС‘ РЅРµС‚ РІ Р±Р°Р·Рµ РІС‹РІРµРґРµРј РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
             if ($tsvshop['addons_discount_active'] == 'yes') {
                 $discountres = $modx->db->query("SELECT * FROM " . $modx->getFullTableName('shop_discount') . " AS a WHERE a.discountnum = '" . $row['discountnum'] . "' AND a.active = 1 AND (a.use < a.count OR a.count = 0) AND (a.summa >= '" . $sub . "' OR a.summa = 0) LIMIT 1");
                 $discountrow = $modx->db->getRow($discountres);
@@ -424,7 +424,7 @@ function tsv_showorder()
                 $tpl = str_replace('[+discountnum+]', $discountrow['discountnum'], $tpl);
             }
             else {
-                $tpl = str_replace('[+discountnum+]', '<span class="error_discount">Карта указана неверно или неактивна</span>', $tpl);
+                $tpl = str_replace('[+discountnum+]', '<span class="error_discount">РљР°СЂС‚Р° СѓРєР°Р·Р°РЅР° РЅРµРІРµСЂРЅРѕ РёР»Рё РЅРµР°РєС‚РёРІРЅР°</span>', $tpl);
             }
             // end
             if ($res = $modx->db->select('*', $dborders_details, 'numorder = "' . $n . '"', 'numorder')) {
@@ -443,13 +443,13 @@ function tsv_showorder()
             }
         }
         else {
-            return '<div class="error">Извините, но такого заказа не существует.</div>';
+            return '<div class="error">РР·РІРёРЅРёС‚Рµ, РЅРѕ С‚Р°РєРѕРіРѕ Р·Р°РєР°Р·Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.</div>';
         }
     }
     else {
-        return '<div class="error">Извините, но такого заказа не существует.</div>';
+        return '<div class="error">РР·РІРёРЅРёС‚Рµ, РЅРѕ С‚Р°РєРѕРіРѕ Р·Р°РєР°Р·Р° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.</div>';
     }
-    // если номер заказа, ид пользователя и код доступа подходят, выдаем подробности заказа
+    // РµСЃР»Рё РЅРѕРјРµСЂ Р·Р°РєР°Р·Р°, РёРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё РєРѕРґ РґРѕСЃС‚СѓРїР° РїРѕРґС…РѕРґСЏС‚, РІС‹РґР°РµРј РїРѕРґСЂРѕР±РЅРѕСЃС‚Рё Р·Р°РєР°Р·Р°
     // backid
 }
 if ($act == 'editprofile') {
@@ -473,7 +473,7 @@ if ($act == 'showorder') {
          $act='office';
     }
 }
-// авторизован ли?
+// Р°РІС‚РѕСЂРёР·РѕРІР°РЅ Р»Рё?
 if ($act == 'office') {
     $uid = $modx->getLoginUserID();
     $modx->setPlaceholder('manager_folder', MGR_DIR);
@@ -489,7 +489,7 @@ if ($act == 'office') {
         $modx->setPlaceholder('logoutlink', $modx->documentIdentifier . '?isLogOut=1');
         echo getTpl($yesChunk);
     }
-    else { // если неавторизован
+    else { // РµСЃР»Рё РЅРµР°РІС‚РѕСЂРёР·РѕРІР°РЅ
         
         $logintpl = (!empty($logintpl)) ? $logintpl : 'weblogin';
         $signuptpl = (!empty($signuptpl)) ? $signuptpl : 'formsignup';
@@ -510,7 +510,7 @@ if ($act == 'listorders') {
          $act='office';
     }
 }
-// показ формы авторизации
+// РїРѕРєР°Р· С„РѕСЂРјС‹ Р°РІС‚РѕСЂРёР·Р°С†РёРё
 if ($act == 'weblogin') {
     $modx->setPlaceholder('manager_folder', MGR_DIR);
     return $modx->runSnippet('WebLogin', array(
