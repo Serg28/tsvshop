@@ -1,0 +1,73 @@
+                              /* SWITCH */
+.switch {
+  cursor: pointer;
+  position: relative;
+}
+.switch input {
+  position: absolute;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.switch input:checked + span:after {
+  left: 21px;
+}
+.switch input:checked + span {
+  background-color: #95b75d;
+}
+.switch input:disabled + span {
+  background-color: #CCC;
+}
+.switch span {
+  position: relative;
+  width: 50px;
+  height: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  background-color: #E04B4A;
+  border: 1px solid #E5E5E5;
+  display: inline-block;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  border-color: rgba(0, 0, 0, 0.1);
+  left: 0px;
+}
+.switch span:after {
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  width: 26px;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.switch.switch-small {
+  margin: 6px 0px 4px;
+}
+.switch.switch-small input:checked + span:after {
+  left: 11px;
+}
+.switch.switch-small span {
+  width: 30px;
+  height: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+}
+.switch.switch-small span:after {
+  width: 16px;
+}
