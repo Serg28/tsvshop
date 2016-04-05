@@ -20,6 +20,8 @@
 [+tsvoptions+]
 </div>
 <div class="clear"></div>
+Кол-во: <input type="number" name="qty" value="1" [+tsvbattr+] />
+<div class="clear"></div>
 <div class="dashed">
      <span class="left"><span class="price">[+tsvprice+]</span> руб.</span>
      <a href="javascript: void(0);" onclick="AddToCart('[+id+]');return false" class="button right cart">В корзину</a>

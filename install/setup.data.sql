@@ -162,6 +162,8 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6,
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
 
+REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1036','TSVshopOnUserFormFieldsRender', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (13, 'TSVshop');
 
@@ -209,8 +211,8 @@ REPLACE INTO `{PREFIX}site_tmplvars` (`id`,	`type`,	`name`, `caption`, `descript
 (25, 'image', 'cart_icon', 'Картинка товара', 'Выводится в каталоге, корзине и инфоблоке', 0, 13, 0, '', 0, '', '', ''),
 (23, 'textareamini',	'tsvshop_param', 'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 13, 0, '', 0, '', '', ''),
 (24, 'text', 'articul', 'Артикул', 'Артикул товара', 0, 13, 0, '', 0, '', '', ''),
-(21, 'text', 'price', 'Цена товара', 'Параметр <b>обязателен</b>', 0, 13, 0, '', 0, '', '', ''),
-(26, 'text', 'inventory', 'Кол-во на складе', '', 0, 13, 0, '', 0, '', '', ''),
+(21, 'number', 'price', 'Цена товара', 'Параметр <b>обязателен</b>', 0, 13, 0, '', 0, '', '', ''),
+(26, 'number', 'inventory', 'Кол-во на складе', '', 0, 13, 0, '', 0, '', '', ''),
 (22, 'richtext', 'demotext', 'Текст вверху', '', 0, 0, 0, '', 0, '', '', '');
 
 REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`id`, `tmplvarid`, `contentid`, `value`) VALUES

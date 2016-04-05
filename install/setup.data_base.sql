@@ -41,8 +41,8 @@ REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 	
 										({TV_IMAGE}, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 8, 0, '', 0, '', '', ''),
 										({TV_TMINI}, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 8, 0, '', 0, '', '', ''),
 										({TV_ARTCL}, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 8, 0, '', 0, '', '', ''),
-										({TV_PRICE}, 	'text', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 8, 0, '', 0, '', '', ''),
-		    ({TV_INVEN}, 'text', 'inventory', 'Кол-во на складе', '', 0, 8, 0, '', 0, '', '', ''),
+										({TV_PRICE}, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 8, 0, '', 0, '', '', ''),
+		    ({TV_INVEN}, 'number', 'inventory', 'Кол-во на складе', '', 0, 8, 0, '', 0, '', '', ''),
 										({TV_REDIT}, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 
 REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`id`, `tmplvarid`, `contentid`, `value`) VALUES

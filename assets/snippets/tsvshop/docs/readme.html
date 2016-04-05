@@ -253,6 +253,7 @@ table td.head {font-weight:bold; text-align:center; background:#f4f4f4;}
 &lt;form action="index.php" method="post" name="Tovar[+id+]" id="Tovar[+id+]"&gt;
 [+tsvoptions+]
 [+tsvprice+] руб.
+&lt;input type="number" name="qty" value="1" [+tsvbattr+] /&gt;
 &lt;a href="javascript: void(0);" onclick="AddToCart('[+id+]');return false"&gt;В корзину&lt;/a&gt;
 [+tsvservices+]
 &lt;/form&gt;
@@ -284,7 +285,7 @@ table td.head {font-weight:bold; text-align:center; background:#f4f4f4;}
 </tr>
 <tr>
 <td>[+tsvbattr+]</td>
-<td>Служебный плейсхолдер, который выводит дополнительные атрибуты для поля количества заказанного товара. Используется так: <i>&lt;input type="text" name="qty" value="1" [+tsvbattr+] /&gt;</i>. В результате выводится: <i>&lt;input type="text" name="qty" value="1" onkeypress="return testKey(event)" onChange="UserCalc('[+id+]')" /&gt;</i>. Если вы собираетесь использовать поле Количество, то этот плейсхолдер <b>использовать обязательно</b>.</td>
+<td>Служебный плейсхолдер, который выводит дополнительные атрибуты для поля количества заказанного товара. Используется так: <i>&lt;input type="number" name="qty" value="1" [+tsvbattr+] /&gt;</i>. В результате выводится: <i>&lt;input type="text" name="qty" value="1" onkeypress="return testKey(event)" onChange="UserCalc('[+id+]')" /&gt;</i>. Если вы собираетесь использовать поле Количество, то этот плейсхолдер <b>использовать обязательно</b>.</td>
 </tr>
 </table>
 
