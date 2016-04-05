@@ -1,5 +1,5 @@
 <?php
-$hiddenFields='price,cart_icon';
+$hiddenFields='price,cart_icon,typeitem';
 
 $placeholders['tsvservices'] = array('id,price,cart_icon,typeitem','tsvservices');
 $placeholders['tsvprice'] = array('id,price,tsvshop_param','tsvprice');
