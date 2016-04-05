@@ -229,8 +229,9 @@ function Ucalc(ID_NUM) {
 		var b = 1;
 	} else {
 		var b = thisForm.elements['qty'].value;
-		if (!b) {
+		if (!b || b<=0) {
 			b = 1;
+			thisForm.elements['qty'].value = b;
 		}
 	}
 	var c = thisForm.elements['formula'].value;
@@ -407,11 +408,14 @@ function RemoveFromCart(i) {
 
 function ChangeQuantity(i,q) {
     if (isNaN(q)) {
-      alert(strErrQty);
+		  alert(strErrQty);
     } else {
+    	if (!q || q<=0) {
+			   q = 1;
+			   this.value = q;
+		  }
       location.href=location.href + get+ "a=chq&num="+i+"&qnt="+q;
     }
-   
 }
 
 function AddToCart(ID_NUM) {
