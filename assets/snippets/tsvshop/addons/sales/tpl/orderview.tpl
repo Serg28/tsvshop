@@ -11,6 +11,7 @@
 		.gridAltItem .actionButtons #Button2
 			{display:none !important;}
 	}
+  #myform input:disabled {background: #f0f0f0; color:#999}
 </style>
 
 <table class="grid_table">
@@ -38,43 +39,43 @@
 		    </tr>
 		    <tr>
 		    	<td width="30%" class="gridAltItem">[+sales_numorder+]</td>
-		    	<td width="70%" class="gridItem" style="border-right:none">[+numorder+]</td>
+		    	<td width="70%" class="gridItem" style="border-right:none; height:20px">[+numorder+]</td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_data+]</td>
-		    	<td class="gridItem" style="border-right:none">[+dateorder+]</td>
+		    	<td class="gridItem" style="border-right:none; height:20px">[+dateorder+]</td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_fio+]</td>
-		    	<td class="gridItem" style="border-right:none">[+fio+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="fio" value="[+fio+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_phone+]</td>
-		    	<td class="gridItem" style="border-right:none">[+phone+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="phone" value="[+phone+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_email+]</td>
-		    	<td class="gridItem" style="border-right:none">[+email+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="email" value="[+email+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_province+]</td>
-		    	<td class="gridItem" style="border-right:none">[+province+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="province" value="[+province+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_region+]</td>
-		    	<td class="gridItem" style="border-right:none">[+region+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="region" value="[+region+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_city+]</td>
-		    	<td class="gridItem" style="border-right:none">[+city+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="city" value="[+city+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem">[+sales_zip+]</td>
-		    	<td class="gridItem" style="border-right:none">[+zip+]</td>
+		    	<td class="gridItem" style="border-right:none; padding:1px 7px 2px 7px"><input type="text" name="zip" value="[+zip+]"></td>
 		    </tr>
 		    <tr>
 		    	<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_adress+]</td>
-		    	<td class="gridItem" style="border-bottom:1px solid #D0D0D0; border-right:none">[+adress+]</td>
+		    	<td class="gridItem" style="border-bottom:1px solid #D0D0D0; border-right:none; padding:1px 7px 2px 7px"><input type="text" name="adress" value="[+adress+]"></td>
 		    </tr>
 		    </table>
 		</td>
@@ -87,19 +88,19 @@
 		    </tr>
       	<tr>
 		    	<td class="gridAltItem">[+sales_comments+]</td>
-		    	<td class="gridItem">[+comments+]</td>
+		    	<td class="gridItem" style="padding:1px 7px 2px 7px"><input type="text" name="comments" value="[+comments+]"></td>
 		    </tr>
       	<tr>
 		    	<td width="30%"  class="gridAltItem">[+sales_shiptype+]</td>
-		    	<td width="70%" class="gridItem">[+shiptype+]</td>
+		    	<td width="70%" class="gridItem" style="padding:1px 7px 2px 7px"><input type="text" name="shiptype" value="[+shiptype+]"></td>
 		    </tr>
 				<tr>
 			    <td width="30%"  class="gridAltItem">[+sales_discountnum+]</td>
-			    <td width="70%" class="gridItem">[+discountnum+]</td>
+			    <td width="70%" class="gridItem" style="padding:1px 7px 2px 7px"><input type="text" name="discountnum" value="[+discountnum+]"></td>
 			  </tr>
 				<tr>
 			    <td width="30%"  class="gridAltItem">[+sales_payment+]</td>
-			    <td width="70%" class="gridItem">[+payments+]</td>
+			    <td width="70%" class="gridItem" style="padding:1px 7px 2px 7px"><input type="text" name="payments" value="[+payments+]"></td>
 			  </tr>
 		    	<tr>
 		    		<td class="gridAltItem">[+sales_status+]</td>
@@ -107,7 +108,7 @@
 		    	</tr>
 			    <tr>
 		    		<td class="gridAltItem" valign="top" style="border-bottom:1px solid #D0D0D0">[+sales_notes+]</td>
-		    		<td class="gridItem" style="border-bottom:1px solid #D0D0D0"><textarea name="commentadmin" width="100%" rows="9" style="height:66px; width:98%" id="commentadmin">[+commentadmin+]</textarea></td>
+		    		<td class="gridItem" style="border-bottom:1px solid #D0D0D0; padding:1px 7px 2px 7px"><textarea name="commentadmin" width="100%" rows="12" style="height:105px; width:98%" id="commentadmin">[+commentadmin+]</textarea></td>
 		    	</tr>
           <tr>
 		    <td class="gridAltItem" valign="top" colspan="2" style="border-bottom:1px solid #D0D0D0; padding-bottom:0">
@@ -126,15 +127,16 @@
 		</td>
 	</tr>
 	</table>
-</form>        
+       
         
 <table class="TF tsvorder" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
-      	<th width="1%">№</th>
-				<th width="3%">[+sales_id+]</th>
-				<th width="20%">[+sales_name+]</th>
-				<th width="3%">[+sales_quantity+]</th>
-				<th width="3%">[+sales_price+]</th>
+      	<th width="5%">№</th>
+				<th width="10%">[+sales_id+]</th>
+				<th width="55%">[+sales_name+]</th>
+				<th width="10%">[+sales_quantity+]</th>
+				<th width="10%">[+sales_price+]</th>
+        <th width="10%">[+sales_summa+]</th>
 			</tr>
 <!--repeat-->
 
@@ -142,35 +144,36 @@
       	<td align="center">[+num+]</td>
 			  <td align="center">[+articul+] (ID:[+url+])</td>
 			  <td>[+name+]</td>
-			  <td align="center">[+quantity+]</td>
-			  <td align="center">[+price+]</td>
+			  <td align="center" style="padding:1px 7px 2px 7px"><input type="text" name="item[[+id+]][quantity]" value="[+quantity+]" style="width:80%;"></td>
+			  <td align="center" style=" padding:1px 7px 2px 7px"><input type="text" name="item[[+id+]][price]" value="[+price+]" style="width:80%;" ></td>
+        <td align="center" style="padding:1px 7px 2px 7px"><input type="text" name="none" disabled value="[+summa+]" style="width:80%;"></td>
 	    </tr>
 
 <!--/repeat-->
 
       <tr>
-				<td colspan="4" align="left" class="gridAltItem">[+sales_subtotal+]</td>
-				<td class="gridAltItem">[+subtotal+]</td>
+				<td colspan="5" align="left" class="gridAltItem">[+sales_subtotal+]</td>
+				<td class="gridAltItem" style="padding:1px 7px 2px 7px"><input type="text" name="subtotal" disabled value="[+subtotal+]" style="width:80%;"></td>
 			</tr>
 
 			<tr>
-				<td colspan="4" align="left" class="gridAltItem">[+sales_shipping+]</td>
-				<td class="gridAltItem">[+shipping+]</td>
+				<td colspan="5" align="left" class="gridAltItem">[+sales_shipping+]</td>
+				<td class="gridAltItem" style="padding:1px 7px 2px 7px"><input type="text" name="shipping" value="[+shipping+]" style="width:80%;"></td>
 			</tr>
 			<tr>
-				<td colspan="4" align="left" class="gridAltItem">[+sales_tax+]</td>
-				<td class="gridAltItem">[+nalog+]</td>
+				<td colspan="5" align="left" class="gridAltItem">[+sales_tax+]</td>
+				<td class="gridAltItem" style="padding:1px 7px 2px 7px"><input type="text" name="nalog" value="[+nalog+]" style="width:80%;"></td>
 			</tr>
 			<tr>
-				<td colspan="4" align="left" class="gridAltItem">[+sales_discount+]</td>
-				<td class="gridAltItem"> - [+discountsize+] ([+discount+])</td>
+				<td colspan="5" align="left" class="gridAltItem" style="padding:1px 7px 2px 7px"; ><div style="margin-top:8px; float:left">[+sales_discount+]</div> <span style="float:right"><input type="text" name="discount" value="[+discount+]" style="width:80%;">%</span></td>
+				<td class="gridAltItem" style="padding:1px 7px 2px 7px"> <input type="text" name="discountsize" disabled value="[+discountsize+]" style="width:80%;"></td>
 			</tr>
 			<tr>
-				<td colspan="4" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
-				<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" >[+total+]</td>
+				<td colspan="5" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
+				<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" ><input type="text" name="total" disabled value="[+total+]" style="width:80%;"></td>
 			</tr>
       </table>        
-        
+</form>         
      
         
         

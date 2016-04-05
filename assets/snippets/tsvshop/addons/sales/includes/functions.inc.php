@@ -8,7 +8,7 @@ $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateord
 //Ниже - список имен полей в таблице заказа shop_order . Служит как проверочный список допустимых полей при добавлении заказа в БД
 //т.е. значение поля в форме заказа не будет добавлено в БД, если названия этого поля нету в данном списке.
 //также этот список служит для формирования списка полей, доступных для шифрования в аддоне модуле TSVshop, аддон Конфигурация, вкладка Безопасность, поле Поля для шифрования
-$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid";
+$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid,discount,discountnum,shipping,shiptype,payments";
 //список меток аддона Заказы, которые используются в чанках Shop_Cart, Shop_Checkout, которые нельзя вырезать.
 $tsvshop['syslabels']="noempty,empty,subtotal,total,buttons,repeat,full,table";
 
@@ -165,28 +165,55 @@ function checkdelorder() {
 
 //update selected order
 function updateorder($idorder) {
-    global $modx, $shop_lang, $tsvshop;
+    global $modx, $shop_lang, $tsvshop, $cache;
     //$user=$modx->userLoggedIn();
     $user=$modx->getLoginUserType();
     $output = "";
     $output_sales_notice="";
     $output_sales_error="";
     $act=$_GET['act'];
-
-    //if ($user['usertype']=="manager") {
+    $subtotal = 0;
+    
+    $folders = $cache->cache('folders','tsvshop');
+    if (!is_array($tsvshop['sysfields'])) $tsvshop['sysfields'] = explode(',',$tsvshop['sysfields']);
+    if (!is_array($tsvshop['customfields'])) $tsvshop['customfields'] = explode(',',$tsvshop['customfields']);
+    $tsvshop['sysfields'] = array_merge($tsvshop['sysfields'],$tsvshop['customfields']);
+    foreach ($folders as $folder) {
+      if ($folder != "."  && $folder != ".." ) {
+         if (!is_array($tsvshop['cf_'.$folder])) $tsvshop['cf_'.$folder] = explode(',',$tsvshop['cf_'.$folder]);
+         $tsvshop['sysfields'] = array_merge($tsvshop['sysfields'],$tsvshop['cf_'.$folder]);
+      }
+    }
+    
     if ($user=="manager") {
         if (!empty($act) && $act=="updateorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder !="0") {
-          if ($_GET['status'] == "Оплачено") $fields['datepay'] = time();
-          //---v5.2rc2----
-          $sysfielad = explode(',',$tsvshop['sysfields']);
+          // ищем данные о товарах в REQUEST  v5.4.1----
+          if (!empty($_REQUEST['item'])) {
+            foreach ($_REQUEST['item'] as $key=>$val) {
+               $res = $modx->db->update( $val, $tsvshop['dborders_details'], 'id = ' . intval($key) );
+                    $summa = $val['price']*$val['quantity'];
+                    $subtotal = $subtotal + $summa;
+            }
+          }
+
+          //---v5.4.1----
+          $sysfielad = array_unique($tsvshop['sysfields']);
+          $sfields = explode(",", $tsvshop['SecFields']);
           foreach ($_GET as $key => $value) {
             if (in_array($key,$sysfielad)) {
+                 if (in_array($key, $sfields)) {
+                    $value = CryptMessage($value, $tsvshop['SecPassword']);
+                 }
               $fields[$key] = $modx->db->escape($value);
             }
           }
+          //пересчет и добавление итоговых сумм  ---v5.4.1----
+          $fields['subtotal'] = $subtotal;
+          $fields['discountsize'] = round(($fields['subtotal']*$fields['discount'])/100,2);
+          $fields['total'] = ($fields['subtotal']+$fields['shipping']+$fields['nalog'])-$fields['discountsize'];
+          
           //------
           updateMail($modx->db->escape($_GET['status']),$idorder);
-		      //$result = $modx->db->update( $fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"' );
           if ($modx->db->update( $fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"' )) {
               //Запускаем событие TSVshopOnOrderStatusUpdate
               $modx->invokeEvent("TSVshopOnOrderStatusUpdate",array("idorder"=>$idorder, "newstatus"=>$modx->db->escape($_GET['status'])));
@@ -314,6 +341,7 @@ function vieworder($filename) {
     $output_sales_notice="";
 	  $output_sales_error="";
     $temp = "";
+    $subtotal = 0;
     $act=$_GET['act'];
     $id=_filter($_GET['idorder'],1);
     $filename = (empty($filename)) ? TSVSHOP_PATH.'addons/sales/tpl/orderview.tpl' : $filename;
@@ -335,7 +363,6 @@ function vieworder($filename) {
            $tpltr = getStr($tpl, '<!--repeat-->', '<!--/repeat-->');
            
            $row = array_merge($shop_lang,$row1,$row);
-           
            foreach ($row as $key => $value) {
              if (in_array($key,explode(",",$tsvshop['SecFields'])))  {
                $value=DeCryptMessage($value, $tsvshop['SecPassword']);
@@ -345,22 +372,43 @@ function vieworder($filename) {
              }
              if ($key=="status") {
                $tpl = str_replace('[+buildstatus+]', '<select name="status" id="status">'.buildstatus($value, explode("||",$tsvshop['StatusOrder'])).'</select>', $tpl);
+             }  
+             if ($key=="shipping") {$shipping = $value;}
+             if ($key=="nalog") {$nalog = $value;}
+             if ($key=="discount") {$discount = $value;}
+             if ($key!="subtotal" && $key!="total" && $key!="topay" && $key!="discountsize") {
+                $tpl = str_replace('[+'.$key.'+]', $value, $tpl);
              }
-             $tpl = str_replace('[+'.$key.'+]', $value, $tpl);
            }
            
            if ($res = $modx->db->select('*', $tsvshop['dborders_details'], 'numorder = "' . $id . '"','numorder' )) {
+             
              while ($order = $modx->db->getRow($res))  {
                $row = array_merge($row,$order);
 			         $r++;
                $temp = str_replace('[+moduleid+]', $_GET['id'], $tpltr);
-               foreach ($order as $key => $value) { 
+               foreach ($order as $key => $value) {
                  $temp = str_replace('[+'.$key.'+]', $value, $temp);
+                 if ($key == 'price') {
+                    $summa = $value*$order['quantity'];
+                    $temp = str_replace('[+summa+]', $summa, $temp);
+                    $subtotal = $subtotal + $summa;
+                 }
                }
                $temp = str_replace('[+num+]', $r, $temp);
                $out.=$temp;
-             }
-             $out = str_replace($tpltr,$out,$tpl);
+             }  
+             $out = str_replace($tpltr,$out,$tpl);       
+             
+             //подсчет и заполнение итоговых сумм
+             $discountsize = round(($subtotal*$discount)/100,2);
+             $total = ($subtotal+$shipping+$nalog)-$discountsize;
+             //echo 'subtotal='.$subtotal.": shipping=".$shipping."; nalog=".$nalog."; discountsize=".$discountsize."; total=".$total;
+             $out = str_replace('[+total+]', $total, $out);
+             $out = str_replace('[+topay+]', $total, $out);
+             $out = str_replace('[+subtotal+]', $subtotal, $out);
+             $out = str_replace('[+discountsize+]', $discountsize, $out);
+                          
              $out = preg_replace('/(\[\+.*?\+\])/' ,'', $out);
              return $out;
            }
