@@ -486,7 +486,7 @@ if ($act == 'office') {
             'act' => 'listorders',
             'orderpage' => $orderpage
         )));
-        $modx->setPlaceholder('logoutlink', $modx->documentIdentifier . '?isLogOut=1');
+        $modx->setPlaceholder('logoutlink', $modx->makeUrl($modx->documentIdentifier).'?isLogOut=1');
         echo getTpl($yesChunk);
     }
     else { // если неавторизован
