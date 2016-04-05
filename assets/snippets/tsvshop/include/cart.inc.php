@@ -19,6 +19,14 @@ if (!function_exists("session")) {
 
 $session = (!$session) ? session($cache) : $session;
 
+if (!function_exists("tsv_priceformat")) {
+  function tsv_PriceFormat($price) {
+    global $tsvshop;
+    $decimal = ($tsvshop['PriceFormat']=="0" || $tsvshop['PriceFormat']=="") ? 0 : 2;
+    return number_format($price, $decimal, '.', '');
+  }
+}
+
 if (!function_exists("tsv_ConvertPrice")) {
     function tsv_ConvertPrice($txt)
     {
@@ -98,6 +106,35 @@ if (!function_exists("tsv_CalcPrice")) {
         return $price;
     }
 }
+
+
+if(!function_exists("tsv_parseOptions")) {
+function tsv_parseOptions($opt) {
+   $price = 0;
+   $fprice = 0;
+   $i=0;
+   $price='';
+   if (is_array($txt = explode(";", $opt))) {
+     foreach ($txt as $sel1) {
+        $option = explode(":", $sel1);
+        $sel3 = explode("||",$option[1]);
+        foreach($sel3 as $sel4) {
+           $res = explode("==",$sel4);
+           if ($res[0]{0} == "*") {
+			       if (!in_array($res[1]{0},array('+', '-','/','*')))$res[1]='+'.$res[1];
+             $price.= $res[1];
+           }
+           if ($i==0) { $fprice = $res[1]; }
+           $i++;
+        }
+     }
+   }
+   $price = ($i>0) ? $price : $fprice;
+   return $price; 
+}
+}
+
+
 if (!function_exists("tsv_GetTovar")) {
     function tsv_GetTovar($cache, $idnum = false)
     {
@@ -363,8 +400,8 @@ if (!function_exists("tsv_display_infoblock")) {
             $tabletmp = str_replace('[+shop.info.iconpath+]', $_SESSION[$session]['orders'][$i]['icon'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.articul+]', $_SESSION[$session]['orders'][$i]['articul'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.quantity+]', $_SESSION[$session]['orders'][$i]['qty'], $tabletmp);
-            $tabletmp = str_replace('[+shop.info.price+]', $price, $tabletmp);
-            $tabletmp = str_replace('[+shop.info.summa+]', $summa, $tabletmp);
+            $tabletmp = str_replace('[+shop.info.price+]', tsv_PriceFormat($price), $tabletmp);
+            $tabletmp = str_replace('[+shop.info.summa+]', tsv_PriceFormat($summa), $tabletmp);
             $tabletmp = str_replace('[+shop.info.name+]', $_SESSION[$session]['orders'][$i]['name'], $tabletmp);
             if (!empty($_SESSION[$session]['orders'][$i]['url'])) {
               $url      = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($_SESSION[$session]['orders'][$i]['url']) : "&tovar=" . $_SESSION[$session]['orders'][$i]['url'];
@@ -386,7 +423,7 @@ if (!function_exists("tsv_display_infoblock")) {
         
         $full = str_replace("[+shop.info.count+]", $items, $full);
         $full = str_replace("[+shop.info.ssumma+]", $shop_lang['strSumma'], $full);
-        $full = str_replace("[+shop.info.total+]", $total, $full);
+        $full = str_replace("[+shop.info.total+]", tsv_PriceFormat($total), $full);
         $full = str_replace("[+shop.info.monetary+]", $tsvshop['MonetarySymbol'], $full);
         $full = str_replace($table, $tmp, $full);
         
@@ -551,7 +588,7 @@ if (!function_exists("tsv_display_cart")) {
                             $tabletmp = str_replace('[+shop.basket.icon+]', $val, $tabletmp);
                             break;
                         case 'price':
-                            $tabletmp = str_replace('[+shop.basket.price+]', $price, $tabletmp);
+                            $tabletmp = str_replace('[+shop.basket.price+]', tsv_PriceFormat($price), $tabletmp);
                             break;
                         case 'url':
                             $url      = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($val) : "&tovar=" . $val;
@@ -573,7 +610,7 @@ if (!function_exists("tsv_display_cart")) {
                 }
                 $tabletmp = str_replace('[+shop.basket.qinput+]', '<input type="number" name="q" size="3" class="nopinput" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);">', $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.qatributs+]', 'name="q" value="' . $_SESSION[$session]['orders'][$i]['qty'] . '" onkeypress="return testKey(event)" onChange="ChangeQuantity(\'' . $i . '\', this.value);"', $tabletmp);
-                $tabletmp = str_replace('[+shop.basket.summa+]', $summa, $tabletmp);
+                $tabletmp = str_replace('[+shop.basket.summa+]', tsv_PriceFormat($summa), $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.num+]', $i, $tabletmp);
                 $tabletmp = str_replace('[+shop.basket.delatributs+]', 'onClick="RemoveFromCart(\'' . $i . '\'); return false"', $tabletmp);
                 // --------------------------------
@@ -608,7 +645,7 @@ if (!function_exists("tsv_display_cart")) {
             ));
             if (is_array($evt) && !empty($evt[0]))
                 $sub = $evt[0];
-            $tpl                                      = str_replace("[+shop.basket.subtotal+]", $sub, $tpl);
+            $tpl                                      = str_replace("[+shop.basket.subtotal+]", tsv_PriceFormat($sub), $tpl);
             $_SESSION[$session]['result']['subtotal'] = $sub;
             
             //тут вставляем Actions для корзины
@@ -639,7 +676,7 @@ if (!function_exists("tsv_display_cart")) {
             
             $tot = (($sub - $tsvshop['discountsize']) + (floatval($tsvshop['TaxRate']) + floatval($tsvshop['shipping'])));
             
-            $tpl                                   = str_replace("[+shop.basket.total+]", $tot, $tpl);
+            $tpl                                   = str_replace("[+shop.basket.total+]", tsv_PriceFormat($tot), $tpl);
             $_SESSION[$session]['result']['total'] = $tot;
             $_SESSION[$session]['result']['count'] = $count;
             
@@ -687,7 +724,7 @@ if (!function_exists("tsv_display_cart")) {
             }
             
             //добавлено с v5.3 ----------------------------------------------------
-            $tpl = str_replace("[+shop.basket.topay+]", $_SESSION[$session]['result']['topay'], $tpl);
+            $tpl = str_replace("[+shop.basket.topay+]", tsv_PriceFormat($_SESSION[$session]['result']['topay']), $tpl);
             
             //запоминаем основные переменные
             $userid = $modx->getLoginUserID();
@@ -902,7 +939,7 @@ if (!function_exists("tsv_Finish")) {
                     'numorder' => $numorder,
                     'name' => $_SESSION[$session]['orders'][$i]['name'],
                     'articul' => $_SESSION[$session]['orders'][$i]['articul'],
-                    'price' => $price,
+                    'price' => tsv_PriceFormat($price),
                     'icon' => $_SESSION[$session]['orders'][$i]['icon'],
                     'quantity' => $_SESSION[$session]['orders'][$i]['qty'],
                     'url' => $_SESSION[$session]['orders'][$i]['url'],
@@ -914,8 +951,8 @@ if (!function_exists("tsv_Finish")) {
                 foreach ($_SESSION[$session]['orders'][$i] as $key => $val) {
                     switch ($key) {
                         case 'price':
-                            $tmp  = str_replace("[+shop.mail.price+]", $price, $tmp);
-                            $tmp1 = str_replace("[+shop.mail.price+]", $price, $tmp1);
+                            $tmp  = str_replace("[+shop.mail.price+]", tsv_PriceFormat($price), $tmp);
+                            $tmp1 = str_replace("[+shop.mail.price+]", tsv_PriceFormat($price), $tmp1);
                             break;
                         case 'icon':
                             $tmp  = str_replace("[+shop.mail.icon+]", $val, $tmp);
@@ -950,8 +987,8 @@ if (!function_exists("tsv_Finish")) {
                       }
                     }
                 }
-                $tmp  = str_replace("[+shop.mail.summa+]", (tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty']), $tmp);
-                $tmp1 = str_replace("[+shop.mail.summa+]", (tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty']), $tmp1);
+                $tmp  = str_replace("[+shop.mail.summa+]", (tsv_PriceFormat(tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty'])), $tmp);
+                $tmp1 = str_replace("[+shop.mail.summa+]", (tsv_PriceFormat(tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty'])), $tmp1);
                 
                 $table .= $tmp;
                 $table1 .= $tmp1;
