@@ -43,7 +43,7 @@
 <hr>
 <!-- log out hyperlink section -->
 <a href='[+action+]'>[+logouttext+]</a><br />
-<a href='[~19~]'>Редактирование профиля</a>
+<a href='[~15~]'>Редактирование профиля</a>
 <hr>
 <!-- Password reminder form section -->
 <fieldset>

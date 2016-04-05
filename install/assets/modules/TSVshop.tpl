@@ -70,7 +70,7 @@ if (!$folders = $cache->cache('folders','tsvshop')) {
   $cache->cache('folders','tsvshop',$folders);
 }
 
-
+//$folders=array_reverse($folders,true);
 foreach ($folders as $folder) {
          if ($folder != "."  && $folder != ".." ) {
                  $lfile=$addonspath.$folder.'/lang/' . $modx->config['manager_language'] . '.inc.php';
