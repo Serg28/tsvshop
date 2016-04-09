@@ -1,24 +1,77 @@
-<?php
-$hiddenFields='price,cart_icon,typeitem';
+<?php      
+// shopgroupprice.extender.inc.php
+// это екстендер выполняет те же функции, что и екстендер shop: обрабатывает и выводит товары для модуля TSVshop
+// но разница в следующем: это екстендер позволяет выводить цену товара в зависимости от группы, к которой принаджлежит авторизованный пользователь
+// для этого у товара добавляется несколько TV-параметров с ценами для разных веб-групп, напр., price_group1, price_group2 и т.д.
+// в вызове Ditto добавляем этот екстендер так: &extender=`shopgroupprice`
+// а чтобы задать, какой TV с ценой к какой группе веб-пользователй относится, есть параметр gtp , в котором задается такая формула:
+// имя_веб_группы1=имя_tv_с_ценой1;имя_веб_группы2=имя_tv_с_ценой2.
+//
+// Пример: [[Ditto? &extender=`shopgroupprice` &gtp=`gropname1=tvprice_group1;gropname2=tvprice_group2`]]
+//
+// если &gtp не указан, то берется цена из TV price
+	
+if(!function_exists('tsv_MemberCheck')) {	
+		function tsv_MemberCheck() {
+			global $modx;
+			$allGroups = array ();
+			$tableName = $modx->getFullTableName('webgroup_names');
+			$sql = "SELECT name FROM $tableName";
+			if ($rs = $modx->db->query($sql)) {
+				while ($row = $modx->db->getRow($rs)) {
+					array_push($allGroups, stripslashes($row['name']));
+				}
+			}
+			$_SESSION['allGroups'] = $allGroups;
+		}
 
-$placeholders['tsvservices'] = array('id,price,cart_icon,typeitem','tsvservices');
-$placeholders['tsvprice'] = array('id,price,tsvshop_param','tsvprice');
+		function tsv_isValidGroup($groupName) {
+			global $modx, $allGroups;
+			$isValid = !(array_search($groupName, $allGroups) === false);
+			return $isValid;
+		}	
+}	
+
+global $tvprice, $allGroups, $modx;
+$gtp = (isset($gtp)) ? $gtp : "";
+$allGroups = (isset($_SESSION['allGroups'])) ? $_SESSION['allGroups'] : tsv_MemberCheck(); //все имеющиеся группы
+$usergroups = $modx->isMemberOfWebGroup($allGroups); //авторизован ли пользователь и относится ли к какой-то группе?
+$tvprice = (empty($gtp) || !$usergroups) ? "price" : ""; // если нет группы либо нет параметра $gtp, tvprice = price
+
+if (empty($tvprice)) {
+  $gtptmp = explode(';',trim($gtp));
+  foreach ($gtptmp as $val) {
+    $gtpdata = explode('=',trim($val));
+	if (tsv_isValidGroup($gtpdata[0]) && $modx->isMemberOfWebGroup(array($gtpdata[0]))) {
+      $tvprice = $gtpdata[1];
+    }
+  }
+  $tvprice = (empty($tvprice)) ? "price" : $tvprice;
+}
+
+$price = ','.$tvprice;
+$hiddenFields='typeitem,cart_icon'.$price;
+
+$placeholders['tsvservices'] = array('id'.$price.',cart_icon,typeitem','tsvservices');
+$placeholders['tsvprice'] = array('id,tsvshop_param'.$price,'tsvprice');
 $placeholders['tsvoptions'] = array('id','tsvoptions');
 $placeholders['tsvbattr'] = array('id','tsvbutton');
 
 if(!function_exists('tsvservices')) {
         function tsvservices($resource) {
-                return '<input type="hidden" name="typeitem" value="'.$resource['typeitem'].'" /><input type="hidden" name="formula" value="'.$resource['price'].'" /><input type="hidden" name="cart_icon" value="'.$resource['cart_icon'].'" />';
+				global $tvprice;
+                return '<input type="hidden" name="typeitem" value="'.$resource['typeitem'].'" /><input type="hidden" name="formula" value="'.$resource[$tvprice].'" /><input type="hidden" name="cart_icon" value="'.$resource['cart_icon'].'" />';
         }
 }
 
 if(!function_exists('tsvprice')) {
         function tsvprice($resource) {
+				global $tvprice;
                 require(MODX_BASE_PATH."assets/snippets/tsvshop/include/config.inc.php");
                 $decimal = ($tsvshop['PriceFormat']=="0" || $tsvshop['PriceFormat']=="") ? 0 : 2;
-                $price = number_format($resource['price'], $decimal, '.', '');
+                $price = number_format(floatval($resource[$tvprice]), $decimal, '.', '');
                 //return '<span id="price'.$resource['id'].'" class="tsvprice">'.tsv_CalcPrice($resource['price'], 1, tsv_parseOptions($resource['tsvshop_param'])).'</span>';
-                return '<span id="price'.$resource['id'].'" class="tsvprice">'.number_format(tsv_CalcPrice($resource['price'], 1, tsv_parseOptions($resource['tsvshop_param'])), $decimal, '.', '').'</span>';
+                return '<span id="price'.$resource['id'].'" class="tsvprice">'.number_format(tsv_CalcPrice($resource[$tvprice], 1, tsv_parseOptions($resource['tsvshop_param'])), $decimal, '.', '').'</span>';
         }
 }
 
@@ -144,9 +197,10 @@ function tsv_parseOptions($opt) {
 
 if (!function_exists('sortByPrice')) {
     function sortByPrice($a_doc, $b_doc) {
+		global $tvprice;
         $sortDirPrice = isset($sortDirPrice) ? $sortDirPrice : 'ASC';
-        $a_stamp = tsv_CalcPrice($a_doc['price'],1,'');
-        $b_stamp = tsv_CalcPrice($b_doc['price'],1,''); 
+        $a_stamp = tsv_CalcPrice($a_doc[$tvprice],1,'');
+        $b_stamp = tsv_CalcPrice($b_doc[$tvprice],1,''); 
 
         if ($GLOBALS['sortDirPrice']=='ASC') {
           return ($a_stamp < $b_stamp ? -1 : ($a_stamp > $b_stamp ? 1 : 0));
@@ -172,25 +226,12 @@ if (!function_exists('sortByParam')) {
     }
 }
 
-/*
-// чтобы включить стандартную сортировку в Ditto, нужно добавить в его вызов &sortByPrice=`none`
-if ($GLOBALS['sortByPrice'] != 'none')
-{
-	if ($GLOBALS['sortByPrice']=='price') {
-	 $orderBy['custom'][] = array('price', 'sortByPrice');
-	} else {
-	 $orderBy['custom'][] = array('tsvshop_param', 'sortByParam');
-	}
-	$ditto->advSort = TRUE; 
-}
-*/
-
 //v5.3
 // По-умолчанию работает стандартная сортировка в Ditto
 // Если же указан &sortByPrice=`price` или &sortByPrice=`param`, сортируется по цене или параметрам товара соответственно
 if ($GLOBALS['sortByPrice']!='' && ($GLOBALS['sortByPrice']=='price' || $GLOBALS['sortByPrice']=='param')) {
   if ($GLOBALS['sortByPrice']=='price') {
-    $orderBy['custom'][] = array('price', 'sortByPrice');
+    $orderBy['custom'][] = array($tvprice, 'sortByPrice');
   } else {
     $orderBy['custom'][] = array('tsvshop_param', 'sortByParam');
   }
