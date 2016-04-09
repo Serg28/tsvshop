@@ -724,7 +724,7 @@ if ($callBackFnc != "")
 define('MODX_API_MODE', true);
 define('MODX_BASE_PATH', $base_path);
 if (!defined('MODX_MANAGER_PATH')) define('MODX_MANAGER_PATH', $base_path.MGR_DIR.'/');
-$database_type = 'mysql';
+$database_type = 'mysqli';
 // initiate a new document parser
 include_once('../'.MGR_DIR.'/includes/document.parser.class.inc.php');
 $modx = new DocumentParser;
