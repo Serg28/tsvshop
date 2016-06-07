@@ -141,7 +141,7 @@ class fileCache {
 			
 			if ( time() < (filemtime($filename) + $this->cache_expire) ) {//cache for the key not expired
 				$file = fopen($filename, 'r');// read data file
-		        if ($file){//able to open the file
+		        if ($file && filesize($filename)>0){//able to open the file
 		            $data = fread($file, filesize($filename));
 		            fclose($file);
 		            $this->addLog('reading key: '.$key.' file: '.$filename);
