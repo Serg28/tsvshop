@@ -24,7 +24,7 @@ if(!function_exists('tsv_MemberCheck')) {
 			}
 			$_SESSION['allGroups'] = $allGroups;
 		}
-
+if(!function_exists('tsv_isValidGroup')) {	
 		function tsv_isValidGroup($groupName) {
 			global $modx, $allGroups;
 			$isValid = !(array_search($groupName, $allGroups) === false);
@@ -60,7 +60,7 @@ $placeholders['tsvbattr'] = array('id','tsvbutton');
 if(!function_exists('tsvservices')) {
         function tsvservices($resource) {
 				global $tvprice;
-                return '<input type="hidden" name="typeitem" value="'.$resource['typeitem'].'" /><input type="hidden" name="formula" value="'.$resource[$tvprice].'" /><input type="hidden" name="cart_icon" value="'.$resource['cart_icon'].'" />';
+                return '<input type="hidden" name="typeitem" value="'.$resource['typeitem'].'" /><input type="hidden" name="formula" value="'.$resource[$tvprice].'" /><input type="hidden" name="cart_icon" value="[(base_url)]'.$resource['cart_icon'].'" />';
         }
 }
 
