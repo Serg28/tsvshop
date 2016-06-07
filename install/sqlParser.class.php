@@ -10,6 +10,7 @@ class SqlParser {
 	var $dbVersion;
     var $connection_charset, $connection_method;
     
+    var $CONTENT_MAIN, $CONTENT_KABINET, $CONTENT_CART, $CONTENT_CHECKOUT, $CONTENT_FINISH, $CONTENT_ABOUT, $CONTENT_CATALOG, $CONTENT_TEHN, $CONTENT_KANC, $CONTENT_LCD, $CONTENT_MV;
     var $TEMPLATE_ITEM, $TEMPLATE_MAIN, $TEMPLATE_INDX, $TEMPLATE_CART;
     var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE, $TV_INVEN;
 
@@ -70,31 +71,199 @@ class SqlParser {
 			$e = strpos($idata,"]]non-upgrade-able")+17;
 			if($s && $e) $idata = str_replace(substr($idata,$s,$e-$s)," Removed non upgradeable items",$idata);
 		}
+    
+    
+		//content
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Главная демо-сайта'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_MAIN=!empty($rid)?$rid:331;    
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мой кабинет (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_KABINET=!empty($rid)?$rid:336; 
+
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Корзина (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_CART=!empty($rid)?$rid:332; 
+
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Оформление покупки (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_CHECKOUT=!empty($rid)?$rid:333; 
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Спасибо за покупку (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_FINISH=!empty($rid)?$rid:334;     
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'О сайте (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_ABOUT=!empty($rid)?$rid:335;  
+
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Каталог товаров (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_CATALOG=!empty($rid)?$rid:337;      
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Бытовая техника (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_TEHN=!empty($rid)?$rid:338;   
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Канцелярия (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_KANC=!empty($rid)?$rid:339;  
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Телевизор LCD (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_LCD=!empty($rid)?$rid:400;      
+
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Микроволновка (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_MV=!empty($rid)?$rid:401;       
+      
 		
-		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Карточка товара'"));
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара'"));
-		$this->TEMPLATE_ITEM=!empty($r['id'])?$r['id']:101;
-		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Основной'"));
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной'"));
+		//templates
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->TEMPLATE_ITEM=!empty($rid)?$rid:101;
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TEMPLATE_MAIN=!empty($r['id'])?$r['id']:102;
-		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Главная'"));
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная'"));
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TEMPLATE_INDX=!empty($r['id'])?$r['id']:103;
-		//$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `name` LIKE 'Корзина'"));
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина'"));
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TEMPLATE_CART=!empty($r['id'])?$r['id']:104;
 		
+    //TV
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='price'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_PRICE=!empty($r['id'])?$r['id']:201;
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='text'"));
+    
+		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='demotext'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_REDIT=!empty($r['id'])?$r['id']:202;
+    
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='tsvshop_param'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_TMINI=!empty($r['id'])?$r['id']:203;
+    
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='articul'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_ARTCL=!empty($r['id'])?$r['id']:204;
+
 		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='cart_icon'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_IMAGE=!empty($r['id'])?$r['id']:205;
+
     $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='inventory'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $rid = $r['id'];
+    }
 		$this->TV_INVEN=!empty($r['id'])?$r['id']:206;      
 
 
@@ -112,7 +281,19 @@ class SqlParser {
 		$idata = str_replace('{FILEMANAGERPATH}', $this->fileManagerPath, $idata);
 		$idata = str_replace('{MANAGERLANGUAGE}', $this->managerlanguage, $idata);
 		$idata = str_replace('{AUTOTEMPLATELOGIC}', $this->autoTemplateLogic, $idata);
-		
+		                                                                               
+		$idata = str_replace('{CONTENT_MAIN}',	$this->CONTENT_MAIN, $idata);
+		$idata = str_replace('{CONTENT_KABINET}',	$this->CONTENT_KABINET, $idata);
+		$idata = str_replace('{CONTENT_CART}',	$this->CONTENT_CART, $idata);
+		$idata = str_replace('{CONTENT_CHECKOUT}',	$this->CONTENT_CHECKOUT, $idata);
+		$idata = str_replace('{CONTENT_FINISH}',	$this->CONTENT_FINISH, $idata);
+		$idata = str_replace('{CONTENT_ABOUT}',	$this->CONTENT_ABOUT, $idata);
+		$idata = str_replace('{CONTENT_CATALOG}',	$this->CONTENT_CATALOG, $idata);
+		$idata = str_replace('{CONTENT_TEHN}',	$this->CONTENT_TEHN, $idata);
+		$idata = str_replace('{CONTENT_KANC}',	$this->CONTENT_KANC, $idata);
+		$idata = str_replace('{CONTENT_LCD}',	$this->CONTENT_LCD, $idata);
+    $idata = str_replace('{CONTENT_MV}',	$this->CONTENT_MV, $idata);                                                                                   
+                                                                                   
 		$idata = str_replace('{TEMPLATE_ITEM}',	$this->TEMPLATE_ITEM, $idata);
 		$idata = str_replace('{TEMPLATE_MAIN}',	$this->TEMPLATE_MAIN, $idata);
 		$idata = str_replace('{TEMPLATE_INDX}',	$this->TEMPLATE_INDX, $idata);
