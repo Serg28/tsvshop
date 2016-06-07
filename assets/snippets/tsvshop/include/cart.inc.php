@@ -1112,6 +1112,8 @@ if (!function_exists("tsv_sendMail")) {
     function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
     {
         global $modx, $session, $tsvshop, $shop_lang, $mail;
+        $tsvshop['SmtpFromEmail'] = (!empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['SmtpFromEmail'] : $modx->config['emailsender'];
+	      $tsvshop['SmtpFromName'] = (!empty($tsvshop['SmtpFromName'])) ? $tsvshop['SmtpFromName'] : $modx->config['site_name'];
 		    $modx->loadExtension('MODxMailer');
         $modx->mail->ClearAllRecipients();
         $modx->mail->ClearAttachments();
@@ -1124,8 +1126,14 @@ if (!function_exists("tsv_sendMail")) {
         
         $from = explode(',',$tsvshop['SmtpFromEmail']);
         if (is_array($from)) {
-               $modx->mail->From = trim($from[0]);
-        }
+			     $modx->mail->From = trim($from[0]);
+			     $modx->mail->Sender   = trim($from[0]);
+			     $modx->mail->AddReplyTo(trim($from[0]), $modx->config['site_name']);
+		    } else {
+			     $modx->mail->From = trim($tsvshop['SmtpFromEmail']);
+			     $modx->mail->Sender   = trim($tsvshop['SmtpFromEmail']); 
+			     $modx->mail->AddReplyTo(trim($tsvshop['SmtpFromEmail']), $modx->config['site_name']);
+		    }
         
         //5.4 Можно добавлять несколько адресов почты, через запятую
         $emails = explode(",",$emails);
