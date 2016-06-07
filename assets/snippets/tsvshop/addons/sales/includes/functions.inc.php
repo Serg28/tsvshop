@@ -213,10 +213,11 @@ function updateorder($idorder) {
           $fields['total'] = ($fields['subtotal']+$fields['shipping']+$fields['nalog'])-$fields['discountsize'];
           
           //------
-          updateMail($modx->db->escape($_GET['status']),$idorder);
+          //updateMail($modx->db->escape($_GET['status']),$idorder);
           if ($modx->db->update( $fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"' )) {
               //Запускаем событие TSVshopOnOrderStatusUpdate
               $modx->invokeEvent("TSVshopOnOrderStatusUpdate",array("idorder"=>$idorder, "newstatus"=>$modx->db->escape($_GET['status'])));
+              updateMail($modx->db->escape($_GET['status']),$idorder);
               return "<span class='ok'>".$shop_lang['sales_update_ok']."</span>";
           } else {
               return "<span class='error'>".$shop_lang['sales_update_error']."</span>";
