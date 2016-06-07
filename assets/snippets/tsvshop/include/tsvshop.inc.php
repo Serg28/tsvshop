@@ -119,7 +119,7 @@ if ($act == "itemcard") {
     $price = tsv_PriceFormat(tsv_CalcPrice($price, 1, tsv_parseOptions($dparam['value'])));
 
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
-    $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="[*typeitem*]" /><input type="hidden" name="formula" value="'.$formula.'" /><input type="hidden" name="cart_icon" value="[*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
+    $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="[*typeitem*]" /><input type="hidden" name="formula" value="'.$formula.'" /><input type="hidden" name="cart_icon" value="[(base_url)][*cart_icon*]" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
     $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'">'.$price.'</span>');
     $modx->setPlaceholder('tsvbattr','onkeypress="return testKey(event)" onChange="Ucalc(\''.$modx->documentIdentifier.'\')"');
     $evt = $modx->invokeEvent("TSVshopOnViewItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat']));
