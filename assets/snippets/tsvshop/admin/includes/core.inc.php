@@ -416,6 +416,8 @@ if (!function_exists("send_mail")) {
         $modx->mail->ClearAttachments();
         $modx->mail->CharSet = $modx->config['modx_charset'];
         $modx->mail->IsHTML(true);
+        $tsvshop['SmtpFromEmail'] = (!empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['SmtpFromEmail'] : $modx->config['emailsender'];
+	      $tsvshop['SmtpFromName'] = (!empty($tsvshop['SmtpFromName'])) ? $tsvshop['SmtpFromName'] : $modx->config['site_name'];
         try {
         
             //5.4 Можно добавлять несколько адресов почты, через запятую
