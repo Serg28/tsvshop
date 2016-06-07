@@ -3,7 +3,8 @@ if (!navigator.cookieEnabled) {
 }
 
 isIE = window.navigator.userAgent.indexOf("MSIE") > - 1;
-domain = "http://" + window.location.hostname;
+var protocol = (window.location.protocol=='https:') ? 'https://' : 'http://';
+domain = protocol + window.location.hostname;
 var result = null;
 var ID = null;
 var selOptKo;

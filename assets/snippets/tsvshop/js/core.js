@@ -69,7 +69,8 @@ function getform(url,obj,callback) {
   var res = new AJAXInteraction(domain+url+getstr, callback); res.doGet();
 }
 
-var domain = "http://"+window.location.hostname;
+var protocol = (window.location.protocol=='https:') ? 'https://' : 'http://';
+var domain = protocol + window.location.hostname;
 
 function save_config_ok(result) {
     var out = (result) ? result : "<span class='error'>Error</span>";
