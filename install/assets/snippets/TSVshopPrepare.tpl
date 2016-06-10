@@ -26,7 +26,7 @@
 
  если &gtp не указан, то берется цена из TV price
 */
- 
+global $tvprice, $allGroups, $modx, $tvPrefix; 
 
 if(!function_exists('tsv_MemberCheck')) {	
 		function tsv_MemberCheck() {
@@ -77,14 +77,14 @@ if (empty($tvprice)) {
 
 if(!function_exists('tsvservices')) {
         function tsvservices($data) {
-				global $tvprice;
+				global $tvprice,$tvPrefix;
                 return '<input type="hidden" name="typeitem" value="'.$data[$tvPrefix.'typeitem'].'" /><input type="hidden" name="formula" value="'.$data[$tvprice].'" /><input type="hidden" name="cart_icon" value="[(base_url)]'.$data[$tvPrefix.'cart_icon'].'" />';
         }
 }
 
 if(!function_exists('tsvprice')) {
         function tsvprice($data) {
-				global $tvprice;
+				global $tvprice,$tvPrefix;
                 require(MODX_BASE_PATH."assets/snippets/tsvshop/include/config.inc.php");
                 $decimal = ($tsvshop['PriceFormat']=="0" || $tsvshop['PriceFormat']=="") ? 0 : 2;
                 $price = number_format(floatval($data[$tvprice]), $decimal, '.', '');
