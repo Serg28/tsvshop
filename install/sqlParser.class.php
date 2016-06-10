@@ -10,7 +10,7 @@ class SqlParser {
 	var $dbVersion;
     var $connection_charset, $connection_method;
     
-    var $CONTENT_MAIN, $CONTENT_KABINET, $CONTENT_CART, $CONTENT_CHECKOUT, $CONTENT_FINISH, $CONTENT_ABOUT, $CONTENT_CATALOG, $CONTENT_TEHN, $CONTENT_KANC, $CONTENT_LCD, $CONTENT_MV;
+    var $CONTENT_RP, $CONTENT_VZ, $CONTENT_MZ, $CONTENT_MAIN, $CONTENT_KABINET, $CONTENT_CART, $CONTENT_CHECKOUT, $CONTENT_FINISH, $CONTENT_ABOUT, $CONTENT_CATALOG, $CONTENT_TEHN, $CONTENT_KANC, $CONTENT_LCD, $CONTENT_MV;
     var $TEMPLATE_ITEM, $TEMPLATE_MAIN, $TEMPLATE_INDX, $TEMPLATE_CART;
     var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE, $TV_INVEN;
 
@@ -172,7 +172,35 @@ class SqlParser {
       $rid = $r['id'];
     }
 		$this->CONTENT_MV=!empty($rid)?$rid:401;       
-      
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мои заказы  (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_MZ=!empty($rid)?$rid:402;  
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Просмотр заказа  (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_VZ=!empty($rid)?$rid:403; 
+    
+    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Редактирование профиля  (демо-сайт)'"));
+    if (!empty($r['id'])) {
+      $rid = $r['id'];
+    } else {
+      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $rid = $r['id'];
+    }
+		$this->CONTENT_RP=!empty($rid)?$rid:404;     
+    
+          
 		
 		//templates
     $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
