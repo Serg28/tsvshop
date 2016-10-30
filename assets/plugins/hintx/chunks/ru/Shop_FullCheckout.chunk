@@ -1,0 +1,26 @@
+<br/>
+
+<style>
+#hinttable {margin-bottom:24px;}
+#hinttable TR TD {border-bottom:1px dotted #808080;}
+#hinttable THEAD TD {background-color:#dddddd; border:1px solid white;}
+#hinttable TD {padding:3px 8px;}
+</style>
+
+
+
+<h2>Чанк Shop_FullCheckout - шаблон для вывода полностью сформированной страницы оформления заказа для режима ckeckout</h2>
+<table id="hinttable">
+<thead>
+<td width="200"> Плейсхолдер</td><td>Назначение</td>
+</thead>
+<tr>
+<td>[+shop.basket.userform+]</td>
+<td><span style="color:red">Вместо данного плейсхолдера выведется полностью сформированная форма заказа покупки с помощью сниппета eForm.</td>
+</tr>
+<tr>
+<td>[+shop.basket.checkouttable+]</td>
+<td><span style="color:red">Вместо данного плейсхолдера выведется полностью сформированная таблица с заказом.</td>
+</tr> 
+</table>
+<br/>

@@ -81,7 +81,6 @@
 <!--/total-->
 </tbody>
 </table>
-[+shop.basket.userform+]
 
 
 
