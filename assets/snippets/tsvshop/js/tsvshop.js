@@ -421,8 +421,10 @@ function ChangeQuantity(i,q) {
 
 function AddToCart(ID_NUM) {
   if (DisplayNotice) ShowWindow(strAddLoading, load);
-  USelect(ID_NUM, document.forms['Tovar' + ID_NUM]);
-  var thisForm = document.forms['Tovar' + ID_NUM];
+  var thisForm =getId('Tovar' + ID_NUM);
+  USelect(ID_NUM, thisForm);
+  //USelect(ID_NUM, document.forms['Tovar' + ID_NUM]);
+  //var thisForm = document.forms['Tovar' + ID_NUM][0];
   var cart_icon = (ci = thisForm.elements['cart_icon']) ? ci.value : '';
   var typeitem = (ti = thisForm.elements['typeitem']) ? ti.value : '';
   var q = (thisForm.elements['qty']) ? parseInt(thisForm.elements['qty'].value) : 1;
