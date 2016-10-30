@@ -26,7 +26,7 @@
 <!--/table-->
 <tr><td colspan="3">ПОДИТОГ:</td><td colspan="1">[+shop.mail.subtotal+] [+shop.mail.monetary+]</td></tr>
 <tr><td colspan="3">ОТГРУЗКА:</td><td colspan="1">[+shop.mail.shipping+] [+shop.mail.monetary+]</td></tr>
-<tr><td colspan="3">СКИДКА:</td><td colspan="1">[+shop.mail.discount+] [+shop.mail.monetary+]</td></tr>
+<tr><td colspan="3">СКИДКА:</td><td colspan="1">[+shop.mail.discountsize+] [+shop.mail.monetary+]</td></tr>
 <tr><td colspan="3">ВСЕГО:</td><td colspan="1">[+shop.mail.total+] [+shop.mail.monetary+]</td></tr>
 </table>
 <br />
