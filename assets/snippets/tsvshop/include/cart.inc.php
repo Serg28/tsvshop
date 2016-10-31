@@ -8,7 +8,7 @@ if (!$cache) {
 if (!function_exists("session")) {
     function session($cache)
     {
-        $session = (empty($_COOKIE['tsvshop'])) ? md5(uniqid(rand())) : $_COOKIE['tsvshop'];
+        $session = (empty($_COOKIE['tsvshop'])) ? md5(uniqid(rand())).'hgT' : $_COOKIE['tsvshop'];
         SetCookie("tsvshop", $session, time() + 7200, "/"); //set the cookie to remain for 2 hours
         if ($cache) {
             $cache->cache("session", "tsvshop", $session);
@@ -489,6 +489,58 @@ if (!function_exists("tsv_ParseUserForm")) {
     }
 }
 
+if (!function_exists("tsv_display_checkoutform")) {
+    function tsv_display_checkoutform($cache)
+    {
+	global $modx, $session, $tsvshop, $shop_lang, $folders, $tables;
+	$tsvshop['MinimumOrder'] = empty($tsvshop['MinimumOrder']) ? 0 : $tsvshop['MinimumOrder'];
+    if ($_SESSION[$session]['result']['total'] < $tsvshop['MinimumOrder']) {
+         $tpl = notice(str_replace('%minsum%', $tsvshop['MinimumOrder'] . " " . $tsvshop['MonetarySymbol'], $shop_lang['strMinimumOrder']), 'error');
+    } else {
+                    $tpl = $modx->runSnippet("eForm", array(
+                        'tpl' => $tsvshop['tpluserform'],
+                        'formid' => 'TSVCheckoutForm',
+                        'eformOnBeforeFormParse' => 'tsv_ParseUserForm',
+                        'eFormOnBeforeMailSent' => 'tsv_Finish',
+                        'allowhtml' => '1',
+                        'submitLimit'=>'0',
+						            'protectSubmit'=>'0',
+                        'noemail' => '1',
+                        'gotoid' => $tsvshop['backid']
+                    ));
+                    // Плагин TSVshopOnUserFormComplete
+                    $evt = $modx->invokeEvent("TSVshopOnUserFormComplete", array(
+                        "tpl" => $tpl
+                    ));
+                    if (is_array($evt) && !empty($evt[0]))
+                        $tpl = $evt[0];
+                }
+	return $tpl;	
+}
+}
+
+if (!function_exists("tsv_display_fullcheckout")) {
+    function tsv_display_fullcheckout($cache)
+    {
+        global $modx, $session, $tsvshop, $shop_lang, $folders, $tables;
+		$tvar    = "fch";
+		$chunk = $tsvshop['tplfullcheckout'];
+		$tpl = $cache->cache($tvar, 'tsvshop');
+		if (!$tpl) {
+            if (!$tpl = getTpl($chunk)) {
+                $tpl = "<div>[+shop.basket.checkouttable+]</div> <div>[+shop.basket.userform+]</div>";
+            } else {
+                $cache->cache($tvar, 'tsvshop', $tpl);
+            }
+        }
+		$userform = '<div id="checkoutform_cont">'.tsv_display_checkoutform($cache).'</div>';
+		$table = '<div id="checkout_cont">'.tsv_display_cart($cache, "checkout").'</div>';
+		$tpl = str_replace("[+shop.basket.userform+]",$userform,$tpl);
+		$tpl = str_replace("[+shop.basket.checkouttable+]",$table,$tpl);
+		return $tpl;
+	}
+}
+
 if (!function_exists("tsv_display_cart")) {
     function tsv_display_cart($cache, $act = "basket")
     {
@@ -697,27 +749,11 @@ if (!function_exists("tsv_display_cart")) {
                 $tpl = $evt[0];
             
             if (!empty($_SESSION[$session]['result']['count']) && _filter($_REQUEST['act']) != 'recalc') {
-                $tsvshop['MinimumOrder'] = empty($tsvshop['MinimumOrder']) ? 0 : $tsvshop['MinimumOrder'];
                 if ($tot < $tsvshop['MinimumOrder']) {
                     $tpl = str_replace("[+shop.basket.userform+]", notice(str_replace('%minsum%', $tsvshop['MinimumOrder'] . " " . $tsvshop['MonetarySymbol'], $shop_lang['strMinimumOrder']), 'error'), $tpl);
                 } else {
-                    $tpl = str_replace("[+shop.basket.userform+]", '</div>' . $modx->runSnippet("eForm", array(
-                        'tpl' => $tsvshop['tpluserform'],
-                        'formid' => 'TSVCheckoutForm',
-                        'eformOnBeforeFormParse' => 'tsv_ParseUserForm',
-                        'eFormOnBeforeMailSent' => 'tsv_Finish',
-                        'allowhtml' => '1',
-                        'submitLimit'=>'0',
-						            'protectSubmit'=>'0',
-                        'noemail' => '1',
-                        'gotoid' => $tsvshop['backid']
-                    )), $tpl);
-                    // Плагин TSVshopOnUserFormComplete
-                    $evt = $modx->invokeEvent("TSVshopOnUserFormComplete", array(
-                        "tpl" => $tpl
-                    ));
-                    if (is_array($evt) && !empty($evt[0]))
-                        $tpl = $evt[0];
+					          $userform = tsv_display_checkoutform($cache);
+                    $tpl = str_replace("[+shop.basket.userform+]", $userform, $tpl);
                 }
             } else {
                 $tpl = str_replace("[+shop.basket.userform+]", "", $tpl);
