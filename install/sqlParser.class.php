@@ -31,21 +31,22 @@ class SqlParser {
 	}
 
 	function connect() {
-		$this->conn = mysql_connect($this->host, $this->user, $this->password);
-		mysql_select_db($this->dbname, $this->conn);
+		$this->conn = mysqli_connect($this->host, $this->user, $this->password);
+		mysqli_select_db($this->conn, $this->dbname);
+		if (function_exists('mysqli_set_charset')) mysqli_set_charset($this->conn, $this->connection_charset);
 
 		$this->dbVersion = 3.23; // assume version 3.23
-		if(function_exists("mysql_get_server_info")) {
-			$ver = mysql_get_server_info();
+		if(function_exists("mysqli_get_server_info")) {
+			$ver = mysqli_get_server_info($this->conn);
 			$this->dbMODx 	 = version_compare($ver,"4.0.2");
 			$this->dbVersion = (float) $ver; // Typecasting (float) instead of floatval() [PHP < 4.2]
 		}
 
-        mysql_query("{$this->connection_method} {$this->connection_charset}");
+        mysqli_query($this->conn,"{$this->connection_method} {$this->connection_charset}");
 	}
 
 	function process($filename) {
-	    global $modx_version;
+	    global $modx_version, $custom_placeholders;
 
 		// check to make sure file exists
 		if (!file_exists($filename)) {
@@ -72,130 +73,129 @@ class SqlParser {
 			if($s && $e) $idata = str_replace(substr($idata,$s,$e-$s)," Removed non upgradeable items",$idata);
 		}
     
-    
-		//content
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Главная демо-сайта'"));
+    //content
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Главная демо-сайта'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_MAIN=!empty($rid)?$rid:331;    
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мой кабинет (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мой кабинет (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_KABINET=!empty($rid)?$rid:336; 
 
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Корзина (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Корзина (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_CART=!empty($rid)?$rid:332; 
 
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Оформление покупки (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Оформление покупки (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_CHECKOUT=!empty($rid)?$rid:333; 
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Спасибо за покупку (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Спасибо за покупку (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_FINISH=!empty($rid)?$rid:334;     
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'О сайте (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'О сайте (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_ABOUT=!empty($rid)?$rid:335;  
 
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Каталог товаров (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Каталог товаров (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_CATALOG=!empty($rid)?$rid:337;      
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Бытовая техника (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Бытовая техника (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_TEHN=!empty($rid)?$rid:338;   
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Канцелярия (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Канцелярия (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_KANC=!empty($rid)?$rid:339;  
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Телевизор LCD (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Телевизор LCD (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_LCD=!empty($rid)?$rid:400;      
 
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Микроволновка (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Микроволновка (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_MV=!empty($rid)?$rid:401;       
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мои заказы  (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мои заказы  (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_MZ=!empty($rid)?$rid:402;  
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Просмотр заказа  (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Просмотр заказа  (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_VZ=!empty($rid)?$rid:403; 
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Редактирование профиля  (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Редактирование профиля  (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_content order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->CONTENT_RP=!empty($rid)?$rid:404;     
@@ -203,97 +203,99 @@ class SqlParser {
           
 		
 		//templates
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TEMPLATE_ITEM=!empty($rid)?$rid:101;
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TEMPLATE_MAIN=!empty($r['id'])?$r['id']:102;
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TEMPLATE_INDX=!empty($r['id'])?$r['id']:103;
     
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина (демо-сайт)'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина (демо-сайт)'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_templates order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TEMPLATE_CART=!empty($r['id'])?$r['id']:104;
 		
     //TV
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='price'"));
+		$r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='price'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TV_PRICE=!empty($r['id'])?$r['id']:201;
     
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='demotext'"));
+		$r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='demotext'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TV_REDIT=!empty($r['id'])?$r['id']:202;
     
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='tsvshop_param'"));
+		$r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='tsvshop_param'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TV_TMINI=!empty($r['id'])?$r['id']:203;
     
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='articul'"));
+		$r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='articul'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TV_ARTCL=!empty($r['id'])?$r['id']:204;
 
-		$r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='cart_icon'"));
+		$r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='cart_icon'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
 		$this->TV_IMAGE=!empty($r['id'])?$r['id']:205;
 
-    $r=mysql_fetch_assoc(mysql_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='inventory'"));
+    $r=mysqli_fetch_assoc(mysqli_query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='inventory'"));
     if (!empty($r['id'])) {
       $rid = $r['id'];
     } else {
-      $r=mysql_fetch_assoc(mysql_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+      $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
-		$this->TV_INVEN=!empty($r['id'])?$r['id']:206;      
-
+		$this->TV_INVEN=!empty($r['id'])?$r['id']:206; 
+    
+    
+    
 
 		// replace {} tags
 		$idata = str_replace('{PREFIX}', $this->prefix, $idata);
@@ -309,7 +311,7 @@ class SqlParser {
 		$idata = str_replace('{FILEMANAGERPATH}', $this->fileManagerPath, $idata);
 		$idata = str_replace('{MANAGERLANGUAGE}', $this->managerlanguage, $idata);
 		$idata = str_replace('{AUTOTEMPLATELOGIC}', $this->autoTemplateLogic, $idata);
-		                                                                               
+    
 		$idata = str_replace('{CONTENT_MAIN}',	$this->CONTENT_MAIN, $idata);
 		$idata = str_replace('{CONTENT_KABINET}',	$this->CONTENT_KABINET, $idata);
 		$idata = str_replace('{CONTENT_CART}',	$this->CONTENT_CART, $idata);
@@ -335,6 +337,13 @@ class SqlParser {
     $idata = str_replace('{TV_INVEN}',	$this->TV_INVEN, $idata);
 		/*$idata = str_replace('{VERSION}', $modx_version, $idata);*/
 
+		// Replace custom placeholders 
+		foreach($custom_placeholders as $key=>$val) {
+			if (strpos($idata, '{'.$key.'}') !== false) {
+				$idata = str_replace('{'.$key.'}', $val, $idata);
+			}
+		}
+		
 		$sql_array = explode("\n\n", $idata);
 
 		$num = 0;
@@ -352,23 +361,22 @@ class SqlParser {
 
 
 			$num = $num + 1;
-			if ($sql_do) mysql_query($sql_do, $this->conn);
-			if(mysql_error()) {
+			if ($sql_do) mysqli_query($this->conn, $sql_do);
+			if(mysqli_error($this->conn)) {
 				// Ignore duplicate and drop errors - Raymond
 				if ($this->ignoreDuplicateErrors){
-					if (mysql_errno() == 1060 || mysql_errno() == 1061 || mysql_errno() == 1091) continue;
+					if (mysqli_errno($this->conn) == 1060 || mysqli_errno($this->conn) == 1061 || mysqli_errno($this->conn) == 1091) continue;
 				}
 				// End Ignore duplicate
-				$this->mysqlErrors[] = array("error" => mysql_error(), "sql" => $sql_do);
+				$this->mysqlErrors[] = array("error" => mysqli_error($this->conn), "sql" => $sql_do);
 				$this->installFailed = true;
 			}
 		}
 	}
 
 	function close() {
-		mysql_close($this->conn);
+		mysqli_close($this->conn);
 	}
 }
 
 ?>
-
