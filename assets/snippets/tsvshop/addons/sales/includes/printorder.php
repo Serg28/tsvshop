@@ -346,12 +346,12 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
 		     elseif ($key=='quantity') {
             $tablecheck1 = str_replace("[+shop.order.qty+]", $order['quantity'], $tablecheck1);
 			      $items = $items + $order['quantity'];
-		     } elseif ($key=='articul') {
+		     /*} elseif ($key=='articul') {
 			     if (empty($val)) {
 				      $tablecheck1 = str_replace("[+shop.order.articul+]", $order['url'], $tablecheck1);
-			     } 
+			     } */
 		     } else {
-		 	     $tablecheck1 = str_replace("[+shop.order.".$key."+]", $val, $tablecheck1);
+          if (!empty($val)) $tablecheck1 = str_replace("[+shop.order.".$key."+]", $val, $tablecheck1);
 		     }
          $tablecheck1 = str_replace("[+shop.order.num+]", $r, $tablecheck1);
       }

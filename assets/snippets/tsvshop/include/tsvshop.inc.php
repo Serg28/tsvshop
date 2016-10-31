@@ -32,6 +32,7 @@ $tsvshop['backurl'] = $modx->makeUrl($backid);
 $tsvshop['hideon'] = !empty($hideon) ? explode(",",$hideon) : array();
 // Templates
 $tsvshop['tplcart'] = !empty($tplcart) ? $tplcart : "Shop_Cart";
+$tsvshop['tplfullcheckout'] = !empty($tplfullcheckout) ? $tplfullcheckout : "Shop_FullCheckout";
 $tsvshop['tplcartempty'] = !empty($tplcartempty) ? $tplcartempty : "Shop_Cart_Empty";
 $tsvshop['tplcheckout'] = !empty($tplcheckout) ? $tplcheckout : "Shop_Checkout";
 $tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "Shop_PrintOrder";
@@ -134,8 +135,17 @@ if ($act == "basket") {
     print '<div id="basket_cont">'.tsv_display_cart($cache, "basket").'</div>';
 }
 
-if ($act == "checkout") {
+if ($act == "checkout_cart") {
+//if ($act == "checkout") {
     print '<div id="checkout_cont">'.tsv_display_cart($cache, "checkout").'</div>';
+}
+
+if ($act == "checkout_form") {
+    print '<div id="checkoutform_cont">'.tsv_display_checkoutform($cache).'</div>';
+}
+
+if ($act == "checkout") {
+    print tsv_display_fullcheckout($cache);
 }
 
 if ($act == "finish") {
