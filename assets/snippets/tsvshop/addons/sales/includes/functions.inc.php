@@ -279,6 +279,8 @@ function getOrderInfo($idorder) {
 function sendMailUpdate($emails, $subject='', $body, $isHTML=false)
 	{
     global $modx, $session, $tsvshop, $shop_lang, $mail;
+    $tsvshop['SmtpFromEmail'] = (!empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['SmtpFromEmail'] : $modx->config['emailsender'];
+	  $tsvshop['SmtpFromName'] = (!empty($tsvshop['SmtpFromName'])) ? $tsvshop['SmtpFromName'] : $modx->config['site_name'];
     $modx->loadExtension('MODxMailer');
 		$modx->mail->ClearAllRecipients();
     $modx->mail->ClearAttachments();
@@ -290,6 +292,21 @@ function sendMailUpdate($emails, $subject='', $body, $isHTML=false)
 		$modx->mail->Subject = $subject;
     
     		
+		$from = explode(',',$tsvshop['SmtpFromEmail']);
+        	if (is_array($from)) {
+			     $modx->mail->From = trim($from[0]);
+			     $modx->mail->Sender   = trim($from[0]);
+			     $modx->mail->AddReplyTo(trim($from[0]), $modx->config['site_name']);
+		    } else {
+			     $modx->mail->From = trim($tsvshop['SmtpFromEmail']);
+			     $modx->mail->Sender   = trim($tsvshop['SmtpFromEmail']); 
+			     $modx->mail->AddReplyTo(trim($tsvshop['SmtpFromEmail']), $modx->config['site_name']);
+		    }
+
+		//5.4 Можно добавлять несколько адресов почты, через запятую
+		if(!is_array($emails)) {
+        		$emails = explode(",",$emails);
+		}
 		if(is_array($emails))
 		{
 			foreach($emails as $name => $email)
@@ -378,7 +395,7 @@ function vieworder($filename) {
              if ($key=="nalog") {$nalog = $value;}
              if ($key=="discount") {$discount = $value;}
              if ($key!="subtotal" && $key!="total" && $key!="topay" && $key!="discountsize") {
-                $tpl = str_replace('[+'.$key.'+]', $value, $tpl);
+                if (!empty($value)) $tpl = str_replace('[+'.$key.'+]', $value, $tpl);
              }
            }
            
@@ -389,7 +406,8 @@ function vieworder($filename) {
 			         $r++;
                $temp = str_replace('[+moduleid+]', $_GET['id'], $tpltr);
                foreach ($order as $key => $value) {
-                 $temp = str_replace('[+'.$key.'+]', $value, $temp);
+                 
+                 if (!empty($value)) $temp = str_replace('[+'.$key.'+]', $value, $temp);
                  if ($key == 'price') {
                     $summa = $value*$order['quantity'];
                     $temp = str_replace('[+summa+]', $summa, $temp);
