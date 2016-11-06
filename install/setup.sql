@@ -164,7 +164,7 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6,
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
 
-REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (8, 'TSVshop');
+REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (38, 'TSVshop');
 
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
 										(145, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 8, 0, '', 0, '', '', ''),
