@@ -167,10 +167,10 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty'
 REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (38, 'TSVshop');
 
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
-										(145, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 8, 0, '', 0, '', '', ''),
-										(143, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 8, 0, '', 0, '', '', ''),
-										(144, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 8, 0, '', 0, '', '', ''),
-										(141, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 8, 0, '', 0, '', '', ''),
-		    (146, 'number', 'inventory', 'Кол-во на складе', '', 0, 8, 0, '', 0, '', '', ''),
+										(145, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 38, 0, '', 0, '', '', ''),
+										(143, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 38, 0, '', 0, '', '', ''),
+										(144, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 38, 0, '', 0, '', '', ''),
+										(141, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 38, 0, '', 0, '', '', ''),
+		    (146, 'number', 'inventory', 'Кол-во на складе', '', 0, 38, 0, '', 0, '', '', ''),
 										(142, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 
