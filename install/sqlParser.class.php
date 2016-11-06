@@ -322,7 +322,10 @@ class SqlParser {
 		$idata = str_replace('{CONTENT_TEHN}',	$this->CONTENT_TEHN, $idata);
 		$idata = str_replace('{CONTENT_KANC}',	$this->CONTENT_KANC, $idata);
 		$idata = str_replace('{CONTENT_LCD}',	$this->CONTENT_LCD, $idata);
-    $idata = str_replace('{CONTENT_MV}',	$this->CONTENT_MV, $idata);                                                                                   
+    $idata = str_replace('{CONTENT_MV}',	$this->CONTENT_MV, $idata);  
+    $idata = str_replace('{CONTENT_VZ}',	$this->CONTENT_VZ, $idata);  
+    $idata = str_replace('{CONTENT_MZ}',	$this->CONTENT_MZ, $idata);
+    $idata = str_replace('{CONTENT_RP}',	$this->CONTENT_RP, $idata);                                                                                 
                                                                                    
 		$idata = str_replace('{TEMPLATE_ITEM}',	$this->TEMPLATE_ITEM, $idata);
 		$idata = str_replace('{TEMPLATE_MAIN}',	$this->TEMPLATE_MAIN, $idata);
