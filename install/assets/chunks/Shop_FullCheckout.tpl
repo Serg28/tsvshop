@@ -4,7 +4,7 @@
  * Шаблон для вывода полностью сформированной страницы оформления заказа в TSVshop
  *
  * @category	chunk
- * @version 	5.3
+ * @version 	5.4.2
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal  @modx_category TSVshop
  * @internal  @installset base, sample
