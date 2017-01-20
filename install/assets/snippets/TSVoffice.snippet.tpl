@@ -11,7 +11,7 @@
  * @internal    @modx_category TSVoffice
  * @internal    @installset base, sample
  *
- * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz
+ * @author      Serg24 <privat_tel@mail.ru>, http://tsvshop.xyz
  * -----------------------------------------------------------------------------
  */
 

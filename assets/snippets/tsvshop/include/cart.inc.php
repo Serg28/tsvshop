@@ -19,7 +19,7 @@ if (!function_exists("session")) {
 
 $session = (!$session) ? session($cache) : $session;
 
-if (!function_exists("tsv_priceformat")) {
+if (!function_exists("tsv_PriceFormat")) {
   function tsv_PriceFormat($price) {
     global $tsvshop;
     $decimal = ($tsvshop['PriceFormat']=="0" || $tsvshop['PriceFormat']=="") ? 0 : 2;
