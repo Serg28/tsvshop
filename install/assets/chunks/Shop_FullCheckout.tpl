@@ -13,7 +13,7 @@
 <div>
   [+shop.basket.checkouttable+]
 </div>
-<div
+ <div>
   [+shop.basket.userform+]
 </div>
 
