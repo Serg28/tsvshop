@@ -164,6 +164,7 @@ class fileCache {
 //			if(!$group)
 //				$group = 'default';
 //			return $this->cache_path.$group[0].'/'.$group.'/'.md5($key);
+                        @chmod($this->cache_path.$group[0], 0755);
 			return $this->cache_path.$group[0].'/'.$group.'_'.md5($key);
 		}
 		
@@ -171,9 +172,10 @@ class fileCache {
 			try {
 //				if(!$group)
 //					$group = 'default';
-				if(!file_exists($this->cache_path.$group[0]))
+				if(!file_exists($this->cache_path.$group[0])) {
 					mkdir($this->cache_path.$group[0]);
-//					mkdir($this->cachePath.$group[0].'/'.$group);
+                                        chmod($this->cache_path.$group[0], 0755);
+				}
 //				} else
 //					if(!file_exists($this->cachePath.$group[0].'/'.$group))
 //						mkdir($this->cachePath.$group[0].'/'.$group);
