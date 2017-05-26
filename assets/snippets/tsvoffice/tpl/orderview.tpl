@@ -77,7 +77,7 @@
 
       <tr>
       	<td align="center">[+num+]</td>
-			  <td align="center">[+id+]</td>
+			  <td align="center">[+url+]</td>
 			  <td>[+name+]</td>
 			  <td align="center">[+quantity+]</td>
 			  <td align="center">[+price+]</td>
