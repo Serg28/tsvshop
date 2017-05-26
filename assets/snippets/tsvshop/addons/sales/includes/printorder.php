@@ -22,6 +22,18 @@ include (TSVSHOP_PATH.'include/config.inc.php');
 $tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "@FILE:assets/snippets/tsvshop/addons/sales/tpl/Shop_PrintOrder.tpl";
 
 
+if (!function_exists("tsv_PriceFormat")) {
+
+    function tsv_PriceFormat($price) {
+        global $tsvshop;
+		$price = (empty($price)) ? 0 : $price;
+        $decimal = ($tsvshop['PriceFormat'] == "0" || $tsvshop['PriceFormat'] == "") ? 0 : 2;
+        return number_format($price, $decimal, '.', '');
+    }
+
+}
+
+
 if(!function_exists("propis"))
 {
 function propis($price) {
@@ -338,8 +350,8 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
       foreach ($order as $key=>$val) {
          if ($key=='price') {
             $summa = $val*$order['quantity'];
-            $tablecheck1 = str_replace("[+shop.order.summa+]", $summa, $tablecheck1);
-			      $tablecheck1 = str_replace("[+shop.order.price+]", $val, $tablecheck1);
+            $tablecheck1 = str_replace("[+shop.order.summa+]", tsv_PriceFormat($summa), $tablecheck1);
+			      $tablecheck1 = str_replace("[+shop.order.price+]", tsv_PriceFormat($val), $tablecheck1);
          } elseif ($key=='id') {
             $tablecheck1 = str_replace("[+shop.order.id+]", $order['url'], $tablecheck1);
 		     }
@@ -362,6 +374,13 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
   //проверка, есть ли поле topay. Если да, берем его как сумма к оплате. Иначе - total
   $totalkey = (isset($orderdata[0]['topay'])) ? 'topay' : 'total';
   $tplcheck = str_replace($tablecheck, $table, $tplcheck);
+  
+  $orderdata[0][$totalkey] = tsv_PriceFormat($orderdata[0][$totalkey]);
+	$orderdata[0]['shipping'] = tsv_PriceFormat($orderdata[0]['shipping']);
+	$orderdata[0]['discountsize'] = tsv_PriceFormat($orderdata[0]['discountsize']);
+  $orderdata[0]['tax'] = tsv_PriceFormat($orderdata[0]['tax']);
+  $orderdata[0]['subtotal'] = tsv_PriceFormat($orderdata[0]['subtotal']);
+  
   $orderdata[0]['count'] = $r;
   $orderdata[0]['totalcount'] = $items;
   $orderdata[0]['datecreate'] = get_date($orderdata[0]['dateorder']);

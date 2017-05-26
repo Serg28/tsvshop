@@ -12,6 +12,17 @@ $tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adres
 //список меток аддона Заказы, которые используются в чанках Shop_Cart, Shop_Checkout, которые нельзя вырезать.
 $tsvshop['syslabels']="noempty,empty,subtotal,total,buttons,repeat,full,table";
 
+if (!function_exists("tsv_PriceFormat")) {
+
+    function tsv_PriceFormat($price) {
+        global $tsvshop;
+		$price = (empty($price)) ? 0 : $price;
+        $decimal = ($tsvshop['PriceFormat'] == "0" || $tsvshop['PriceFormat'] == "") ? 0 : 2;
+        return number_format($price, $decimal, '.', '');
+    }
+
+}
+
 function parsetable($res,$filename) {
 	global $modx, $shop_lang, $tsvshop, $modulea, $moduleid;
         $out="";
@@ -209,8 +220,8 @@ function updateorder($idorder) {
           }
           //пересчет и добавление итоговых сумм  ---v5.4.1----
           $fields['subtotal'] = $subtotal;
-          $fields['discountsize'] = round(($fields['subtotal']*$fields['discount'])/100,2);
-          $fields['total'] = ($fields['subtotal']+$fields['shipping']+$fields['nalog'])-$fields['discountsize'];
+          $fields['discountsize'] = tsv_PriceFormat((($fields['subtotal']*$fields['discount'])/100);
+          $fields['total'] = tsv_PriceFormat(($fields['subtotal']+$fields['shipping']+$fields['nalog'])-$fields['discountsize']);
           
           //------
           //updateMail($modx->db->escape($_GET['status']),$idorder);
@@ -363,7 +374,6 @@ function vieworder($filename) {
     $act=$_GET['act'];
     $id=_filter($_GET['idorder'],1);
     $filename = (empty($filename)) ? TSVSHOP_PATH.'addons/sales/tpl/orderview.tpl' : $filename;
-    //if ($user['usertype']=="manager") { 
     if ($user=="manager") {
       if (!empty($act) && $act=="vieworder" && $tables['sales']!="none" && $tsvshop['dborders']!="" && !empty($id) && is_numeric($id)) { 
         if ($res = $modx->db->select('*', $tsvshop['dborders'], 'numorder = "' . $id . '"','numorder','1' )) { 
@@ -410,7 +420,7 @@ function vieworder($filename) {
                  if (!empty($value)) $temp = str_replace('[+'.$key.'+]', $value, $temp);
                  if ($key == 'price') {
                     $summa = $value*$order['quantity'];
-                    $temp = str_replace('[+summa+]', $summa, $temp);
+                    $temp = str_replace('[+summa+]', tsv_PriceFormat($summa), $temp);
                     $subtotal = $subtotal + $summa;
                  }
                }
@@ -420,13 +430,13 @@ function vieworder($filename) {
              $out = str_replace($tpltr,$out,$tpl);       
              
              //подсчет и заполнение итоговых сумм
-             $discountsize = round(($subtotal*$discount)/100,2);
+             $discountsize = ($subtotal*$discount)/100;
              $total = ($subtotal+$shipping+$nalog)-$discountsize;
              //echo 'subtotal='.$subtotal.": shipping=".$shipping."; nalog=".$nalog."; discountsize=".$discountsize."; total=".$total;
-             $out = str_replace('[+total+]', $total, $out);
-             $out = str_replace('[+topay+]', $total, $out);
-             $out = str_replace('[+subtotal+]', $subtotal, $out);
-             $out = str_replace('[+discountsize+]', $discountsize, $out);
+             $out = str_replace('[+total+]', tsv_PriceFormat($total), $out);
+             $out = str_replace('[+topay+]', tsv_PriceFormat($total), $out);
+             $out = str_replace('[+subtotal+]', tsv_PriceFormat($subtotal), $out);
+             $out = str_replace('[+discountsize+]', tsv_PriceFormat($discountsize), $out);
                           
              $out = preg_replace('/(\[\+.*?\+\])/' ,'', $out);
              return $out;
