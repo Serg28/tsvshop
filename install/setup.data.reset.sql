@@ -7,30 +7,11 @@
 # Empty tables first
 # 
 
-TRUNCATE TABLE `{PREFIX}documentgroup_names`;
+TRUNCATE TABLE `{PREFIX}shop_order`;
 
-TRUNCATE TABLE `{PREFIX}site_content`;
+TRUNCATE TABLE `{PREFIX}shop_order_detail`;
 
-TRUNCATE TABLE `{PREFIX}site_htmlsnippets`;
+TRUNCATE TABLE `{PREFIX}shop_numorder`;
 
-TRUNCATE TABLE `{PREFIX}site_plugins`;
+TRUNCATE TABLE `{PREFIX}shop_conf`;
 
-TRUNCATE TABLE `{PREFIX}site_snippets`;
-
-TRUNCATE TABLE `{PREFIX}site_tmplvar_contentvalues`;
-
-TRUNCATE TABLE `{PREFIX}site_tmplvar_access`;
-
-TRUNCATE TABLE `{PREFIX}site_tmplvar_templates`;
-
-TRUNCATE TABLE `{PREFIX}site_tmplvars`;
-
-# TRUNCATE TABLE `{PREFIX}web_groups`;
-# TRUNCATE TABLE `{PREFIX}web_user_attributes`;
-# TRUNCATE TABLE `{PREFIX}web_users`;
-# TRUNCATE TABLE `{PREFIX}webgroup_access`;
-# TRUNCATE TABLE `{PREFIX}webgroup_names`;
-
-# Tables not existing at new installations
-# TRUNCATE TABLE `{PREFIX}jot_content`;
-# TRUNCATE TABLE `{PREFIX}jot_subscriptions`;
