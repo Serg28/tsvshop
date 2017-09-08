@@ -7,12 +7,13 @@ class SqlParser {
 	var $host, $dbname, $prefix, $user, $password, $mysqlErrors;
 	var $conn, $installFailed, $sitename, $adminname, $adminemail, $adminpass, $managerlanguage;
 	var $mode, $fileManagerPath, $imgPath, $imgUrl;
-	var $dbVersion;
+	var $dbMODx, $dbVersion;
     var $connection_charset, $connection_method;
     
     var $CONTENT_RP, $CONTENT_VZ, $CONTENT_MZ, $CONTENT_MAIN, $CONTENT_KABINET, $CONTENT_CART, $CONTENT_CHECKOUT, $CONTENT_FINISH, $CONTENT_ABOUT, $CONTENT_CATALOG, $CONTENT_TEHN, $CONTENT_KANC, $CONTENT_LCD, $CONTENT_MV;
     var $TEMPLATE_ITEM, $TEMPLATE_MAIN, $TEMPLATE_INDX, $TEMPLATE_CART;
     var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE, $TV_INVEN;
+
 
 	function SqlParser($host, $user, $password, $db, $prefix='modx_', $adminname, $adminemail, $adminpass, $connection_charset= 'utf8', $managerlanguage='english', $connection_method = 'SET CHARACTER SET', $auto_template_logic = 'parent') {
 		$this->host = $host;
@@ -46,7 +47,7 @@ class SqlParser {
 	}
 
 	function process($filename) {
-	    global $modx_version, $custom_placeholders;
+	    global $custom_placeholders;
 
 		// check to make sure file exists
 		if (!file_exists($filename)) {
@@ -292,27 +293,23 @@ class SqlParser {
       $r=mysqli_fetch_assoc(mysqli_query("SELECT id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
       $rid = $r['id'];
     }
-		$this->TV_INVEN=!empty($r['id'])?$r['id']:206; 
+		$this->TV_INVEN=!empty($r['id'])?$r['id']:206;
     
     
     
 
 		// replace {} tags
 		$idata = str_replace('{PREFIX}', $this->prefix, $idata);
-		$idata = str_replace('{DBHOST}', $this->host, $idata);
-		$idata = str_replace('{DBUSER}', $this->user, $idata);
-		$idata = str_replace('{DBPASS}', $this->password, $idata);
-		$idata = str_replace('{DBNAME}', $this->dbname, $idata);
 		$idata = str_replace('{ADMIN}', $this->adminname, $idata);
 		$idata = str_replace('{ADMINEMAIL}', $this->adminemail, $idata);
 		$idata = str_replace('{ADMINPASS}', $this->adminpass, $idata);
-		$idata = str_replace('{IMAGEPATH}', $this->imagePath, $idata);
-		$idata = str_replace('{IMAGEURL}', $this->imageUrl, $idata);
+		$idata = str_replace('{IMAGEPATH}', $this->imgPath, $idata);
+		$idata = str_replace('{IMAGEURL}', $this->imgUrl, $idata);
 		$idata = str_replace('{FILEMANAGERPATH}', $this->fileManagerPath, $idata);
 		$idata = str_replace('{MANAGERLANGUAGE}', $this->managerlanguage, $idata);
 		$idata = str_replace('{AUTOTEMPLATELOGIC}', $this->autoTemplateLogic, $idata);
     
-		$idata = str_replace('{CONTENT_MAIN}',	$this->CONTENT_MAIN, $idata);
+    $idata = str_replace('{CONTENT_MAIN}',	$this->CONTENT_MAIN, $idata);
 		$idata = str_replace('{CONTENT_KABINET}',	$this->CONTENT_KABINET, $idata);
 		$idata = str_replace('{CONTENT_CART}',	$this->CONTENT_CART, $idata);
 		$idata = str_replace('{CONTENT_CHECKOUT}',	$this->CONTENT_CHECKOUT, $idata);
@@ -337,7 +334,7 @@ class SqlParser {
 		$idata = str_replace('{TV_TMINI}',	$this->TV_TMINI, $idata);
 		$idata = str_replace('{TV_ARTCL}',	$this->TV_ARTCL, $idata);
 		$idata = str_replace('{TV_IMAGE}',	$this->TV_IMAGE, $idata);
-    $idata = str_replace('{TV_INVEN}',	$this->TV_INVEN, $idata);
+    $idata = str_replace('{TV_INVEN}',	$this->TV_INVEN, $idata);    
 		/*$idata = str_replace('{VERSION}', $modx_version, $idata);*/
 
 		// Replace custom placeholders 
@@ -368,7 +365,7 @@ class SqlParser {
 			if(mysqli_error($this->conn)) {
 				// Ignore duplicate and drop errors - Raymond
 				if ($this->ignoreDuplicateErrors){
-					if (mysqli_errno($this->conn) == 1060 || mysqli_errno($this->conn) == 1061 || mysqli_errno($this->conn) == 1091) continue;
+					if (mysqli_errno($this->conn) == 1060 || mysqli_errno($this->conn) == 1061 || mysqli_errno($this->conn) == 1062 ||mysqli_errno($this->conn) == 1091) continue;
 				}
 				// End Ignore duplicate
 				$this->mysqlErrors[] = array("error" => mysqli_error($this->conn), "sql" => $sql_do);
