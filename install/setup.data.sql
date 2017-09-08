@@ -2,6 +2,7 @@
 #
 # Each sql command is separated by double lines
 
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order` (
   `numorder` int(255) NOT NULL AUTO_INCREMENT,
   `dateorder` int(25) NOT NULL,
@@ -47,11 +48,13 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}shop_numorder` (
   `numorder` int(11) NOT NULL,
   `key` int(11) NOT NULL,
   PRIMARY KEY (`numorder`)
 ) ENGINE=MyISAM;
+
 
 CREATE TABLE IF NOT EXISTS `{PREFIX}shop_conf` (
   `module` varchar(32) NOT NULL DEFAULT '',
@@ -64,103 +67,150 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shop_conf` (
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'Prefix', '{PREFIX}', 1);
 
+
 #REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'Server', '{DBHOST}', 1);
+
 
 #REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'User', '{DBUSER}', 1);
 
+
 #REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'Pass', '{DBPASS}', 1);
+
 
 #REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'DB', '{DBNAME}', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('addons', 'sales_active', 0x796573, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('addons', 'config_active', 0x796573, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('addons', 'addons_active', 0x796573, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpReplyEmail', 0x6d79406d61696c2e636f6d, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromName', 0xd098d0bdd182d0b5d180d0bdd0b5d1822dd0bcd0b0d0b3d0b0d0b7d0b8d0bd, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromEmail', 0x6d79406d61696c2e636f6d, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'TypeCat', 0x646f6373, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpAuth', 0x74727565, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtPass', '', 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpUser', '', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MinimumOrder', '', 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayShippingRow', 0x74727565, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayNotice', 0x74727565, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'fShipping', '', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'PriceFormat', 0x302c3030, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'CatRoot', 0x37, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayPrice', 0x74727565, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpPort', '', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayDiscount', 0x74727565, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpHost', '', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MonetarySymbol', 0x20d0b3d180d0bd2e, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MailMode', 0x6d61696c, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'StatusOrder', 0xd09dd0bed0b2d18bd0b93d3d4541413541347c7cd09ed0b6d0b8d0b4d0b0d0bdd0b8d0b520d0bed0bfd0bbd0b0d182d18b3d3d4541453441347c7cd09ed0bfd0bbd0b0d187d0b5d0bdd0be3d3d4233454141347c7cd097d0b0d0b2d0b5d180d188d0b5d0bdd0be3d3d4233454141347c7cd09ed182d0bcd0b5d0bdd0b5d0bd, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailAdmin', 0xd09fd0bed181d182d183d0bfd0b8d0bb20d0bdd0bed0b2d18bd0b920d0b7d0b0d0bad0b0d0b7, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailUser', 0xd097d0b0d0bad0b0d0b720d183d181d0bfd0b5d188d0bdd0be20d0bfd180d0b8d0bdd18fd182, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectUpdateStatus', 0xd098d0b7d0bcd0b5d0bdd0b5d0bdd0b8d0b520d181d182d0b0d182d183d181d0b020d0b7d0b0d0bad0b0d0b7d0b0, 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'shipping', '', 1);
 
+
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecPassword', 0x4d7950617373, 1);
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecFields', 0x66696f2c6164726573732c636974792c70686f6e652c656d61696c, 1);
 
 
-
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1020','TSVshopOnBeforeUserFormInit', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1021','TSVshopOnUserFormComplete', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1022','TSVshopOnUserFormRender', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1023','TSVshopOnBeforeUserFormRenderComplete', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1024','TSVshopOnTplCartRender', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1025','TSVshopOnTplCartPrerender', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1026','TSVshopOnGetSubtotal', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1027','TSVshopOnAddItem', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1028','TSVshopOnOrderSuccess', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1029','TSVshopOnViewItemCard', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1030','TSVshopOnOrderStatusUpdate', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1031','TSVshopOnDeleteItem', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1032','TSVshopOnGetPriceItemCard', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6, 'TSVshop');
 
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
+
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1036','TSVshopOnUserFormFieldsRender', 6, 'TSVshop');
 
@@ -184,6 +234,7 @@ REPLACE INTO `{PREFIX}site_templates` (`id`, `templatename`, `description`, `edi
 ({TEMPLATE_INDX}, 'Главная (демо-сайт)', '', 0, 38, '', 0, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\r\n<html xmlns="http://www.w3.org/1999/xhtml">\r\n<head>\r\n	<meta http-equiv="content-type" content="text/html; charset=[(modx_charset)]" />\r\n	<title>[*longtitle*]</title>\r\n	<meta name="keywords" content="" />\r\n	<meta name="description" content="" />\r\n	<link rel="stylesheet" href="/assets/templates/demoshop/css/style.css" type="text/css" media="screen, projection" />\r\n<base href=\"[(base_url)]\" />\r\n</head>\r\n\r\n<body>\r\n\r\n<div id="wrapper">\r\n\r\n	<div id="header">\r\n	<a href=\"http://tsvshop.xyz\" class=\"logo\" ><img src=\"/assets/templates/demoshop/img/logo.gif\" alt=\"Модуль TSVshop для создания интернет-магазина для MODx\" /></a>\r\n	\r\n<div id="topmenu">\r\n[[Wayfinder? &startId=`0` &level=`1`]]\r\n</div>\r\n	</div><!-- #header-->\r\n\r\n<div id="bread">\r\n[[Breadcrumbs]]\r\n<div class=\"loginlink\"><a href=\"[~{CONTENT_KABINET}~]\">Личный кабинет</a></div>\r\n</div>\r\n\r\n	<div id="middle">\r\n\r\n		<div id="container">\r\n\r\n			<div id="content"><h3 class="title">[*pagetitle*]</h3>\r\n		        <div class="cbox">[*demotext*]</div>\r\n                        [*content*]\r\n			</div><!-- #content-->\r\n		</div><!-- #container-->\r\n\r\n		<div class="sidebar" id="sideRight">\r\n<div class="rbox">\r\n<h3 class="cart">Мои товары</h3>\r\n<div class="rbcont">\r\n[!TSVshop? &act=`info` &basketid=`{CONTENT_CART}`!]\r\n</div>\r\n</div>\r\n\r\n<div class="rbox">\r\n<h3 class="compare">Сравнить</h3>\r\n<div class="rbcont">\r\n\r\n<div class="dashed"><a class="button right" href="">Сравнить</a></div>\r\n<div class="clear"></div>\r\n</div>\r\n</div>\r\n			\r\n		</div><!-- .sidebar#sideRight -->\r\n\r\n	</div><!-- #middle-->\r\n\r\n</div><!-- #wrapper -->\r\n\r\n<div id="footer">\r\n</div><!-- #footer -->\r\n\r\n</body>\r\n</html>', 0),
 ({TEMPLATE_CART}, 'Корзина (демо-сайт)', '', 0, 38, '', 0, '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\r\n<html xmlns="http://www.w3.org/1999/xhtml">\r\n<head>\r\n	<meta http-equiv="content-type" content="text/html; charset=[(modx_charset)]" />\r\n	<title>[*longtitle*]</title>\r\n	<meta name="keywords" content="" />\r\n	<meta name="description" content="" />\r\n	<link rel="stylesheet" href="/assets/templates/demoshop/css/style.css" type="text/css" media="screen, projection" />\r\n<base href=\"[(base_url)]\" />\r\n</head>\r\n\r\n<body>\r\n\r\n<div id="wrapper">\r\n\r\n	<div id="header">\r\n	<a href=\"http://tsvshop.xyz\" class=\"logo\" ><img src=\"/assets/templates/demoshop/img/logo.gif\" alt=\"Модуль TSVshop для создания интернет-магазина для MODx\" /></a>\r\n	\r\n<div id="topmenu">\r\n[[Wayfinder? &startId=`0` &level=`1`]]\r\n</div>\r\n	</div><!-- #header-->\r\n\r\n<div id="bread">\r\n[[Breadcrumbs]]\r\n<div class=\"loginlink\"><a href=\"[~{CONTENT_KABINET}~]\">Личный кабинет</a></div>\r\n</div>\r\n\r\n	<div id="middle">\r\n\r\n		<div id="container">\r\n\r\n			<div id="content" class="full"><h3 class="title">[*pagetitle*]</h3>\r\n                                 <div class="cbox">[*content*]</div>\r\n				\r\n			</div><!-- #content-->\r\n		</div><!-- #container-->\r\n\r\n		\r\n	</div><!-- #middle-->\r\n\r\n</div><!-- #wrapper -->\r\n\r\n<div id="footer">\r\n</div><!-- #footer -->\r\n\r\n</body>\r\n</html>', 0);
 
+
 REPLACE INTO `{PREFIX}site_content` (`id`,	`type`,		`contentType`,	`pagetitle`,			`longtitle`,			`description`,			`alias`,	`link_attributes`, 	`published`, 	`pub_date`, 	`unpub_date`, 	`parent`, 	`isfolder`, 	`introtext`, 			`content`, 	`richtext`, 	`template`, 		`menuindex`, `searchable`, `cacheable`, `createdby`, `createdon`, `editedby`, `editedon`, `deleted`, `deletedon`, `deletedby`, `publishedon`, `publishedby`, `menutitle`, `donthit`, `haskeywords`, `hasmetatags`, `privateweb`, `privatemgr`, `content_dispo`, `hidemenu`) VALUES
 									({CONTENT_MAIN},		'document',	'text/html',	'Главная демо-сайта', 				'Главная демо-сайта', 				'', 					'index', 	'', 				1, 				0, 				0, 				0, 			0, 				'', 					'<div style="margin-left:-20px">[[Ditto? &tpl=`product` &parents=`{CONTENT_TEHN}` &extenders=`shop`]]</div>\r\n',
 																																																																								0, 				{TEMPLATE_INDX}, 	0, 1, 1, 1, 1130304721, 1, 1326980481, 0, 0, 0, 1130304721, 1, 'Главная демо-сайта', 0, 0, 0, 0, 0, 0, 0),
@@ -205,6 +256,7 @@ REPLACE INTO `{PREFIX}site_content` (`id`,	`type`,		`contentType`,	`pagetitle`,	
                   ({CONTENT_VZ},    'document',     'text/html',    'Просмотр заказа  (демо-сайт)',                'Просмотр заказа',                'Просмотр заказа',                '',             '',                             1,                              0,                              0,                              {CONTENT_KABINET},                      0,                              'Просмотр заказа',                '<p><a href=\"[~{CONTENT_KABINET}~]\">Назад к списку заказов</a></p>[!TSVoffice? &act=`showorder`!]<p><a href=\"[~{CONTENT_KABINET}~]\">Назад к списку заказов</a></p>',             1,                              {TEMPLATE_MAIN},        1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Просмотр заказа', 0, 0, 0, 0, 0, 0, 0),
                   ({CONTENT_RP},    'document',     'text/html',    'Редактирование профиля  (демо-сайт)',                'Редактирование профиля',                'Редактирование профиля',                '',             '',                             1,                              0,                              0,                              {CONTENT_KABINET},                      0,                              'Редактирование профиля',                '[!TSVoffice? &act=`editprofile`!]',             1,                              {TEMPLATE_MAIN},        1, 1, 1, 1, 1326978714, 1, 1326978714, 0, 0, 0, 1326978714, 1, 'Редактирование профиля', 0, 0, 0, 0, 0, 0, 0);
 
+
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
 										({TV_IMAGE}, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 38, 0, '', 0, '', '', ''),
 										({TV_TMINI}, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 8, 0, '', 0, '', '', ''),
@@ -212,6 +264,7 @@ REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 	
 										({TV_PRICE}, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 38, 0, '', 0, '', '', ''),
 		    ({TV_INVEN}, 'number', 'inventory', 'Кол-во на складе', '', 0, 38, 0, '', 0, '', '', ''),
 										({TV_REDIT}, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
+
 
 REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`tmplvarid`, `contentid`, `value`) VALUES
 ({TV_REDIT}, {CONTENT_MAIN}, '<p>Добро пожаловать на демонстрационный сайт модуля <b>TSVshop</b> для создания интернет-магазина в CMS MODx. Помните, что вся предоставленная информация на сайте имеет исключительно демонстрационный характер. Все заказы, сделанные вами, будут игнорироваться.</p>\r\n<p>Ниже представлен каталог тестовых товаров, сформированных с помощью сниппета <strong>Ditto</strong>. </p>\r\n<p>Обратите внимание на 2 момента!</p>\r\n<ul>\r\n<li>Выбор любой характеристики товара влияет на его конечную стоимость.</li>\r\n<li>В зависимости от выбранного количества товара меняется его стоимость.</li>\r\n</ul>'),
@@ -226,6 +279,7 @@ REPLACE INTO `{PREFIX}site_tmplvar_contentvalues` (`tmplvarid`, `contentid`, `va
 ({TV_TMINI}, {CONTENT_MV}, 'select==Цвет:*Белый==0||Серый==2||Черный==3;'),
 ({TV_ARTCL}, {CONTENT_MV}, 'М120'),
 ({TV_PRICE}, {CONTENT_MV}, '13000');
+
 
 REPLACE INTO `{PREFIX}site_tmplvar_templates` (`tmplvarid`, `templateid`, `rank`) VALUES
 ({TV_IMAGE}, {TEMPLATE_ITEM}, 0),
