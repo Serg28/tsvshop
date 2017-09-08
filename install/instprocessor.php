@@ -450,6 +450,26 @@ if (isset ($_POST['snippet']) || $installData) {
     }
 }
 
+//install base
+if ($moduleSQLBaseFile) {
+    $sqlParser->process($moduleSQLBaseFile);
+    // display database results
+    if ($sqlParser->installFailed == true) {
+        $errors += 1;
+        echo "<span class=\"notok\"><b>" . $_lang['database_alerts'] . "</span></p>";
+        echo "<p>" . $_lang['setup_couldnt_install'] . "</p>";
+        echo "<p>" . $_lang['installation_error_occured'] . "<br /><br />";
+        for ($i = 0; $i < count($sqlParser->mysqlErrors); $i++) {
+            echo "<em>" . $sqlParser->mysqlErrors[$i]["error"] . "</em>" . $_lang['during_execution_of_sql'] . "<span class='mono'>" . strip_tags($sqlParser->mysqlErrors[$i]["sql"]) . "</span>.<hr />";
+        }
+        echo "</p>";
+        echo "<p>" . $_lang['some_tables_not_updated'] . "</p>";
+        return;
+    } else {
+        echo '<span class="ok">'.$_lang['ok']."</span></p>";
+    }
+}
+
 
 // install data
 if ($installData && $moduleSQLDataFile) {
@@ -471,6 +491,7 @@ if ($installData && $moduleSQLDataFile) {
         echo "<span class=\"ok\">".$_lang['ok']."</span></p>";
     }
 }
+
 
 
 // always empty cache after install
