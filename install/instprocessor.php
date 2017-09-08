@@ -173,7 +173,7 @@ if ($installMode != 0) {
 
 // open db connection
 $setupPath = realpath(dirname(__FILE__));
-include "{$setupPath}/setup.info.php";
+include "{$setupPath}/setup_int.info.php";
 include "{$setupPath}/sqlParser.class.php";
 $sqlParser = new SqlParser($database_server, $database_user, $database_password, str_replace("`", "", $dbase), $table_prefix, $adminname, $adminemail, $adminpass, $database_connection_charset, $managerlanguage, $database_connection_method, $auto_template_logic);
 $sqlParser->mode = ($installMode < 1) ? "new" : "upd";
