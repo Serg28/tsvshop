@@ -36,7 +36,7 @@ global $errors;
 $create = false;
 
 // set timout limit
-@ set_time_limit(120); // used @ to prevent warning when using safe mode?
+@ set_time_limit(360); // used @ to prevent warning when using safe mode?
 
 
 $installMode= intval($_POST['installmode']);
