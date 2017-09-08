@@ -452,7 +452,7 @@ if (isset ($_POST['snippet']) || $installData) {
 
 //install base
 if ($moduleSQLBaseFile) {
-    $sqlParser->process($moduleSQLBaseFile);
+    $sqlParser->process($installPath.'/'.$moduleSQLBaseFile);
     // display database results
     if ($sqlParser->installFailed == true) {
         $errors += 1;
