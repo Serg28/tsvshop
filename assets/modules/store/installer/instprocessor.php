@@ -5,12 +5,12 @@ if(IN_MANAGER_MODE!='true' && !$modx->hasPermission('exec_module')) die('<b>INCL
 function abort(){
 
 $dsd=getcwd();
-           unlink(MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
-unlink(MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
+           //unlink(MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
+//unlink(MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
 unlink(MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
 
-rename("MODX_BASE_PATH."assets/modules/store/installer/setup_bak.info.php", MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
-rename("MODX_BASE_PATH."assets/modules/store/installer/sqlParser_bak.class.php", MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
+//rename("MODX_BASE_PATH."assets/modules/store/installer/setup_bak.info.php", MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
+//rename("MODX_BASE_PATH."assets/modules/store/installer/sqlParser_bak.class.php", MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
 rename("MODX_BASE_PATH."assets/modules/store/installer/instprocessor_bak.php", MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
 }
 
@@ -101,6 +101,7 @@ if(!function_exists('parseProperties')) {
     }
 }
 $table_prefix = $modx->db->config['table_prefix'];
+$modulePath = MODX_BASE_PATH.'assets/cache/store/install/install';
 $setupPath = $modulePath;
     
 include "{$setupPath}/setup.info.php";
