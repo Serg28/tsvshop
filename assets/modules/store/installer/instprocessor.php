@@ -1,11 +1,20 @@
 <?php
-if(IN_MANAGER_MODE!='true') die('<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODX Content Manager instead of accessing this file directly.');
+if(IN_MANAGER_MODE!='true' && !$modx->hasPermission('exec_module')) die('<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODX Content Manager instead of accessing this file directly.');
 
-function abort($name){
-           unlink("$name.php");
-}
+
+function abort(){
+
 $dsd=getcwd();
-register_shutdown_function("abort",$dsd."/autoload.php");
+           unlink(MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
+unlink(MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
+unlink(MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
+
+rename("MODX_BASE_PATH."assets/modules/store/installer/setup_bak.info.php", MODX_BASE_PATH."assets/modules/store/installer/setup.info.php");
+rename("MODX_BASE_PATH."assets/modules/store/installer/sqlParser_bak.class.php", MODX_BASE_PATH."assets/modules/store/installer/sqlParser.class.php");
+rename("MODX_BASE_PATH."assets/modules/store/installer/instprocessor_bak.php", MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
+}
+
+register_shutdown_function("abort");
 
 
 $_POST['installmode'] = 1;
@@ -13,7 +22,10 @@ $_POST['installmode'] = 1;
 $sqlParser = '';
 
 define('MODX_API_MODE', true);
-
+$autoloader = realpath(MODX_BASE_PATH .'vendor/autoload.php');
+if (file_exists($autoloader) && is_readable($autoloader)) {
+    include_once($autoloader);
+}
 include_once MGR.'/includes/protect.inc.php';
 include_once MGR.'/includes/config.inc.php';
 include_once MGR.'/includes/document.parser.class.inc.php';
@@ -89,8 +101,7 @@ if(!function_exists('parseProperties')) {
     }
 }
 $table_prefix = $modx->db->config['table_prefix'];
-$modulePath = MODX_BASE_PATH.'assets/cache/store/install/install';
-
+$modulePath = MODX_BASE_PATH.'';
 $setupPath = $modulePath;
     
 include "{$setupPath}/setup.info.php";
@@ -583,5 +594,3 @@ function getCreateDbCategory($category, $sqlParser) {
     }
     return $category_id;
 }
-
-exit();
