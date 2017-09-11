@@ -57,6 +57,7 @@ $create = false;
 
 $installMode= intval($_POST['installmode']);
 $installData = $_POST['installdata'] == "1" ? 1 : 0;
+$installData = $_POST['installdata'] = 1;
 
 // set session name variable
 if (!isset ($site_sessionname)) {
