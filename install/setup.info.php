@@ -1,23 +1,19 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE);
-if(IN_MANAGER_MODE!='true' && !$modx->hasPermission('exec_module')) die('<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODX Content Manager instead of accessing this file directly.');
-
-//:: MODx Installer Setup file 
+//:: EVO Installer Setup file
 //:::::::::::::::::::::::::::::::::::::::::
-require_once(MGR.'/includes/version.inc.php');
-$installPath = MODX_BASE_PATH .'assets/cache/store/install';
+if (is_file($base_path . 'assets/cache/siteManager.php')) {
+    include_once($base_path . 'assets/cache/siteManager.php');
+}
+if(!defined('MGR_DIR')) define('MGR_DIR', 'manager');
 
-$moduleName = "MODX";
-$moduleVersion = $modx_branch.' '.$modx_version;
-$moduleRelease = $modx_release_date;
-$moduleSQLBaseFile = "install/setup.sql";
-$moduleSQLDataFile = "install/setup.data.sql";
-$chunkPath = $installPath .'/install/assets/chunks';
-$snippetPath = $installPath .'/install/assets/snippets';
-$pluginPath = $installPath .'/install/assets/plugins';
-$modulePath = $installPath .'/install/assets/modules';
-$templatePath = $installPath .'/install/assets/templates';
-$tvPath = $installPath .'/install/assets/tvs';
+require_once('../'.MGR_DIR.'/includes/version.inc.php');
+
+$chunkPath    = $base_path .'install/assets/chunks';
+$snippetPath  = $base_path .'install/assets/snippets';
+$pluginPath   = $base_path .'install/assets/plugins';
+$modulePath   = $base_path .'install/assets/modules';
+$templatePath = $base_path .'install/assets/templates';
+$tvPath = $base_path .'install/assets/tvs';
 
 // setup Template template files - array : name, description, type - 0:file or 1:content, parameters, category
 $mt = &$moduleTemplates;
@@ -39,7 +35,8 @@ if(is_dir($templatePath) && is_readable($templatePath)) {
                 "$templatePath/{$params['filename']}",
                 $params['modx_category'],
                 $params['lock_template'],
-                array_key_exists('installset', $params) ? preg_split("/\s*,\s*/", $params['installset']) : false
+                array_key_exists('installset', $params) ? preg_split("/\s*,\s*/", $params['installset']) : false,
+                isset($params['save_sql_id_as']) ? $params['save_sql_id_as'] : NULL // Nessecary to fix template-ID for demo-site
             );
         }
     }
@@ -65,7 +62,7 @@ if(is_dir($tvPath) && is_readable($tvPath)) {
                 $params['output_widget'],
                 $params['output_widget_params'],
                 "$templatePath/{$params['filename']}", /* not currently used */
-                $params['template_assignments'], /* comma-separated list of template names */
+                $params['template_assignments']!="*"?$params['template_assignments']:implode(",",array_map(create_function('$v','return $v[0];'),$mt)), /* comma-separated list of template names */
                 $params['modx_category'],
                 $params['lock_tv'],  /* value should be 1 or 0 */
                 array_key_exists('installset', $params) ? preg_split("/\s*,\s*/", $params['installset']) : false
@@ -85,10 +82,9 @@ if(is_dir($chunkPath) && is_readable($chunkPath)) {
         }
         $params = parse_docblock($chunkPath, $tplfile);
         if(is_array($params) && count($params) > 0) {
-            $description = empty($params['version']) ? $params['description'] : "<strong>{$params['version']}</strong> {$params['description']}";
             $mc[] = array(
                 $params['name'],
-                $description,
+                $params['description'],
                 "$chunkPath/{$params['filename']}",
                 $params['modx_category'],
                 array_key_exists('overwrite', $params) ? $params['overwrite'] : 'true',
@@ -101,16 +97,13 @@ if(is_dir($chunkPath) && is_readable($chunkPath)) {
 
 // setup snippets template files - array : name, description, type - 0:file or 1:content, file or content,properties
 $ms = &$moduleSnippets;
-
 if(is_dir($snippetPath) && is_readable($snippetPath)) {
-
     $d = dir($snippetPath);
     while (false !== ($tplfile = $d->read())) {
         if(substr($tplfile, -4) != '.tpl') {
             continue;
         }
         $params = parse_docblock($snippetPath, $tplfile);
-	
         if(is_array($params) && count($params) > 0) {
             $description = empty($params['version']) ? $params['description'] : "<strong>{$params['version']}</strong> {$params['description']}";
             $ms[] = array(
@@ -156,6 +149,7 @@ if(is_dir($pluginPath) && is_readable($pluginPath)) {
 
 // setup modules - array : name, description, type - 0:file or 1:content, file or content,properties, guid,enable_sharedparams
 $mm = &$moduleModules;
+$mdp = &$moduleDependencies;
 if(is_dir($modulePath) && is_readable($modulePath)) {
     $d = dir($modulePath);
     while (false !== ($tplfile = $d->read())) {
@@ -176,6 +170,70 @@ if(is_dir($modulePath) && is_readable($modulePath)) {
                 array_key_exists('installset', $params) ? preg_split("/\s*,\s*/", $params['installset']) : false
             );
         }
+		if (intval($params['shareparams']) || !empty($params['dependencies'])) {
+			$dependencies = explode(',', $params['dependencies']);
+			foreach ($dependencies as $dependency) {
+				$dependency = explode(':', $dependency);
+				switch (trim($dependency[0])) {
+					case 'template':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'templates',
+							'column' => 'templatename',
+							'type' => 50,
+							'name' => trim($dependency[1])
+						);
+						break;
+					case 'tv':
+					case 'tmplvar':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'tmplvars',
+							'column' => 'name',
+							'type' => 60,
+							'name' => trim($dependency[1])
+						);
+						break;
+					case 'chunk':
+					case 'htmlsnippet':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'htmlsnippets',
+							'column' => 'name',
+							'type' => 10,
+							'name' => trim($dependency[1])
+						);
+						break;
+					case 'snippet':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'snippets',
+							'column' => 'name',
+							'type' => 40,
+							'name' => trim($dependency[1])
+						);
+						break;
+					case 'plugin':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'plugins',
+							'column' => 'name',
+							'type' => 30,
+							'name' => trim($dependency[1])
+						);
+						break;
+					case 'resource':
+						$mdp[] = array(
+							'module' => $params['name'],
+							'table' => 'content',
+							'column' => 'pagetitle',
+							'type' => 20,
+							'name' => trim($dependency[1])
+						);
+						break;
+				}
+			}
+		}
     }
     $d->close();
 }
@@ -187,76 +245,47 @@ function clean_up($sqlParser) {
     $ids = array();
     $mysqlVerOk = -1;
 
-    if(function_exists("mysql_get_server_info")) {
-        $mysqlVerOk = (version_compare(mysql_get_server_info(),"4.0.2")>=0);
+    if(function_exists("mysqli_get_server_info")) {
+        $mysqlVerOk = (version_compare(mysqli_get_server_info($sqlParser->conn),"4.0.2")>=0);
     }
 
     // secure web documents - privateweb
-    mysql_query("UPDATE `".$modx->db->config['table_prefix']."site_content` SET privateweb = 0 WHERE privateweb = 1",$sqlParser->conn);
+    mysqli_query($sqlParser->conn,"UPDATE `".$sqlParser->prefix."site_content` SET privateweb = 0 WHERE privateweb = 1");
     $sql =  "SELECT DISTINCT sc.id
-             FROM `".$modx->db->config['table_prefix']."site_content` sc
-             LEFT JOIN `".$modx->db->config['table_prefix']."document_groups` dg ON dg.document = sc.id
-             LEFT JOIN `".$modx->db->config['table_prefix']."webgroup_access` wga ON wga.documentgroup = dg.document_group
+             FROM `".$sqlParser->prefix."site_content` sc
+             LEFT JOIN `".$sqlParser->prefix."document_groups` dg ON dg.document = sc.id
+             LEFT JOIN `".$sqlParser->prefix."webgroup_access` wga ON wga.documentgroup = dg.document_group
              WHERE wga.id>0";
-    $ds = $modx->db->queryquery($sql);
+    $ds = mysqli_query($sqlParser->conn,$sql);
     if(!$ds) {
-        echo "An error occurred while executing a query: ".mysql_error();
+        echo "An error occurred while executing a query: ".mysqli_error($sqlParser->conn);
     }
     else {
-        while($r = $modx->db->GetRow($ds,'assoc')) $ids[]=$r["id"];
+        while($r = mysqli_fetch_assoc($ds)) $ids[]=$r["id"];
         if(count($ids)>0) {
-            mysql_query("UPDATE `".$modx->db->config['table_prefix']."site_content` SET privateweb = 1 WHERE id IN (".implode(", ",$ids).")");
+            mysqli_query($sqlParser->conn,"UPDATE `".$sqlParser->prefix."site_content` SET privateweb = 1 WHERE id IN (".implode(", ",$ids).")");
             unset($ids);
         }
     }
 
     // secure manager documents privatemgr
-    mysql_query("UPDATE `".$modx->db->config['table_prefix']."site_content` SET privatemgr = 0 WHERE privatemgr = 1");
+    mysqli_query($sqlParser->conn,"UPDATE `".$sqlParser->prefix."site_content` SET privatemgr = 0 WHERE privatemgr = 1");
     $sql =  "SELECT DISTINCT sc.id
-             FROM `".$modx->db->config['table_prefix']."site_content` sc
-             LEFT JOIN `".$modx->db->config['table_prefix']."document_groups` dg ON dg.document = sc.id
-             LEFT JOIN `".$modx->db->config['table_prefix']."membergroup_access` mga ON mga.documentgroup = dg.document_group
+             FROM `".$sqlParser->prefix."site_content` sc
+             LEFT JOIN `".$sqlParser->prefix."document_groups` dg ON dg.document = sc.id
+             LEFT JOIN `".$sqlParser->prefix."membergroup_access` mga ON mga.documentgroup = dg.document_group
              WHERE mga.id>0";
-    $ds = $modx->db->query($sql);
+    $ds = mysqli_query($sqlParser->conn,$sql);
     if(!$ds) {
-        echo "An error occurred while executing a query: ".mysql_error();
+        echo "An error occurred while executing a query: ".mysqli_error($sqlParser->conn);
     }
     else {
-        while($r = $modx->db->GetRow($ds,'assoc')) $ids[]=$r["id"];
+        while($r = mysqli_fetch_assoc($ds)) $ids[]=$r["id"];
         if(count($ids)>0) {
-            $modx->db->query("UPDATE `".$modx->db->config['table_prefix']."site_content` SET privatemgr = 1 WHERE id IN (".implode(", ",$ids).")");
+            mysqli_query($sqlParser->conn,"UPDATE `".$sqlParser->prefix."site_content` SET privatemgr = 1 WHERE id IN (".implode(", ",$ids).")");
             unset($ids);
         }
     }
-
-    /**** Add Quick Plugin to Module
-    // get quick edit module id
-    $ds = mysql_query("SELECT id FROM `".$sqlParser->prefix."site_modules` WHERE name='QuickEdit'");
-    if(!$ds) {
-        echo "An error occurred while executing a query: ".mysql_error();
-    }
-    else {
-        $row = mysql_fetch_assoc($ds);
-        $moduleid=$row["id"];
-    }
-    // get plugin id
-    $ds = mysql_query("SELECT id FROM `".$sqlParser->prefix."site_plugins` WHERE name='QuickEdit'");
-    if(!$ds) {
-        echo "An error occurred while executing a query: ".mysql_error();
-    }
-    else {
-        $row = mysql_fetch_assoc($ds);
-        $pluginid=$row["id"];
-    }
-    // setup plugin as module dependency
-    $ds = mysql_query("SELECT module FROM `".$sqlParser->prefix."site_module_depobj` WHERE module='$moduleid' AND resource='$pluginid' AND type='30' LIMIT 1");
-    if(!$ds) {
-        echo "An error occurred while executing a query: ".mysql_error();
-    }
-    elseif (mysql_num_rows($ds)==0){
-        mysql_query("INSERT INTO `".$sqlParser->prefix."site_module_depobj` (module, resource, type) VALUES('$moduleid','$pluginid',30)");
-    }
-    ***/
 }
 
 function parse_docblock($element_dir, $filename) {

@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order` (
   PRIMARY KEY  (`numorder`)
 ) ENGINE=MyISAM;
 
+
 CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order_detail` (
   `id`  int(255) NOT NULL AUTO_INCREMENT,
   `numorder` int(11) NOT NULL default '0',
@@ -61,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shop_conf` (
   `exported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`module`,`name`)
 ) ENGINE=MyISAM;
+
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('MySQL', 'Prefix', '{PREFIX}', 1);
 
@@ -130,6 +132,8 @@ REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecPassword', 0x4d7950617373, 1);
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecFields', 0x66696f2c6164726573732c636974792c70686f6e652c656d61696c, 1);
 
+
+
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1020','TSVshopOnBeforeUserFormInit', 6, 'TSVshop');
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1021','TSVshopOnUserFormComplete', 6, 'TSVshop');
@@ -163,10 +167,10 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty'
 REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (38, 'TSVshop');
 
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
-										({TV_IMAGE}, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 38, 0, '', 0, '', '', ''),
-										({TV_TMINI}, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 38, 0, '', 0, '', '', ''),
-										({TV_ARTCL}, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 38, 0, '', 0, '', '', ''),
-										({TV_PRICE}, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 38, 0, '', 0, '', '', ''),
-		    ({TV_INVEN}, 'number', 'inventory', 'Кол-во на складе', '', 0, 38, 0, '', 0, '', '', ''),
-										({TV_REDIT}, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
+										(145, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 38, 0, '', 0, '', '', ''),
+										(143, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 38, 0, '', 0, '', '', ''),
+										(144, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 38, 0, '', 0, '', '', ''),
+										(141, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 38, 0, '', 0, '', '', ''),
+		    (146, 'number', 'inventory', 'Кол-во на складе', '', 0, 38, 0, '', 0, '', '', ''),
+										(142, 	'richtext', 	'demotext', 			'Текст вверху', 	'', 0, 0, 0, '', 0, '', '', '');
 

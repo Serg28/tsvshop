@@ -34,8 +34,8 @@ install_sessionCheck();
 $moduleName = "EVO";
 $moduleVersion = $modx_branch.' '.$modx_version;
 $moduleRelease = $modx_release_date;
-$moduleSQLBaseFile = "setup.sql";
-$moduleSQLDataFile = "setup.data.sql";
+$moduleSQLBaseFile = "setup_base.sql";
+$moduleSQLDataFile = "setup_base.data.sql";
 $moduleSQLResetFile = "setup.data.reset.sql";
 
 $moduleChunks = array (); // chunks - array : name, description, type - 0:file or 1:content, file or content
