@@ -104,7 +104,7 @@ $table_prefix = $modx->db->config['table_prefix'];
 $modulePath = MODX_BASE_PATH.'assets/cache/store/install/install';
 $setupPath = $modulePath;
     
-include "{$setupPath}/setup.info.php";
+include "{$setupPath}/setup_extras.info.php";
 include "{$setupPath}/sqlParser.class.php";
 $sqlParser = new SqlParser();
 
