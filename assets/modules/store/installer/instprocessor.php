@@ -101,7 +101,6 @@ if(!function_exists('parseProperties')) {
     }
 }
 $table_prefix = $modx->db->config['table_prefix'];
-$modulePath = MODX_BASE_PATH.'';
 $setupPath = $modulePath;
     
 include "{$setupPath}/setup.info.php";
@@ -594,3 +593,5 @@ function getCreateDbCategory($category, $sqlParser) {
     }
     return $category_id;
 }
+
+exit();
