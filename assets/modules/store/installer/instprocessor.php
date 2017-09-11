@@ -14,7 +14,7 @@ unlink(MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
 rename("MODX_BASE_PATH."assets/modules/store/installer/instprocessor_bak.php", MODX_BASE_PATH."assets/modules/store/installer/instprocessor.php");
 }
 
-register_shutdown_function("abort");
+//register_shutdown_function("abort");
 
 
 $_POST['installmode'] = 1;
@@ -501,7 +501,7 @@ $sync->emptyCache(); // first empty the cache
 
 // setup completed!
 echo "<p><b>" . $_lang['installation_successful'] . "</b></p>";
-
+abort();
 
 
 // Property Update function
@@ -594,5 +594,3 @@ function getCreateDbCategory($category, $sqlParser) {
     }
     return $category_id;
 }
-
-exit();
