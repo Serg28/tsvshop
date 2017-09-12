@@ -14,7 +14,24 @@ class SqlParser {
     var $TEMPLATE_ITEM, $TEMPLATE_MAIN, $TEMPLATE_INDX, $TEMPLATE_CART;
     var $TV_PRICE, $TV_REDIT, $TV_TMINI, $TV_ARTCL, $TV_IMAGE, $TV_INVEN;
 
+	public function __construct() {
+		$adminname='';
+		$adminemail=''; 
+		$adminpass='';		
+		$connection_charset= 'utf8'; 
+		$managerlanguage='english'; 
+		$connection_method = 'SET CHARACTER SET'; 
+		$auto_template_logic = 'parent';
+		$this->adminname = $adminname;
+		$this->adminemail = $adminemail;
+		$this->connection_charset = $connection_charset;
+		$this->connection_method = $connection_method;
+		$this->ignoreDuplicateErrors = false;
+		$this->managerlanguage = $managerlanguage;
+        $this->autoTemplateLogic = $auto_template_logic;
+	}
 
+/*
 	function SqlParser($host, $user, $password, $db, $prefix='modx_', $adminname, $adminemail, $adminpass, $connection_charset= 'utf8', $managerlanguage='english', $connection_method = 'SET CHARACTER SET', $auto_template_logic = 'parent') {
 		$this->host = $host;
 		$this->dbname = $db;
@@ -30,7 +47,7 @@ class SqlParser {
 		$this->managerlanguage = $managerlanguage;
         $this->autoTemplateLogic = $auto_template_logic;
 	}
-
+*/
 	function connect() {
 		$this->conn = mysqli_connect($this->host, $this->user, $this->password);
 		mysqli_select_db($this->conn, $this->dbname);
