@@ -290,6 +290,34 @@ class SqlParser {
 		$idata = str_replace('{FILEMANAGERPATH}', $this->fileManagerPath, $idata);
 		$idata = str_replace('{MANAGERLANGUAGE}', $this->managerlanguage, $idata);
 		$idata = str_replace('{AUTOTEMPLATELOGIC}', $this->autoTemplateLogic, $idata);
+
+$idata = str_replace('{CONTENT_MAIN}',	$this->CONTENT_MAIN, $idata);
+		$idata = str_replace('{CONTENT_KABINET}',	$this->CONTENT_KABINET, $idata);
+		$idata = str_replace('{CONTENT_CART}',	$this->CONTENT_CART, $idata);
+		$idata = str_replace('{CONTENT_CHECKOUT}',	$this->CONTENT_CHECKOUT, $idata);
+		$idata = str_replace('{CONTENT_FINISH}',	$this->CONTENT_FINISH, $idata);
+		$idata = str_replace('{CONTENT_ABOUT}',	$this->CONTENT_ABOUT, $idata);
+		$idata = str_replace('{CONTENT_CATALOG}',	$this->CONTENT_CATALOG, $idata);
+		$idata = str_replace('{CONTENT_TEHN}',	$this->CONTENT_TEHN, $idata);
+		$idata = str_replace('{CONTENT_KANC}',	$this->CONTENT_KANC, $idata);
+		$idata = str_replace('{CONTENT_LCD}',	$this->CONTENT_LCD, $idata);
+    $idata = str_replace('{CONTENT_MV}',	$this->CONTENT_MV, $idata);  
+    $idata = str_replace('{CONTENT_VZ}',	$this->CONTENT_VZ, $idata);  
+    $idata = str_replace('{CONTENT_MZ}',	$this->CONTENT_MZ, $idata);
+    $idata = str_replace('{CONTENT_RP}',	$this->CONTENT_RP, $idata);                                                                                 
+                                                                                   
+		$idata = str_replace('{TEMPLATE_ITEM}',	$this->TEMPLATE_ITEM, $idata);
+		$idata = str_replace('{TEMPLATE_MAIN}',	$this->TEMPLATE_MAIN, $idata);
+		$idata = str_replace('{TEMPLATE_INDX}',	$this->TEMPLATE_INDX, $idata);
+		$idata = str_replace('{TEMPLATE_CART}',	$this->TEMPLATE_CART, $idata);
+
+		$idata = str_replace('{TV_PRICE}',	$this->TV_PRICE, $idata);
+		$idata = str_replace('{TV_REDIT}',	$this->TV_REDIT, $idata);
+		$idata = str_replace('{TV_TMINI}',	$this->TV_TMINI, $idata);
+		$idata = str_replace('{TV_ARTCL}',	$this->TV_ARTCL, $idata);
+		$idata = str_replace('{TV_IMAGE}',	$this->TV_IMAGE, $idata);
+    $idata = str_replace('{TV_INVEN}',	$this->TV_INVEN, $idata);
+
 		//$idata = str_replace('{VERSION}', $modx_version, $idata);
 
 		$sql_array = explode("\n\n", $idata);
