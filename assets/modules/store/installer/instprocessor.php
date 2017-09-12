@@ -1,6 +1,25 @@
 <?php
 if(IN_MANAGER_MODE!='true' && !$modx->hasPermission('exec_module')) die('<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODX Content Manager instead of accessing this file directly.');
 
+function shutdown()
+{
+    // Это наша завершающая функция, 
+    // здесь мы можем выполнить кое-какую работу
+    // перед тем как скрипт полностью завершится.
+
+    echo 'Скрипт успешно завершился', PHP_EOL;
+@unlink(MODX_BASE_PATH.'assets/modules/store/installer/instprocessor.php');
+@rename(MODX_BASE_PATH.'assets/modules/store/installer/instprocessor_bak.php',MODX_BASE_PATH.'assets/modules/store/installer/instprocessor.php');
+@unlink(MODX_BASE_PATH.'assets/modules/store/installer/setup_bak.info.php');
+@rename(MODX_BASE_PATH.'assets/modules/store/installer/setup_bak.info.php',MODX_BASE_PATH.'assets/modules/store/installer/setup.info.php');
+@unlink(MODX_BASE_PATH.'assets/modules/store/installer/sqlParser_bak.class.php');
+@rename(MODX_BASE_PATH.'assets/modules/store/installer/sqlParser_bak.class.php',MODX_BASE_PATH.'assets/modules/store/installer/sqlParser.class.php');
+}
+
+register_shutdown_function('shutdown');
+
+
+
 $_POST['installmode'] = 1;
 //$_POST['installdata'] = 0;
 $sqlParser = '';
