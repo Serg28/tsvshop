@@ -97,7 +97,7 @@ $sqlParser = new SqlParser();
 
 echo "<p>" . $_lang['setup_database_creating_tables'];
 if ($moduleSQLBaseFile) {
-    $sqlParser->process($moduleSQLBaseFile);
+    $sqlParser->process($installPath.'/'.$moduleSQLBaseFile);
     // display database results
     if ($sqlParser->installFailed == true) {
         $errors += 1;
@@ -480,7 +480,7 @@ if (isset ($_POST['snippet']) || $installData) {
 // Reset database for installation of demo-site 
 if ($installData && $moduleSQLDataFile && $moduleSQLResetFile) {
 	echo "<p>" . $_lang['resetting_database'];
-	$sqlParser->process($moduleSQLResetFile);
+	$sqlParser->process($installPath.'/'.$moduleSQLResetFile);
 	// display database results
 	if ($sqlParser->installFailed == true) {
 		$errors += 1;
