@@ -4,8 +4,8 @@
 <input type="hidden" id="a" name="a" value="[+modulea+]" />
 <table class="grid_table">
     <tr>
-     <td style="height:28px;" >
-	<div class="header_tables" style="margin-bottom:-4px"><div class="header_cont"><b>[+sales_ttitle+]</b></div></div>
+     <td style="height:34px;" >
+	<div class="header_tables" style="margin-bottom:0px"><div class="header_cont"><b>[+sales_ttitle+]</b></div></div>
      </td>
    </tr>
    <tr>

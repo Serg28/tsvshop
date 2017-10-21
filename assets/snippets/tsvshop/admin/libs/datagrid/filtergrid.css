@@ -19,7 +19,7 @@ border-color:#fff #d0d0d0 #d0d0d0 #fff;
 padding:4px 7px; color:#333;
 background:#f9f9f9 url(/manager/media/style/MODxCarbon/images/misc/mainbg.gif) repeat-x 0 100%; 
 font-weight:normal;
-font-size:11px
+font-size:12px
 }
 
 table.TF td{ padding:3px 7px 3px 7px; border-bottom:1px solid #D0D0D0; border-right:1px solid #D0D0D0;  font-size:11px;
@@ -40,11 +40,15 @@ table.TF td:last-child {
   border-right:1px solid #ccc
 }
 
-table.TF.tsvorder td{
-  padding:6px 7px 5px 7px
+table.TF.tsvorder td {
+  padding:3px 4px;
 }
 table.TF.tsvorder th {
-  padding:7px 7px 6px 7px
+  padding:8px 7px;
+}
+
+table.TF.tsvorder td input {
+    padding:7px 6px;
 }
 
 table.TF.tsvorder td ul.actionButtons li a img {margin-top:-1px; margin-right:3px }
@@ -129,7 +133,7 @@ input.reset:hover{ background:url(TF_Themes/btn_clear_filters.png) center center
 /* PAGING ELEMENTS
 =====================================================*/
 .inf{ /* div containing left, middle and right divs */
-	clear:both; width:auto; height:25px; 
+	clear:both; width:auto; height:34px; 
 	background:#EBECEE; font-size:12px; 
 	margin:0; padding:1px 3px 1px 3px; 
 	overflow:hidden;
@@ -137,7 +141,7 @@ input.reset:hover{ background:url(TF_Themes/btn_clear_filters.png) center center
 	border-top:none;
 }
 #saletoolbar, #addonstoolbar, #shiptoolbar, #paytoolbar, #disctoolbar {
-border:1px solid #ccc; 	margin-top:-3px;
+border:1px solid #ccc; 	margin-top:0px;
 height:auto;
 padding-top:1px;
 
@@ -148,7 +152,8 @@ padding-top:1px;
 }
 .mdiv{ /* middle div */
 	float:left; width:38%; position:inherit; text-align:center;
-	padding:2px 0;margin-top:1px;
+	padding:0;padding-top:5px;margin-top:0px;
+        /*height:34px*/
 }
 .rdiv{ /* right div */
 	float:right; width:30%; position:inherit; text-align:right; margin-top:2px;
@@ -160,8 +165,11 @@ input.pgNbInp{/*paging text-box*/
 }
 input.pgInp{ /*paging buttons (Next/Previous)*/
 	width:19px; height:19px; cursor:pointer !important;
-	border:0 !important; font-weight:bold; font-size:11px;margin-top:-4px;
+	border:0 !important; font-weight:bold; font-size:11px;margin-top:0px;height:34px
 }
+
+input[type="button"], input[type="submit"] {min-height:auto}
+
 .nextPage{ background:transparent url(TF_Themes/btn_next_page.png) center center no-repeat !important; }
 .previousPage{ background:transparent url(TF_Themes/btn_previous_page.png) center center no-repeat !important; }
 .firstPage{ background:transparent url(TF_Themes/btn_first_page.png) center center no-repeat !important; }
@@ -173,10 +181,10 @@ div.inf a{ color:#333; text-decoration:none; font-weight:bold; }/*link appearenc
 div.inf a:hover{ text-decoration:underline; }/*link appearence in .inf div*/
 div.tot{ /* rows counter appearance */
 	float:left; overflow:hidden;
-	width:150px; height:15px;
-	line-height:14px;
+	width:150px; height:34px;
+	line-height:33px;
 	border-right:1px solid #ccc;
-	margin:5px 5px 0 2px;
+	margin:0 5px 0 2px;
 	padding:0 2px 0 2px;
 }
 div.tot span{ font-weight:bold; font-size:11px; }

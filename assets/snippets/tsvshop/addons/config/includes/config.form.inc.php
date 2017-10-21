@@ -6,10 +6,10 @@ $output.= '<h2 class="tab">'.$shop_lang['config_form_mail'].'</h2>';
 
 $output.='
 <div class="notice">'.$shop_lang['config_mail_title'].'</div><br />
-<table width=100%>';
+<table width="100%" class="formconfig">';
 
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpfromname_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_smtpfromname_title'].'</td>
               <td ><input type="text" id="SmtpFromName" name="SmtpFromName" class="inputBox" value="' . $tsvshop['SmtpFromName'] . '"></td>
             </tr>
             <tr>
@@ -21,7 +21,7 @@ $output.= '<tr>
             </tr>';
 
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpfromemail_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_smtpfromemail_title'].'</td>
               <td ><input type="text" id="SmtpFromEmail" name="SmtpFromEmail" class="inputBox" value="' . $tsvshop['SmtpFromEmail'] . '"></td>
             </tr>
             <tr>
@@ -32,7 +32,7 @@ $output.= '<tr>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_smtpreplyemail_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_smtpreplyemail_title'].'</td>
               <td ><input type="text" id="SmtpReplyEmail" name="SmtpReplyEmail" class="inputBox" value="' . $tsvshop['SmtpReplyEmail'] . '"></td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@ $output.= '<tr>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_mailadmin_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_mailadmin_title'].'</td>
               <td ><input type="text" id="SubjectMailAdmin" name="SubjectMailAdmin" class="inputBox" value="' . $tsvshop['SubjectMailAdmin'] . '"></td>
             </tr>
             <tr>
@@ -54,7 +54,7 @@ $output.= '<tr>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_mailuser_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_mailuser_title'].'</td>
               <td ><input type="text" id="SubjectMailUser" name="SubjectMailUser" class="inputBox" value="' . $tsvshop['SubjectMailUser'] . '"></td>
             </tr>
             <tr>
@@ -65,7 +65,7 @@ $output.= '<tr>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_updatestatus_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_updatestatus_title'].'</td>
               <td ><input type="text" id="SubjectUpdateStatus" name="SubjectUpdateStatus" class="inputBox" value="' . $tsvshop['SubjectUpdateStatus'] . '"></td>
             </tr>
             <tr>
@@ -81,9 +81,9 @@ $output.= '</div>';
 
 $output.= '<div class="tab-page" id="ShopSalesSecurity">';
 $output.= '<h2 class="tab">'.$shop_lang['config_form_security'].'</h2>';
-$output.='<table width=100%>';
+$output.='<table width="100%" class="formconfig">';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_password_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_password_title'].'</td>
               <td ><input type="text" id="SecPassword" name="SecPassword" class="inputBox" value="' . $tsvshop['SecPassword'] . '"></td>
             </tr>
             <tr>
@@ -95,7 +95,7 @@ $output.= '<tr>
             </tr>';
            
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_secfields_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_secfields_title'].'</td>
               <td ><select id="SecFields" multiple name="SecFields" size="5" class="inputBox">'.buildmultioptions($tsvshop['SecFields'], $tsvshop['sysfields']).'</td>
             </tr>
             <tr>
@@ -111,10 +111,10 @@ $output.= '</div>';
 
 $output.= '<div class="tab-page" id="ShopSalesMain">';
 $output.= '<h2 class="tab">'.$shop_lang['config_form_main'].'</h2>';
-$output.='<table width=100%>';
+$output.='<table width="100%" class="formconfig">';
 
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_typecat_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_typecat_title'].'</td>
               <td ><select name="TypeCat" id="TypeCat" size="1" class="inputBox">';
 $output.= buildoptions($tsvshop['TypeCat'], $TypeCatArray);
 $output.= '</select>
@@ -129,7 +129,7 @@ $output.= '</select>
             </tr>';
             
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_id_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_id_title'].'</td>
               <td ><input type="text" id="CatRoot" name="CatRoot" class="inputBox" value="' . $tsvshop['CatRoot'] . '"></td>
             </tr>
             <tr>
@@ -141,7 +141,7 @@ $output.= '<tr>
             </tr>';
 
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_valuta_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_valuta_title'].'</td>
               <td ><select name="MonetarySymbol" id="MonetarySymbol" size="1" class="inputBox">';
 $output.= buildoptions($tsvshop['MonetarySymbol'], $MonetarySymbolArray);
 $output.= '</select>
@@ -157,7 +157,7 @@ $output.= '</select>
 
 
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_priceformat_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_priceformat_title'].'</td>
               <td ><select id="PriceFormat" name="PriceFormat" size="1" class="inputBox">';
 $output.= buildoptions($tsvshop['PriceFormat'], $PriceFormatArray);
 $output.= '</select> 
@@ -171,7 +171,7 @@ $output.= '</select>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_notice_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_notice_title'].'</td>
               <td ><select id="DisplayNotice" name="DisplayNotice" size="1" class="inputBox">';
 $output.= buildoptions($tsvshop['DisplayNotice'], $DisplayNoticeArray);
 $output.= '</select>
@@ -185,7 +185,7 @@ $output.= '</select>
               <td colspan="2"><div class="split"></div></td>
             </tr>';
 $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_minsumma_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_minsumma_title'].'</td>
               <td ><input type="text" id="MinimumOrder" name="MinimumOrder" size="7" class="inputBox" value="' . $tsvshop['MinimumOrder'] . '"></td>
             </tr>
             <tr>
@@ -197,7 +197,7 @@ $output.= '<tr>
             </tr>';
             
             $output.= '<tr>
-              <td nowrap class="warning"><b>'.$shop_lang['config_status_title'].'</b></td>
+              <td nowrap class="warning">'.$shop_lang['config_status_title'].'</td>
               <td ><textarea id="StatusOrder" name="StatusOrder" size="1" class="inputBox">';
             $output.= $tsvshop['StatusOrder'];
             $output.= '</textarea> 
