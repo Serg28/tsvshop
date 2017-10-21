@@ -4,7 +4,7 @@
  * Шаблон корзины для оформления заказов в TSVshop
  *
  * @category	chunk
- * @version 	5.3
+ * @version 	5.4.2
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal  @modx_category TSVshop
  * @internal  @installset base, sample
@@ -28,7 +28,7 @@
 <!--noempty-->
 <tr>
 <td class="icon"><img src="[+shop.basket.iconpath+]" alt="[+shop.basket.name+]" width="50" /></td>
-<td class="name"><a href="[+shop.basket.link+]">[+shop.basket.name+]</a></td>
+<td class="name"><a href="[+shop.basket.link+]">[+shop.basket.name+] <i>[+shop.basket.details+]</i></a></td>
 <td class="qty">[+shop.basket.quantity+]</td>
 <td class="price">[+shop.basket.price+] [+shop.basket.monetary+]</td>
 <td class="price">[+shop.basket.summa+] [+shop.basket.monetary+]</td>
