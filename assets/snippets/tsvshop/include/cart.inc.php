@@ -70,9 +70,9 @@ if (!function_exists("tsv_ConvertPrice")) {
 
 }
 
-if (!function_exists("tsv_TryCalc")) {
+if (!function_exists("tsv_TryCalc_old")) {
 
-    function tsv_TryCalc($code, $col) {
+    function tsv_TryCalc_old($code, $col) {
         global $modx;
          $cod = str_replace(' ', '', $cod);
           $cod = str_replace(',', '.', $cod);
@@ -97,7 +97,7 @@ if (!function_exists("tsv_TryCalc")) {
           $cod .= '0';
           eval("\$a=" . $cod . ";");
           return ($a * 1);
-          } 
+          }
         /*
         $a    = "";
         $code = str_replace(array(' ', ',', '\r', '\n'), array('', '.', '', ''), $code);
@@ -116,9 +116,9 @@ if (!function_exists("tsv_TryCalc")) {
 
 }
 
-if (!function_exists("tsv_CalcPrice")) {
+if (!function_exists("tsv_CalcPrice_old")) {
 
-    function tsv_CalcPrice($price, $col, $opt) {
+    function tsv_CalcPrice_old($price, $col, $opt) {
         //$opt = (!preg_match("/[^(\w)|(\+)|(\*)|(\-)|(\/)]/",$opt[0])) ? "+".$opt : $opt;
         /* $price = tsv_TryCalc($price, $col);
           $opt   = str_replace(" ", "+", $opt);
@@ -132,6 +132,45 @@ if (!function_exists("tsv_CalcPrice")) {
     }
 
 }
+
+
+if(!function_exists("tsv_TryCalc"))
+{
+function tsv_TryCalc($cod,$col) {
+	global $modx;
+        $cod = str_replace(' ', '', $cod);
+        $cod = str_replace(',', '.', $cod);
+        $cod = str_replace('\r\n', '', $cod);
+        if (strpos($cod, "||")){
+            $cod=tsv_ConvertPrice($cod);
+            $a="";
+            $cod=str_replace("&#36n", $col, $cod);
+            $cod=str_replace("$n", $col, $cod);
+            if (!$cod) {$cod="\"\"";}
+            if(substr($cod, -1)=='+')$cod.='0';
+            eval("\$a".$cod.";");
+            return ($a*1);
+       } else {
+            if (!$cod) {$cod="\"\"";}
+            if(substr($cod, -1)=='+')$cod.='0';
+            eval("\$a=".$cod.";");
+            return ($a*1);
+       }
+}
+}
+
+if(!function_exists("tsv_CalcPrice"))
+{
+function tsv_CalcPrice($price, $col, $opt) {
+  //$opt = (!preg_match("/[^(\w)|(\+)|(\*)|(\-)|(\/)]/",$opt[0])) ? "+".$opt : $opt;
+	$price = tsv_TryCalc($price, $col);
+	$opt = str_replace(" ","+", $opt);
+	$opt = str_replace("#","*", $opt);
+	$price = tsv_TryCalc($price.$opt, $col);
+	return $price;
+}
+}
+
 
 
 if (!function_exists("tsv_parseOptions")) {
@@ -429,7 +468,19 @@ if (!function_exists("tsv_display_infoblock")) {
             $tabletmp = str_replace('[+shop.info.quantity+]', $_SESSION[$session]['orders'][$i]['qty'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.price+]', tsv_PriceFormat($price), $tabletmp);
             $tabletmp = str_replace('[+shop.info.summa+]', tsv_PriceFormat($summa), $tabletmp);
-            $tabletmp = str_replace('[+shop.info.name+]', $_SESSION[$session]['orders'][$i]['name'], $tabletmp);
+            //$tabletmp = str_replace('[+shop.info.name+]', $_SESSION[$session]['orders'][$i]['name'], $tabletmp);
+
+            // добавлено разделение названия и опций
+            $tplname = $_SESSION[$session]['orders'][$i]['name'];
+            $details = getStr($tplname, 'ldquo', 'rdquo');
+
+            $tplname = str_replace("ldquo".$details."rdquo", "", $tplname);
+            $tabletmp = str_replace('[+shop.info.name+]', $tplname, $tabletmp);
+            if (!empty($details)) {
+              $tabletmp = str_replace('[+shop.info.details+]', " (".$details.")", $tabletmp);
+            }
+            // --
+
             if (!empty($_SESSION[$session]['orders'][$i]['url'])) {
                 $url = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($_SESSION[$session]['orders'][$i]['url']) : "&tovar=" . $_SESSION[$session]['orders'][$i]['url'];
             }
@@ -570,6 +621,7 @@ if (!function_exists("tsv_display_fullcheckout")) {
         }
         $userform = '<div id="checkoutform_cont">' . tsv_display_checkoutform($cache) . '</div>';
         $table    = '<div id="checkout_cont">' . tsv_display_cart($cache, "checkout") . '</div>';
+        $userform = (!sizeof($_SESSION[$session]['orders'])) ? '' : $userform;
         $tpl      = str_replace("[+shop.basket.userform+]", $userform, $tpl);
         $tpl      = str_replace("[+shop.basket.checkouttable+]", $table, $tpl);
         return $tpl;
@@ -683,6 +735,21 @@ if (!function_exists("tsv_display_cart")) {
                             $tabletmp = str_replace('[+shop.basket.link+]', $url, $tabletmp);
                             //$tabletmp = str_replace('[+shop.basket.id+]', $val, $tabletmp);
                             break;
+
+
+                            //-- добавлено разделение названия и опций
+                        case 'name' :
+                          $tplname = $val;
+                          $details = getStr($tplname, 'ldquo', 'rdquo');
+                          $tplname = str_replace("ldquo".$details."rdquo", "", $tplname);
+                          $tabletmp = str_replace('[+shop.basket.name+]', $tplname, $tabletmp);
+                          if (!empty($details)) {
+                            $tabletmp = str_replace('[+shop.basket.details+]', " (".$details.")", $tabletmp);
+                          }
+                        break;
+                          //--
+
+
                         default:
                             $tabletmp = str_replace('[+shop.basket.' . $key . '+]', $val, $tabletmp);
                             break;
@@ -1001,9 +1068,13 @@ if (!function_exists("tsv_Finish")) {
                 $tmp         = $tablemail; // для письма
                 $tmp1        = $tablemail1; // для письма
                 $price       = tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']);
+                //---  Добавлено разделение названия и опций
+                $name=str_replace("rdquo",")",$_SESSION[$session]['orders'][$i]['name']);
+                $name=str_replace("ldquo","(",$name);
+                //---
                 $orderfields = array(
                     'numorder' => $numorder,
-                    'name'     => $_SESSION[$session]['orders'][$i]['name'],
+                    'name'     => $name,
                     'articul'  => $_SESSION[$session]['orders'][$i]['articul'],
                     'price'    => tsv_PriceFormat($price),
                     'icon'     => $_SESSION[$session]['orders'][$i]['icon'],
@@ -1037,6 +1108,14 @@ if (!function_exists("tsv_Finish")) {
                             $tmp  = str_replace('[+shop.mail.url+]', $val, $tmp);
                             $tmp1 = str_replace('[+shop.mail.url+]', $val, $tmp1);
                             break;
+                        //-- добавлено разделение названия и опций
+                        case 'name' :
+                          $val = str_replace('ldquo','(',$val);
+                          $val = str_replace('rdquo',')',$val);
+                          $tmp = str_replace("[+shop.mail.name+]", $val, $tmp);
+                          $tmp1 = str_replace("[+shop.mail.name+]", $val, $tmp1);
+                        break;
+                        //--
                         default:
                             $tmp  = str_replace("[+shop.mail." . $key . "+]", $val, $tmp);
                             $tmp1 = str_replace("[+shop.mail." . $key . "+]", $val, $tmp1);
@@ -1080,9 +1159,9 @@ if (!function_exists("tsv_Finish")) {
 
         $strMessageBody  = str_replace("[+shop.mail.monetary+]", $tsvshop['MonetarySymbol'], $strMessageBody);
         $strMessageBody1 = str_replace("[+shop.mail.monetary+]", $tsvshop['MonetarySymbol'], $strMessageBody1);
-        
-        
-        
+
+
+
         //оплата
     		if ($_SESSION[$session]['result']['paytype'] == "none" || empty($_SESSION[$session]['result']['paytype']) || empty($_SESSION[$session]['result']['topay'])) {
     			$_SESSION[$session]['result']['paylink'] = '';
@@ -1109,9 +1188,9 @@ if (!function_exists("tsv_Finish")) {
                 }
     		}
     		//
-        
-        
-        
+
+
+
 
         //if (sizeof($order)>0) {
         if (sizeof($_SESSION[$session]['result']) > 0) {
@@ -1124,7 +1203,7 @@ if (!function_exists("tsv_Finish")) {
 				        }
                 if ($key == "paylink") {
                     $val = base64_decode($val);
-					
+
                 }
                 if (in_array($key, explode(",", $tsvshop['SecFields']))) {
                     $val = DeCryptMessage($val, $tsvshop['SecPassword']);
@@ -1182,7 +1261,7 @@ if (!function_exists("tsv_display_success")) {
             $output = str_replace("[+shop.paylink+]", "", $output);
         } else {
 			      $output = str_replace("[+shop.paylink+]", base64_decode($_SESSION['tsvshopfin']['result']['paylink']), $output);
-		    } 
+		    }
 
         if (is_array($_SESSION['tsvshopfin']['result'])) {
             foreach ($_SESSION['tsvshopfin']['result'] as $key => $val) {
