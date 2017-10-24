@@ -24,14 +24,9 @@
     }
 
     // show javascript alert    
-    function webLoginAlert($msg,$alerttpl=''){
+    function webLoginAlert($msg){
     	global $modx;
-        if(!empty($alerttpl)){
-          $output = $modx->parseChunk($alerttpl, array("msg"=>$msg), '[+', '+]');
-        }else{
-          $output = "<script>window.setTimeout(\"alert('".addslashes($modx->db->escape($msg))."')\",10);</script>";
-        }
-        return $output;
+        return "<script>window.setTimeout(\"alert('".addslashes($modx->db->escape($msg))."')\",10);</script>";
     }
 
     // generate new password
@@ -44,42 +39,8 @@
             $pass .= $allowable_characters[mt_rand(0,$ps_len-1)];
         }
         return $pass;
-    } 
-    
-    function sendMail($subject,$email,$body){
-      global $modx;
-      $charset = $modx->config['modx_charset'];
-      $site_name = $modx->config['site_name'];
-      $adminEmail = $modx->config['emailsender'];
-      require_once(MODX_MANAGER_PATH . "includes/controls/class.phpmailer.php");
-      $mail = new PHPMailer();
-      //add smtp method by Dmi3yy
-      if ($modx->config['email_method'] == 'smtp') {
-          $mail->IsSMTP();// отсылать используя SMTP
-          $mail->Host  = $modx->config['email_host']; // SMTP сервер
-          $mail->SMTPAuth = true;  // включить SMTP аутентификацию
-          $mail->Username = $modx->config['email_smtp_sender']; // SMTP username
-          $mail->Password = $modx->config['email_pass']; // SMTP password
-          $mail->From   = $modx->config['email_smtp_sender'];
-          $mail->Port     = $modx->config['email_port'];
-      }else{
-          $mail->IsMail();
-          $mail->From = $adminEmail;
-      }
-      
-      $mail->IsHTML(false);
-      $mail->CharSet = $charset;
-      $mail->FromName	= $site_name;
-      $mail->Subject	= $subject;
-      $mail->Body	= $body;
-      $mail->AddAddress($email);
-      if(!$mail->send()){
-        echo $mail->ErrorInfo;
-        exit;
-      }
-    }
-    
-    
+    }    
+
     // Send new password to the user
     function webLoginSendNewPassword($email,$uid,$pwd,$ufn){
         global $modx, $site_url;
@@ -97,13 +58,9 @@
         $message = str_replace("[+sname+]",$site_name,$message);
         $message = str_replace("[+semail+]",$emailsender,$message);
         $message = str_replace("[+surl+]",$site_url,$message);
-        /*
-        if (!ini_get('safe_mode')) $sent = mail($email, $emailsubject, $message, "Content-type: text/plain; charset=UTF-8"."\r\n"."From: ".$emailsender."\r\n"."X-Mailer: Content Manager - PHP/".phpversion(), "-f {$emailsender}");
-        else $sent = mail($email, $emailsubject, $message, "Content-type: text/plain; charset=UTF-8"."\r\n"."From: ".$emailsender."\r\n"."X-Mailer: Content Manager - PHP/".phpversion());
-        if (!$sent) webLoginAlert($langTXT[16]." $mailto",$alerttpl);
-        */
-        sendMail($emailsubject,$email,$message);
-        
+        if (!ini_get('safe_mode')) $sent = mail($email, $emailsubject, $message, "From: ".$emailsender."\r\n"."X-Mailer: Content Manager - PHP/".phpversion(), "-f {$emailsender}");
+        else $sent = mail($email, $emailsubject, $message, "From: ".$emailsender."\r\n"."X-Mailer: Content Manager - PHP/".phpversion());
+        if (!$sent) webLoginAlert("Error while sending mail to $mailto",1);
         return true;
     }
     
@@ -119,19 +76,11 @@
 		$array_url = array_merge($array_get, $array_values);
 		foreach ($array_url as $name => $value) {
 			if (!is_null($value)) {
-				if(!is_array($value)){
-				  $urlstring[] = urlencode($name) . '=' . urlencode($value);
-				}else{
-				  foreach ($value as $val){
-            $urlstring[] = urlencode($name) . '[]=' . urlencode($val);
-          }
-          unset($key,$val);
-				}
-        
+				$urlstring[] = urlencode($name) . '=' . urlencode($value);
 			}
 		}
 	
-		$url = join('&',$urlstring);
+		$url = implode('&',$urlstring);
 		if ($suffix) {
 			if (empty($url)) {
 				$url = "?";
