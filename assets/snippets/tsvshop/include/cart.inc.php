@@ -932,7 +932,7 @@ if (!function_exists("tsv_display_cart")) {
                 "Z"
             );
             for ($c = 0; $c < 8; $c++) {
-                srand((double) microtime() * 100000000000000);
+                //srand((double) microtime() * 100000000000000);
                 $pass      = $tekens[rand(0, 62)];
                 $accesskey = $accesskey . $pass;
             }
