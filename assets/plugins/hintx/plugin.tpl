@@ -1,7 +1,7 @@
 /**
  * HINTx
  * 
- * add hints to chunks & templates editors (плагин для вывода подсказок при редактировании чанков и шаблонов)
+ * add hints to chunks & templates editors (РїР»Р°РіРёРЅ РґР»СЏ РІС‹РІРѕРґР° РїРѕРґСЃРєР°Р·РѕРє РїСЂРё СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРё С‡Р°РЅРєРѕРІ Рё С€Р°Р±Р»РѕРЅРѕРІ)
  *
  * @author	 	lecosson@gmail.com
  * @category 	plugin
@@ -12,7 +12,6 @@
  * @config		&lang=hints language;string;ru
  */ 
 
-global $modx;
 if(!isset($hintx_path)) require_once MODX_BASE_PATH.'assets/plugins/hintx/hintx.php';
 
 
