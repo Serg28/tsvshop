@@ -77,57 +77,57 @@ REPLACE INTO `{PREFIX}shop_conf` VALUES ('addons', 'config_active', 0x796573, 1)
 
 REPLACE INTO `{PREFIX}shop_conf` VALUES ('addons', 'addons_active', 0x796573, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpReplyEmail', 0x6d79406d61696c2e636f6d, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpReplyEmail', 0x6d79406d61696c2e636f6d, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromName', 0xd098d0bdd182d0b5d180d0bdd0b5d1822dd0bcd0b0d0b3d0b0d0b7d0b8d0bd, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromName', 0xd098d0bdd182d0b5d180d0bdd0b5d1822dd0bcd0b0d0b3d0b0d0b7d0b8d0bd, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromEmail', 0x6d79406d61696c2e636f6d, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpFromEmail', 0x6d79406d61696c2e636f6d, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'TypeCat', 0x646f6373, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'TypeCat', 0x646f6373, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpAuth', 0x74727565, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpAuth', 0x74727565, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtPass', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtPass', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpUser', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpUser', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MinimumOrder', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MinimumOrder', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayShippingRow', 0x74727565, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayShippingRow', 0x74727565, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayNotice', 0x74727565, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayNotice', 0x74727565, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'fShipping', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'fShipping', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'PriceFormat', 0x302c3030, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'PriceFormat', 0x302c3030, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'CatRoot', 0x37, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'CatRoot', 0x37, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayPrice', 0x74727565, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayPrice', 0x74727565, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpPort', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpPort', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayDiscount', 0x74727565, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'DisplayDiscount', 0x74727565, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpHost', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SmtpHost', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MonetarySymbol', 0x20d0b3d180d0bd2e, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MonetarySymbol', 0x20d0b3d180d0bd2e, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MailMode', 0x6d61696c, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'MailMode', 0x6d61696c, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'StatusOrder', 0xd09dd0bed0b2d18bd0b93d3d4541413541347c7cd09ed0b6d0b8d0b4d0b0d0bdd0b8d0b520d0bed0bfd0bbd0b0d182d18b3d3d4541453441347c7cd09ed0bfd0bbd0b0d187d0b5d0bdd0be3d3d4233454141347c7cd097d0b0d0b2d0b5d180d188d0b5d0bdd0be3d3d4233454141347c7cd09ed182d0bcd0b5d0bdd0b5d0bd, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'StatusOrder', 0xd09dd0bed0b2d18bd0b93d3d4541413541347c7cd09ed0b6d0b8d0b4d0b0d0bdd0b8d0b520d0bed0bfd0bbd0b0d182d18b3d3d4541453441347c7cd09ed0bfd0bbd0b0d187d0b5d0bdd0be3d3d4233454141347c7cd097d0b0d0b2d0b5d180d188d0b5d0bdd0be3d3d4233454141347c7cd09ed182d0bcd0b5d0bdd0b5d0bd, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailAdmin', 0xd09fd0bed181d182d183d0bfd0b8d0bb20d0bdd0bed0b2d18bd0b920d0b7d0b0d0bad0b0d0b7, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailAdmin', 0xd09fd0bed181d182d183d0bfd0b8d0bb20d0bdd0bed0b2d18bd0b920d0b7d0b0d0bad0b0d0b7, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailUser', 0xd097d0b0d0bad0b0d0b720d183d181d0bfd0b5d188d0bdd0be20d0bfd180d0b8d0bdd18fd182, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectMailUser', 0xd097d0b0d0bad0b0d0b720d183d181d0bfd0b5d188d0bdd0be20d0bfd180d0b8d0bdd18fd182, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectUpdateStatus', 0xd098d0b7d0bcd0b5d0bdd0b5d0bdd0b8d0b520d181d182d0b0d182d183d181d0b020d0b7d0b0d0bad0b0d0b7d0b0, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SubjectUpdateStatus', 0xd098d0b7d0bcd0b5d0bdd0b5d0bdd0b8d0b520d181d182d0b0d182d183d181d0b020d0b7d0b0d0bad0b0d0b7d0b0, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'shipping', '', 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'shipping', '', 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecPassword', 0x4d7950617373, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecPassword', 0x4d7950617373, 1);
 
-REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecFields', 0x66696f2c6164726573732c636974792c70686f6e652c656d61696c, 1);
+#REPLACE INTO `{PREFIX}shop_conf` VALUES ('', 'SecFields', 0x66696f2c6164726573732c636974792c70686f6e652c656d61696c, 1);
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1020','TSVshopOnBeforeUserFormInit', 6, 'TSVshop');
 
@@ -202,7 +202,7 @@ REPLACE INTO `{PREFIX}site_content` (`id`,	`type`,		`contentType`,	`pagetitle`,	
 
 REPLACE INTO `{PREFIX}site_tmplvars` 	(`id`,			`type`,			`name`, 			`caption`, 			`description`, `editor_type`, `category`, `locked`, `elements`, `rank`, `display`, `display_params`, `default_text`) VALUES
 										({TV_IMAGE}, 	'image', 		'cart_icon', 		'Картинка товара', 	'Выводится в каталоге, корзине и инфоблоке', 0, 38, 0, '', 0, '', '', ''),
-										({TV_TMINI}, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 8, 0, '', 0, '', '', ''),
+										({TV_TMINI}, 	'textareamini',	'tsvshop_param', 	'Параметры товара',	'Дополнительные параметры товара, влияющие на цену', 0, 38, 0, '', 0, '', '', ''),
 										({TV_ARTCL}, 	'text', 		'articul', 			'Артикул', 			'Артикул товара', 0, 38, 0, '', 0, '', '', ''),
 										({TV_PRICE}, 	'number', 		'price', 			'Цена товара', 		'Параметр <b>обязателен</b>', 0, 38, 0, '', 0, '', '', ''),
 		    ({TV_INVEN}, 'number', 'inventory', 'Кол-во на складе', '', 0, 38, 0, '', 0, '', '', ''),
