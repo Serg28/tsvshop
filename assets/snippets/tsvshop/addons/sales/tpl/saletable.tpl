@@ -22,7 +22,7 @@
 	<th width="10%" align="center"><b>[+sales_data+]</b></th>
 	<th width="10%" align="center"><b>[+sales_status+]</b></th>
         <th width="18%" align="right"><nobr><b>[+sales_total+]</b></nobr></th>
-        <th align="left" width="1%"></th>
+        <th align="left" width="10%"></th>
 
 </tr>
 </thead>
