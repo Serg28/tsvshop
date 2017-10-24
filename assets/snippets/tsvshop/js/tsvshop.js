@@ -449,13 +449,13 @@ function AddToCart(ID_NUM) {
         //strNAME = (selOptKo.length) ? " (" + selOptTXT + ")" : "";
         //добавлено разделение названия и опций
         strNAME = (selOptKo.length) ? " ldquo" + selOptTXT + "rdquo" : "";
-        if (!selOptKo.length) {
+        /*if (!selOptKo.length) {
             var elPrice = findElementByID(thisForm, "price" + ID_NUM);
             if (elPrice) {
                 var pr = elPrice.innerHTML;
                 selOptKo = '+' + pr.replace(/[^\d\.]/g, '');
             }
-        }
+        }*/
 
         strCART_ICON = (cart_icon) ? cart_icon : "";
         var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
