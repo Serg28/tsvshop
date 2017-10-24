@@ -38,6 +38,12 @@ $modulea = $_GET['a'];
 $act = $_GET['act'];
 include_once (TSVSHOP_PATH.'admin/lang/' . $modx->config['manager_language'] . '.inc.php');
 require_once ($basePath.MGR_DIR.'/includes/protect.inc.php');
+if (!file_exists(TSVSHOP_PATH.'include/config.inc.php')) {
+	rename(TSVSHOP_PATH.'include/config.inc.blank.php', TSVSHOP_PATH.'include/config.inc.php');
+}
+if (!file_exists(TSVSHOP_PATH.'js/config.js')) {
+	rename(TSVSHOP_PATH.'js/config.blank.js', TSVSHOP_PATH.'js/config.js');
+}
 include_once (TSVSHOP_PATH.'include/config.inc.php');
 include_once (TSVSHOP_PATH.'admin/includes/core.inc.php');
 if (file_exists(TSVSHOP_PATH.'include/version.inc.php')) {
@@ -89,6 +95,7 @@ include_once ($basePath . 'assets/snippets/tsvshop/addons/sales/includes/options
 include_once ($basePath . 'assets/snippets/tsvshop/admin/template/header.inc.php');
 //top button
 include_once ($basePath . 'assets/snippets/tsvshop/admin/template/topbutton.inc.php');
+if (!isset($tsvshop['addons_config_active'])) $output.=notice($shop_lang['config_noconfig'], 'error');
 $output.= '
 <div class="sectionBody">
     <div class="tab-pane" id="resourcesPane">
