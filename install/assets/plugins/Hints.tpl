@@ -1,4 +1,4 @@
-﻿/**
+/**
  * HINTx
  * 
  * add hints to chunks & templates editors (плагин для вывода подсказок при редактировании чанков и шаблонов)
@@ -13,7 +13,6 @@
  * @internal  @installset base
  */ 
 
-global $modx;
 if(!isset($hintx_path)) require_once MODX_BASE_PATH.'assets/plugins/hintx/hintx.php';
 
 
