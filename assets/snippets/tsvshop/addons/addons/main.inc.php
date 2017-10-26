@@ -5,7 +5,7 @@ $output.= '<h2 class="tab">'.$shop_lang['addons_title'].'</h2>';
 $output.= '<p><img src="'.TSVSHOP_SURL.'addons/addons/img/addons.png" alt="'.$shop_lang['sales_title'].'" class="icon" style="vertical-align: middle; text-align: left; " />'.$shop_lang['addons_intro'];
 $path = $siteURL.MGR_DIR."/index.php";
 
-$output.= $anotice;  
+$output.= $anotice;
 $addonstable=parseaddons($addonspath,TSVSHOP_PATH.'addons/addons/tpl/addonstable.tpl', $shop_lang);
 
 $output.= '
@@ -15,13 +15,13 @@ $output.= '
 <input type="hidden" id="a" name="a" value="' . $modulea . '" />
 <table class="grid_table">
     <tr>
-     <td style="height:28px;" >
-	<div class="header_tables" style="margin-bottom:-4px"><div class="header_cont"><b>'.$shop_lang['addons_ttitle'].'</b></div></div>
+     <td style="height:34px;" >
+	<div class="header_tables" style="margin-bottom:0"><div class="header_cont"><b>'.$shop_lang['addons_ttitle'].'</b></div></div>
      </td>
    </tr>
    <tr>
         <td>
-    
+
 
 
 

@@ -78,6 +78,13 @@ input {
 
 }
 
+h1,h2 {
+    margin-bottom:20px;width:100%;clear: both
+}
+
+h1 {font-size:18px}
+h2 {font-size:16px}
+h3 {font-size:14px}
 
 
 
@@ -536,6 +543,12 @@ table.tsvshop thead tr th {
 
 
 /*  catalog */
+
+.cataloglist {
+    margin-left:-20px;clear:both;width:100%
+    
+}
+
 .product {
 	padding:10px;
 	border:1px solid #cbcbcb;
