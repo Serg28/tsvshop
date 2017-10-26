@@ -1,6 +1,6 @@
 <?php
 if (!IN_TSVSHOP_MODE) {die();}
-defined('IN_TSVSHOP_MODE') or die();  
+defined('IN_TSVSHOP_MODE') or die();
 
 //include ($modx->config['base_path']."assets/snippets/tsvshop/include/config.inc.php");
 $checkid = isset($checkid) ? $checkid : '';
@@ -20,11 +20,11 @@ $tsvshop['SmtpFromEmail'] = (empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['youre
 $tsvshop['debug'] = !empty($debug) ? $debug : false;
 $tsvshop['lang'] = !empty($lang) ? $lang : $modx->config['manager_language']; // язык системы
 $tsvshop['act'] = !empty($act) ? $act : "basket"; // определяем действие, иначе "Корзина"
-$tsvshop['actions'] = $actions; 
+$tsvshop['actions'] = $actions;
 $tsvshop['tb_prefix'] = $modx->db->config['table_prefix'];
 $tsvshop['basePath'] = $modx->config['base_path'];
 $tsvshop['siteURL'] = $modx->config['site_url'];
-if (!empty($checkid)) {$tsvshop['checkurl'] = $modx->makeUrl($checkid);} //  урл оформления покупки 
+if (!empty($checkid)) {$tsvshop['checkurl'] = $modx->makeUrl($checkid);} //  урл оформления покупки
 $tsvshop['finurl'] = $modx->makeUrl($finid);
 if (!empty($basketid)) {$tsvshop['basketurl'] = $modx->makeUrl($basketid);}
 $tsvshop['selfurl'] = $modx->makeUrl($modx->documentIdentifier);
@@ -55,9 +55,9 @@ $table = $modx->getFullTableName( 'shop_order_detail');
   if ($modx->db->getRecordCount($modx->db->query("show columns FROM ".$table." where `Field` = 'typeitem'"))==0) {
     $res1=$modx->db->query("ALTER TABLE  ".$table." ADD  `typeitem` varchar(10) NOT NULL DEFAULT 'physical'");
   }
-  
 
-  
+
+
 // DB
 $tsvshop['customfields'] = !empty($customfields) ? explode(",",$customfields) : array(); // кастомные поля для таблицы заказов
 
@@ -74,8 +74,8 @@ foreach ($folders as $folder) {
                  $langfile = $addonspath.$folder.'/lang/'.$tsvshop['lang'].'.inc.php';
                  if ($tsvshop['addons_'.$folder.'_active']=="yes") {
                      if (file_exists($file) && file_exists($langfile)) {
-                         require_once($file); 
-                         require_once($langfile); 
+                         require_once($file);
+                         require_once($langfile);
                          $jsfunc = 'addons/'.$folder.'/js/funct.js';
                          if (file_exists(TSVSHOP_PATH.$jsfunc)) {tsv_jsadd($jsfunc); /*$modx->regClientStartupScript($jsfunc);*/}
                          if (sizeof($tsvshop['cf_'.$folder])>0) {
@@ -113,15 +113,15 @@ if ($act == "itemcard") {
 
     $evt = $modx->invokeEvent("TSVshopOnGetPriceItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat'], 'price'=>$price));
 
-	  if (is_array($evt) && !empty($evt[0])) { 
+	  if (is_array($evt) && !empty($evt[0])) {
 		  $price = tsv_PriceFormat($evt[0]);
 		  $formula = $price;
 	  }
     $price = tsv_PriceFormat(tsv_CalcPrice($price, 1, tsv_parseOptions($dparam['value'])));
-    
-    
+
+
     $vars = $modx->getTemplateVarOutput(array('typeitem','cart_icon'),$modx->documentIdentifier);
-    
+
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
     $modx->setPlaceholder('tsvservices','<input type="hidden" name="formula" value="'.$vars['price'].'" /><input type="hidden" name="cart_icon" value="'.$vars['cart_icon'].'" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
     $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'" class="tsvprice">'.$vars['price'].'</span>');
@@ -154,7 +154,8 @@ if ($act == "checkout_form") {
 }
 
 if ($act == "checkout") {
-    print tsv_display_fullcheckout($cache);
+    //print tsv_display_fullcheckout($cache);
+    print tsv_display_cart($cache, "fullcheckout");
 }
 
 if ($act == "finish") {

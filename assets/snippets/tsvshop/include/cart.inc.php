@@ -660,7 +660,7 @@ if (!function_exists("tsv_display_cart")) {
         } else {
             $tvar    = "ch";
             $chunk   = $tsvshop['tplcheckout'];
-            $divajax = '<div id="checkout_table">';
+            //$divajax = '<div id="checkout_table">';
         }
         if (empty($count)) {
             $tvar  = "cte";
@@ -838,7 +838,7 @@ if (!function_exists("tsv_display_cart")) {
 
 
 
-
+            /*
             // Плагин TSVshopOnBeforeUserFormInit
             $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormInit", array(
                 "tpl" => $tpl
@@ -856,7 +856,7 @@ if (!function_exists("tsv_display_cart")) {
             } else {
                 $tpl = str_replace("[+shop.basket.userform+]", "", $tpl);
             }
-
+            */
             //добавлено с v5.3 ----------------------------------------------------
             $tpl = str_replace("[+shop.basket.topay+]", tsv_PriceFormat($_SESSION[$session]['result']['topay']), $tpl);
 
@@ -945,6 +945,44 @@ if (!function_exists("tsv_display_cart")) {
         if (is_array($evt) && !empty($evt[0]))
             $tpl = $evt[0];
 
+//--------
+        if ($act == 'fullcheckout') {
+            $tvar  = "fch";
+            $chunk = $tsvshop['tplfullcheckout'];
+            $tplfc = $cache->cache($tvar, 'tsvshop');
+            if (!$tplfc) {
+                if (!$tplfc = getTpl($chunk)) {
+                    $$tplfc = "<div>[+shop.basket.checkouttable+]</div> <div>[+shop.basket.userform+]</div>";
+                } else {
+                    $cache->cache($tvar, 'tsvshop', $tplfc);
+                }
+            }
+
+            // Событие TSVshopOnBeforeUserFormInit
+            $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormInit", array(
+                "tpl" => $tpl
+            ));
+            if (is_array($evt) && !empty($evt[0]))
+                $tpl = $evt[0];
+            if (!empty($_SESSION[$session]['result']['count']) && _filter($_REQUEST['act']) != 'recalc') {
+                $userform = tsv_display_checkoutform($cache);
+            } else {
+                $userform = '';
+            }
+
+            $userform = '<div id="checkoutform_cont">' . $userform . '</div>';
+            $table    = '<div id="checkout_table">'. $tpl . '</div>';
+
+            $table = call_user_func_array(tsv_ClearTplfromLabels, array(
+                $table
+            ));
+
+            $userform = (!sizeof($_SESSION[$session]['orders'])) ? '' : $userform;
+            $tplfc      = str_replace("[+shop.basket.checkouttable+]", $table, $tplfc);
+            $tpl      = str_replace("[+shop.basket.userform+]", $userform, $tplfc);
+        }
+        //------
+
         // Чистим чанк от всех меток
         $tpl = call_user_func_array(tsv_ClearTplfromLabels, array(
             $tpl
@@ -954,7 +992,8 @@ if (!function_exists("tsv_display_cart")) {
         if (empty($tpl)) {
             return true;
         } else {
-            return $divajax . $tpl;
+            //return $divajax . $tpl;
+            return $tpl;
         }
         unset($tpl);
         unset($piece);
