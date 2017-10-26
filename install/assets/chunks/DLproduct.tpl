@@ -1,7 +1,7 @@
 /**
- * product
+ * DLproduct
  *
- * Шаблон для вывода товара с помощью Ditto в TSVshop
+ * Шаблон для вывода товара с помощью DocLister в TSVshop
  *
  * @category	chunk
  * @version 	5.4.2
@@ -14,9 +14,9 @@
 
 <div class="product">
 <form action="index.php" method="post" name="Tovar[+id+]" id="Tovar[+id+]">
-<center><a href="[~[+id+]~]"><img src="[(base_url)][+cart_icon+]" width="138" height="118" /></a></center>
+<center><a href="[~[+id+]~]"><img src="[(base_url)][+tv.cart_icon+]" width="138" height="118" /></a></center>
 <div class="dashed">
-<h3><a href="[~[+id+]~]" class="title">[+pagetitle+] [+articul+]</a></h3>
+<h3><a href="[~[+id+]~]" class="title">[+pagetitle+] [+tv.articul+]</a></h3>
 [+tsvoptions+]
 </div>
 <div class="clear"></div>
@@ -30,3 +30,4 @@
 [+tsvservices+]
 </form>
 </div>
+
