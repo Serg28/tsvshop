@@ -587,6 +587,7 @@ function init() {
         c.innerHTML = '<div id="' + divnotice + '" class="jGrowl ie6 ' + position + '"></div>';
         document.body.appendChild(c);
     }
+    GetInfoblock(false);
 };
 
 function addLoadEvent(func) {
