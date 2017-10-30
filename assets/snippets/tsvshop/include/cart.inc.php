@@ -522,7 +522,7 @@ if (!function_exists("tsv_display_infoblock")) {
 
         $tpl = str_replace($empty, "", $tpl);
 
-        //$output = preg_replace('/(\[\+.*?\+\])/', '', $output);
+        $output = preg_replace('/(\[\+.*?\+\])/', '', $output);
         unset($tpl);
         return $output;
     }

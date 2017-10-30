@@ -529,12 +529,14 @@ function GetInfoblock(report, type) {
         type = "full";
     }
     if (!report) {
-        loading('infoblock_cont');
+        if (getId('infoblock_cont')) loading('infoblock_cont');
         var ib = new AJAXInteraction(domain + '/assets/snippets/tsvshop/include/ajax.php', GetInfoblock);
         ib.doPost('mode=info&type=' + type);
     } else {
-        loading('infoblock_cont');
-        getId('infoblock_cont').innerHTML = report;
+        if (getId('infoblock_cont')) {
+            loading('infoblock_cont');
+            getId('infoblock_cont').innerHTML = report;
+        }
     }
 }
 

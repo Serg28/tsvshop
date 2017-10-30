@@ -27,7 +27,6 @@ include_once($_api_path . MGR_DIR . '/includes/document.parser.class.inc.php');
 function executeDocument($docid = 0) {
     global $modx;
     ob_start();
-    ob_start();
     $tmp            = $_REQUEST['id']; // save old id
     $_REQUEST['id'] = $docid;
     $modx->executeParser();
