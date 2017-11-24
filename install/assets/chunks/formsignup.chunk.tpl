@@ -8,7 +8,7 @@
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal  @modx_category TSVoffice
  * @internal  @installset base, sample
- * @author      Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.tsv.org.ua, http://tsvshop.xyz 
+ * @author      Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, http://tsvshop.xyz 
  */
 
 <!-- #declare:separator <hr> --> 

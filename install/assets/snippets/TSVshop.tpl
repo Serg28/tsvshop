@@ -4,13 +4,13 @@
  * Сниппет магазина TSVshop
  *
  * @category    snippet
- * @version     5.4.2
+ * @version     5.4.4
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVshop
  * @internal    @installset base, sample
  *
- * @author      Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.xyz
+ * @author      Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, http://tsvshop.xyz
  * -----------------------------------------------------------------------------
  */
 

@@ -3,7 +3,7 @@
  * 
  * add hints to chunks & templates editors (плагин для вывода подсказок при редактировании чанков и шаблонов)
  *
- * @author	 	lecosson@gmail.com
+ * @author	lecosson@gmail.com
  * @category 	plugin
  * @version 	0.01
  * @license 	http://www.opensource.org/licenses/gpl-2.0.php GNU Public License Version 2 (GPL2)

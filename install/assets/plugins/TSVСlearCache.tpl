@@ -3,7 +3,7 @@
  *
  * Сброс кеша магазина TSVshop
  *
- * @author	 	lecosson@gmail.com,  Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.xyz
+ * @author	 	lecosson@gmail.com,  Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, http://tsvshop.xyz
  * @category 	plugin
  * @version 	0.02
  * @license 	http://www.opensource.org/licenses/gpl-2.0.php GNU Public License Version 2 (GPL2)

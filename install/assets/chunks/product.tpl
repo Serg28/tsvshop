@@ -4,16 +4,16 @@
  * Шаблон для вывода товара с помощью Ditto в TSVshop
  *
  * @category	chunk
- * @version 	5.4.2
+ * @version 	5.4.4
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal  @modx_category TSVshop
  * @internal  @installset base, sample
- * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.xyz 
+ * @author    Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, http://tsvshop.xyz 
  */
 
 
 <div class="product">
-<form action="index.php" method="post" name="Tovar[+id+]" id="Tovar[+id+]">
+<form action="[~[+id+]~]" method="post" name="Tovar[+id+]" id="Tovar[+id+]">
 <center><a href="[~[+id+]~]"><img src="[(base_url)][+cart_icon+]" width="138" height="118" /></a></center>
 <div class="dashed">
 <h3><a href="[~[+id+]~]" class="title">[+pagetitle+] [+articul+]</a></h3>
