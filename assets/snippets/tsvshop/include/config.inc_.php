@@ -21,7 +21,7 @@ $tsvshop['SmtpHost']='';
 $tsvshop['SmtpPort']='';
 $tsvshop['SmtpReplyEmail']='my@mail.com';
 $tsvshop['SmtpUser']='';
-$tsvshop['StatusOrder']='Новый==EAA5A4||Ожидание оплаты==EAE4A4||Оплачено==B3EAA4||Завершено==B3EAA4||Отменен';
+$tsvshop['StatusOrder']='Новый==d4e8f1||Ожидание оплаты==feecd8||Оплачено==e7f0db||Завершено==e4f0c6||Отменен==fce3e2';
 $tsvshop['SubjectMailAdmin']='Поступил новый заказ';
 $tsvshop['SubjectMailUser']='Заказ успешно принят';
 $tsvshop['SubjectUpdateStatus']='Изменение статуса заказа';

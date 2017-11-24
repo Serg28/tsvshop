@@ -21,7 +21,7 @@ SmtpHost='';
 SmtpPort='';
 SmtpReplyEmail='my@mail.com';
 SmtpUser='';
-StatusOrder='Новый==EAA5A4||Ожидание оплаты==EAE4A4||Оплачено==B3EAA4||Завершено==B3EAA4||Отменен';
+StatusOrder='Новый==d4e8f1||Ожидание оплаты==feecd8||Оплачено==e7f0db||Завершено==e4f0c6||Отменен==fce3e2';
 SubjectMailAdmin='Поступил новый заказ';
 SubjectMailUser='Заказ успешно принят';
 SubjectUpdateStatus='Изменение статуса заказа';

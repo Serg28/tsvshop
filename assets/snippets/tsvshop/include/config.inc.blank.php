@@ -1,3 +1,34 @@
 <?php
-
+$tsvshop['CatRoot']=7;
+$tsvshop['DisplayDiscount']='true';
+$tsvshop['DisplayNotice']='true';
+$tsvshop['DisplayPrice']='true';
+$tsvshop['DisplayShippingRow']='true';
+$tsvshop['fShipping']='';
+$tsvshop['MailMode']='mail';
+$tsvshop['MinimumOrder']='';
+$tsvshop['MonetarySymbol']=' грн.';
+$tsvshop['PriceFormat']='0,00';
+$tsvshop['SecFields']='fio,adress,city,phone,email';
+$tsvshop['SecPassword']='MyPass';
+$tsvshop['shipping']='';
+$tsvshop['SmtPass']='';
+$tsvshop['SmtpAuth']='true';
+$tsvshop['SmtpFromEmail']='my@mail.com';
+$tsvshop['SmtpFromName']='Интернет-магазин';
+$tsvshop['SmtpHost']='';
+$tsvshop['SmtpPort']='';
+$tsvshop['SmtpReplyEmail']='my@mail.com';
+$tsvshop['SmtpUser']='';
+$tsvshop['StatusOrder']='Новый==d4e8f1||Ожидание оплаты==feecd8||Оплачено==e7f0db||Завершено==e4f0c6||Отменен==fce3e2';
+$tsvshop['SubjectMailAdmin']='Поступил новый заказ';
+$tsvshop['SubjectMailUser']='Заказ успешно принят';
+$tsvshop['SubjectUpdateStatus']='Изменение статуса заказа';
+$tsvshop['TypeCat']='docs';
+$tsvshop['addons_addonoff_active']='no';
+$tsvshop['addons_addons_active']='yes';
+$tsvshop['addons_config_active']='yes';
+$tsvshop['addons_prices_active']='no';
+$tsvshop['addons_sales_active']='yes';
+$tsvshop['addons_shipping_active']='no';
 ?>
