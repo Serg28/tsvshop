@@ -272,3 +272,17 @@ div.header_tables div.header_cont{margin:0px;height:34px;line-height:33px;paddin
 table.formconfig tr td {padding:5px 0}
 
 .table th, .table td, #tabTemplate tbody td, .sectionBody td, .sectionBody th {padding:0}
+
+table.TF th{
+    padding:6px 7px;
+}
+table.TF td{ 
+    padding:6px 7px;
+}
+
+#saletable.TF th{
+    padding:6px 7px;
+}
+#saletable.TF td{ 
+    padding:3px 7px;
+}

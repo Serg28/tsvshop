@@ -1,4 +1,4 @@
- ﻿	.topdiv {
+ 	.topdiv {
 			border: 0;
 		}
 		
@@ -231,9 +231,7 @@ margin-left:-10px;
     cursor: auto; /* ���ϣϧs��� */
 }
 
-table.TF td.text-center {
-    text-align: center;    
-}
+
 img.icon {
 	float:left;
 	margin:0 15px 10px 0;
@@ -256,12 +254,17 @@ color:#fff;
 
 /*tables order*/
 table.grid_table {border-collapse: collapse; width: 100%; margin-top:0px}
+
+table.grid_table select {
+width: auto;
+}
+
 div.header_tables {
   border:1px solid #8b96a0;border-bottom:none;padding:0px;height:34px;margin-bottom:0;
 }
 div.header_tables div.header_cont{margin:0px;height:34px;line-height:33px;padding-left:8px;text-align:left;background:#88939E url(/manager/media/style/MODxCarbon/images/misc/longbarbg.png) repeat-x left top; color:#fff;}
 
-.aicon {margin-top:2px;margin-bottom:-2px }
+.aicon {/*margin-top:2px;margin-bottom:-2px*/ }
 
 #tabTemplate tbody td,
 .sectionBody td,
@@ -272,3 +275,70 @@ div.header_tables div.header_cont{margin:0px;height:34px;line-height:33px;paddin
 table.formconfig tr td {padding:5px 0}
 
 .table th, .table td, #tabTemplate tbody td, .sectionBody td, .sectionBody th {padding:0}
+
+
+
+table.TF{
+	font:normal 12px arial, tahoma, helvetica, sans-serif;
+	border-top:1px solid #dddddd; border-left:1px solid #dddddd;
+        border-right:1px solid #dddddd;
+	/*border-bottom:1px solid #fff; border-right:1px solid #ccc;*/
+}
+table.TF th{
+    border:1px solid; 
+    border-color:#fff #dddddd #dddddd #fff; 
+    padding:8px 7px;
+}
+table.TF td{ 
+    padding:7px 7px 7px 7px;
+}
+
+table.TF td:first-child,table.TF th:first-child
+{
+  background:#f1f2f4;
+  border-right:1px solid #dddddd;
+  border-left:1px solid #dddddd;
+}
+
+#saletable.TF th{
+    padding:8px 7px;
+}
+#saletable.TF td{ 
+    padding:2px 7px 2px 7px;
+}
+
+table.TF.tsvorder  th {
+    border-top:1px solid #ddd
+}
+
+.mdiv {
+    padding-top: 1px;
+}
+
+select.pgSlc {
+    vertical-align: top;
+    margin-top:0
+}
+
+.rdiv {
+    margin-top:0;
+}
+
+select:not([size]):not([multiple]).pgSlc, select:not([size]):not([multiple]).rspg {
+    height:auto;
+    font-size:100%
+}
+
+input.pgInp {
+    height:26px;
+    margin-top: 2px
+}
+
+span.nbpg {
+    margin-top: -6px;
+    display: inline-block;
+    height:21px;
+    padding: 0 6px;
+    position: relative;
+    top:-2px
+}
