@@ -10,7 +10,7 @@
  * @internal    @modx_category TSVshop
  * @internal    @installset base, sample
  *
- * @author      Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, http://tsvshop.xyz
+ * @author      Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, Сайт проекта, дополнения, доработка под нужды: http://tsvshop.xyz
  * -----------------------------------------------------------------------------
  */
 
