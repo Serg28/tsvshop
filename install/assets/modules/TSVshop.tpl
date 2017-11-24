@@ -4,14 +4,14 @@
  * Модуль управления магазином TSVshop
  *
  * @category	module
- * @version 	5.4.2
+ * @version 	5.4.4
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal	@properties
  * @internal	@guid
  * @internal	@dependencies requires files located at /assets/snippets/tsvshop/
  * @internal	@modx_category TSVshop
  * @internal  @installset base, sample
- * @author    Telnij Sergey (Serg24) <privat_tel@mail.ru>, http://tsvshop.xyz 
+ * @author    Telnij Sergey (Serg24) <tsv.art.com@gmail.com>, Сайт проекта, дополнения, доработка под нужды: http://tsvshop.xyz 
  */
 
 
@@ -25,6 +25,7 @@ $tb_prefix = $modx->db->config['table_prefix'];
 $theme = $modx->db->select('setting_value', '`' . $tb_prefix . 'system_settings`', 'setting_name=\'manager_theme\'', '');
 $theme = $modx->db->getRow($theme);
 $theme = ($theme['setting_value'] <> '') ? '/' . $theme['setting_value'] : '';
+$moduletheme = ($modx->config['manager_theme'] != 'default') ? 'base' : $modx->config['manager_theme'];
 $basePath = $modx->config['base_path'];
 $siteURL = $modx->config['site_url'];
 $addonspath = $basePath."assets/snippets/tsvshop/addons/";
