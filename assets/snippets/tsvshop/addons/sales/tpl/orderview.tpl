@@ -168,24 +168,24 @@
 
       <tr>
 				<td colspan="5" align="left" class="gridAltItem">[+sales_subtotal+]</td>
-				<td class="gridAltItem"><input type="text" name="subtotal" disabled value="[+subtotal+]" style="width:80%;"></td>
+				<td class="gridAltItem" align="center"><input type="text" name="subtotal" disabled value="[+subtotal+]" style="width:80%;"></td>
 			</tr>
 
 			<tr>
 				<td colspan="5" align="left" class="gridAltItem">[+sales_shipping+]</td>
-				<td class="gridAltItem"><input type="text" name="shipping" value="[+shipping+]" style="width:80%;"></td>
+				<td class="gridAltItem" align="center"><input type="text" name="shipping" value="[+shipping+]" style="width:80%;"></td>
 			</tr>
 			<tr>
 				<td colspan="5" align="left" class="gridAltItem">[+sales_tax+]</td>
-				<td class="gridAltItem"><input type="text" name="nalog" value="[+nalog+]" style="width:80%;"></td>
+				<td class="gridAltItem" align="center"><input type="text" name="nalog" value="[+nalog+]" style="width:80%;"></td>
 			</tr>
 			<tr>
 				<td colspan="5" align="left" class="gridAltItem"; ><div style="margin-top:8px; float:left">[+sales_discount+]</div> <span style="float:right"><input type="text" name="discount" value="[+discount+]" style="width:80%;">%</span></td>
-				<td class="gridAltItem"> <input type="text" name="discountsize" disabled value="[+discountsize+]" style="width:80%;"></td>
+				<td class="gridAltItem" align="center"> <input type="text" name="discountsize" disabled value="[+discountsize+]" style="width:80%;"></td>
 			</tr>
 			<tr>
 				<td colspan="5" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
-				<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" ><input type="text" name="total" disabled value="[+total+]" style="width:80%;"></td>
+				<td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" align="center"><input type="text" name="total" disabled value="[+total+]" style="width:80%;"></td>
 			</tr>
       </table>        
 </form>         

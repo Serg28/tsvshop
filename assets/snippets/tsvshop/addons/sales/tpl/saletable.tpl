@@ -14,14 +14,14 @@
 <table id="saletable" class="TF" cellpadding="0" cellspacing="0" width="100%">
 <thead>
 <tr>
-	<th width="40"><input type="checkbox" name="checked" onclick="checkedAll(this.checked,'check_del'); void(0);" /></th>
+	<th width="50"><input type="checkbox" name="checked" onclick="checkedAll(this.checked,'check_del'); void(0);" /></th>
 	<th width="5%"><b>№</b></th>
 	<th  align="left"><b>[+sales_fio+]</b></th>
 	<th align="left"><b>[+sales_notes+]</b></th>
 
-	<th width="10%" align="center"><b>[+sales_data+]</b></th>
+	<th width="12%" align="center"><b>[+sales_data+]</b></th>
 	<th width="10%" align="center"><b>[+sales_status+]</b></th>
-        <th width="18%" align="right"><nobr><b>[+sales_total+]</b></nobr></th>
+        <th width="16%" align="right"><nobr><b>[+sales_total+]</b></nobr></th>
         <th align="left" width="10%"></th>
 
 </tr>

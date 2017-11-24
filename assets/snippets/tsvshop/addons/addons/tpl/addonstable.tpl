@@ -4,8 +4,6 @@
 <td>[+addon+]</td>
 <td>[+description+]</td>
 <td align="center">[+status+]</td>
-<td align="center"><nobr>[+actions+]</nobr>
-
+<td align="center" class="text-center"><nobr>[+actions+]</nobr>
 </td>
-
 </tr>

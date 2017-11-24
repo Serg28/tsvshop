@@ -21,15 +21,6 @@ $output.= '
    </tr>
    <tr>
         <td>
-
-
-
-
-
-
-
-
-
 <table id="addonstable" class="TF" cellpadding="0" cellspacing="0" width="100%">
 <thead>
 <tr>
@@ -37,8 +28,8 @@ $output.= '
 	<th width="5%"><b>№</b></th>
 	<th align="left"><b>'.$shop_lang['addons_name'].'</b></th>
         <th align="left"><b>'.$shop_lang['addons_desc_name'].'</b></th>
-        <th align="left" width="1%"><b>'.$shop_lang['addons_status'].'</b></th>
-        <th align="left" width="1%"></th>
+        <th align="left" width="5%"><b>'.$shop_lang['addons_status'].'</b></th>
+        <th align="left" width="5%"></th>
 
 </tr>
 </thead>
