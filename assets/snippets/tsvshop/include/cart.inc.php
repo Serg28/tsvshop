@@ -797,8 +797,9 @@ if (!function_exists("tsv_display_cart")) {
             $evt                                      = $modx->invokeEvent("TSVshopOnGetSubtotal", array(
                 "subtotal" => $sub
             ));
-            if (is_array($evt) && !empty($evt[0]))
-                $sub                                      = $evt[0];
+            if (is_array($evt) && !empty($evt[0])) {
+                $sub = $evt[0];
+            }
             $tpl                                      = str_replace("[+shop.basket.subtotal+]", tsv_PriceFormat($sub), $tpl);
             $_SESSION[$session]['result']['subtotal'] = $sub;
 
@@ -1316,11 +1317,11 @@ if (!function_exists("tsv_sendMail")) {
 
     function tsv_sendMail($emails, $subject = '', $body, $isHTML = false) {
 
-        global $modx, $session, $tsvshop, $shop_lang, $mail;
-        $tsvshop['SmtpFromEmail'] = (!empty($tsvshop['SmtpFromEmail'])) ? $tsvshop['SmtpFromEmail'] : $modx->config['emailsender'];
+        global $modx, $tsvshop;
+        $tsvshop['SmtpReplyEmail'] = (!empty($tsvshop['SmtpReplyEmail'])) ? $tsvshop['SmtpReplyEmail'] : $modx->config['emailsender'];
         $tsvshop['SmtpFromName']  = (!empty($tsvshop['SmtpFromName'])) ? $tsvshop['SmtpFromName'] : $modx->config['site_name'];
         $params                   = array(
-            'from'     => $tsvshop['SmtpFromEmail'],
+            'from'     => $tsvshop['SmtpReplyEmail'],
             'fromname' => $tsvshop['SmtpFromName'],
             'type'     => ($isHTML !== FALSE) ? '' : 'text',
             'subject'  => $subject,
