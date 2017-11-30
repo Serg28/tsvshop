@@ -459,7 +459,7 @@ function AddToCart(ID_NUM) {
 
         strCART_ICON = (cart_icon) ? cart_icon : "";
         var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
-        var add = new AJAXInteraction(domain + '/assets/snippets/tsvshop/include/ajax.php', AddSuccess);
+        var add = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', AddSuccess);
         add.doPost('mode=additem' + param);
     }
     return false;
@@ -530,7 +530,7 @@ function GetInfoblock(report, type) {
     }
     if (!report) {
         if (getId('infoblock_cont')) loading('infoblock_cont');
-        var ib = new AJAXInteraction(domain + '/assets/snippets/tsvshop/include/ajax.php', GetInfoblock);
+        var ib = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', GetInfoblock);
         ib.doPost('mode=info&type=' + type);
     } else {
         if (getId('infoblock_cont')) {
@@ -542,7 +542,7 @@ function GetInfoblock(report, type) {
 
 function GetBasket(report) {
     if (!report) {
-        var b = new AJAXInteraction(domain + '/assets/snippets/tsvshop/include/ajax.php?mode=basket', GetBasket);
+        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=basket', GetBasket);
         b.doGet();
     } else {
         getId('basket_cont').innerHTML = report;
@@ -552,7 +552,7 @@ function GetBasket(report) {
 function recalcCheckout(report) {
     if (!report) {
         loading('checkout_table');
-        var b = new AJAXInteraction(domain + '/assets/snippets/tsvshop/include/ajax.php?mode=checkout&act=recalc', recalcCheckout);
+        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=checkout&act=recalc', recalcCheckout);
         b.doGet();
     } else {
         loading('checkout_table');
@@ -570,7 +570,7 @@ function loading(id) {
     span.style.position = 'absolute';
     span.style.opacity = '0.3';
     span.style.margin = "-" + height + "px 0 0 0";
-    span.style.background = '#ccc url(/assets/snippets/tsvshop/images/ajax-loader.gif) no-repeat center center';
+    span.style.background = '#ccc url(\''+TSVSHOP_URL+'images/ajax-loader.gif\') no-repeat center center';
 
     if (div) div.appendChild(span);
 }

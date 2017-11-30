@@ -101,6 +101,8 @@ $url = $idnum;
 include_once (TSVSHOP_PATH.'lang/'.$tsvshop['lang'].'.inc.php');
 
 // Служебные скрипты
+$src = "<script type='text/javascript'>var TSVSHOP_URL = '".TSVSHOP_URL."'</script>";
+$modx->regClientStartupScript($src);
 tsv_jsadd("lang/".$tsvshop['lang'].".js");
 tsv_jsadd("js/config.js");
 tsv_jsadd("js/tsvshop.js");

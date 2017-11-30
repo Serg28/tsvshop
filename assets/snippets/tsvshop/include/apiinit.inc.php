@@ -1,16 +1,15 @@
 <?php
 
 define('IN_TSVSHOP_MODE', true);
-if (!$_api_path = $_SERVER["DOCUMENT_ROOT"]) {
+//if (!$_api_path = $_SERVER["DOCUMENT_ROOT"]) {
     if (!defined('DIRECTORY_SEPARATOR')) {
         define('DIRECTORY_SEPARATOR', "/");
     }
     $array     = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
     $size      = sizeof($array);
-    //$p1=array_slice($array,0,($size-6)); // на некоторых хостингах некорректно определяет путь
-    $p1        = array_slice($array, 0, ($size - 4)); // работает? нужно проверить, но вроде корректно.
+    $p1        = array_slice($array, 0, ($size - 4));
     $_api_path = implode(DIRECTORY_SEPARATOR, $p1);
-}
+//}
 $_api_path = $_api_path . "/";
 
 if (file_exists($_api_path . "assets/cache/siteManager.php")) {
