@@ -59,221 +59,221 @@ class SqlParser {
 
 //content
         $ic=1;
-        $r = $modx->db->getRow( $modx->db->query( "SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Главная демо-сайта'"));
+        $r = $modx->db->getRow( $modx->db->query( "SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Главная демо-сайта'"));
         if (!empty($r['id'])) {
             $this->CONTENT_MAIN = $r['id'];
         } else {
-            $r                  = $modx->db->getRow( $modx->db->query( "SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                  = $modx->db->getRow( $modx->db->query( "SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_MAIN = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мой кабинет (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Мой кабинет (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_KABINET = $r['id'];
         } else {
-            $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_KABINET = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Корзина (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Корзина (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_CART = $r['id'];
         } else {
-            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_CART = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Оформление покупки (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Оформление покупки (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_CHECKOUT = $r['id'];
         } else {
-            $r                      = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                      = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_CHECKOUT = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Спасибо за покупку (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Спасибо за покупку (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_FINISH = $r['id'];
         } else {
-            $r                    = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                    = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_FINISH = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'О сайте (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'О сайте (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_ABOUT = $r['id'];
         } else {
-            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_ABOUT = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Каталог товаров (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Каталог товаров (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_CATALOG = $r['id'];
         } else {
-            $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_CATALOG = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Бытовая техника (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Бытовая техника (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_TEHN = $r['id'];
         } else {
-            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_TEHN = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Канцелярия (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Канцелярия (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_KANC = $r['id'];
         } else {
-            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_KANC = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Телевизор LCD (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Телевизор LCD (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_LCD = $r['id'];
         } else {
-            $r                 = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                 = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_LCD = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Микроволновка (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Микроволновка (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_MV = $r['id'];
         } else {
-            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_MV = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Мои заказы  (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Мои заказы  (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_MZ = $r['id'];
         } else {
-            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_MZ = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Просмотр заказа  (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Просмотр заказа  (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_VZ = $r['id'];
         } else {
-            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_VZ = $r['id'];
             $ic++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_content WHERE `pagetitle` LIKE 'Редактирование профиля  (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_content WHERE `pagetitle` LIKE 'Редактирование профиля  (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->CONTENT_RP = $r['id'];
         } else {
-            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM {$this->prefix}site_content order by id desc limit 1"));
+            $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
             $this->CONTENT_RP = $r['id'];
         }
 
         //templates
         $it=1;
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_templates WHERE `templatename` LIKE 'Карточка товара (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->TEMPLATE_ITEM = $r['id'];
         } else {
-            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM {$this->prefix}site_templates order by id desc limit 1"));
+            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
             $this->TEMPLATE_ITEM = $r['id'];
             $it++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Основной (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_templates WHERE `templatename` LIKE 'Основной (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->TEMPLATE_MAIN = $r['id'];
         } else {
-            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM {$this->prefix}site_templates order by id desc limit 1"));
+            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
             $this->TEMPLATE_MAIN = $r['id'];
             $it++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Главная (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_templates WHERE `templatename` LIKE 'Главная (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->TEMPLATE_INDX = $r['id'];
         } else {
-            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM {$this->prefix}site_templates order by id desc limit 1"));
+            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
             $this->TEMPLATE_INDX = $r['id'];
             $it++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_templates WHERE `templatename` LIKE 'Корзина (демо-сайт)'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_templates WHERE `templatename` LIKE 'Корзина (демо-сайт)'"));
         if (!empty($r['id'])) {
             $this->TEMPLATE_CART = $r['id'];
         } else {
-            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM {$this->prefix}site_templates order by id desc limit 1"));
+            $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
             $this->TEMPLATE_CART = $r['id'];
         }
 
         //TV
         $itv=1;
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='price'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='price'"));
         if (!empty($r['id'])) {
             $this->TV_PRICE = $r['id'];
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_PRICE = $r['id'];
             $itv++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='demotext'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='demotext'"));
         if (!empty($r['id'])) {
             $this->TV_REDIT = $r['id'];
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_REDIT = $r['id'];
             $itv++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='tsvshop_param'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='tsvshop_param'"));
         if (!empty($r['id'])) {
             $this->TV_TMINI = $r['id'];
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_TMINI = $r['id'];
             $itv++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='articul'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='articul'"));
         if (!empty($r['id'])) {
             $this->TV_ARTCL = $r['id'];
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_ARTCL = $r['id'];
             $itv++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='cart_icon'"));
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='cart_icon'"));
         if (!empty($r['id'])) {
             $this->TV_IMAGE = $r['id'];
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_IMAGE = $r['id'];
             $itv++;
         }
 
-        $r = $modx->db->getRow($modx->db->query("SELECT * FROM {$this->prefix}site_tmplvars WHERE `name`='inventory'"));  
+        $r = $modx->db->getRow($modx->db->query("SELECT * FROM ".$modx->db->config['table_prefix']."site_tmplvars WHERE `name`='inventory'"));  
         if (!empty($r['id'])) {
             $this->TV_INVEN = $r['id'];
             
         } else {
-            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM {$this->prefix}site_tmplvars order by id desc limit 1"));
+            $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
             $this->TV_INVEN = $r['id']; 
         }
 
