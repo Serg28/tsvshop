@@ -27,7 +27,7 @@
 <div id="wrapper">
 
 	<div id="header">
-		<a href="http://tsvshop.tsv.org.ua" class="logo" ><img src="/assets/templates/demoshop/img/logo.gif" alt="Модуль TSVshop для создания интернет-магазина для MODx" /></a>
+		<a href="http://tsvshop.xyz" class="logo" ><img src="/assets/templates/demoshop/img/logo.gif" alt="Модуль TSVshop для создания интернет-магазина для MODx" /></a>
 <div id="topmenu">
 [[Wayfinder? &startId=`0` &level=`1`]]
 </div>
@@ -68,7 +68,7 @@
 <div class="rbox">
 <h3 class="cart">Корзина</h3>
 <div class="rbcont">
-[!TSVshop? &act=`info` &basketid=`2`!]
+[!TSVshop? &act=`info` &basketid=`26`!]
 </div>
 </div>
 
