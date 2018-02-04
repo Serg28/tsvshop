@@ -1006,11 +1006,7 @@ if (!function_exists("tsv_Finish")) {
 
     function tsv_Finish(&$fields) {
         global $modx, $session, $tsvshop, $shop_lang, $mail;
-        include $modx->config['base_path'] . MGR_DIR . "/includes/controls/class.phpmailer.php";
         include(TSVSHOP_PATH . "include/config.inc.php");
-        if (!$mail) {
-            $mail = new PHPMailer;
-        }
         $order               = $orderfields         = array();
         $today               = date("d.m.Y ");
         $strMessageBody      = "";
