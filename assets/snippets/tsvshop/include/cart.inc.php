@@ -248,41 +248,6 @@ if (!function_exists("tsv_GetTovar")) {
 if (!function_exists("tsv_GetPrice")) {
 
     function tsv_GetPrice($cache, $idnum = false) {
-        /*
-          global $modx, $items, $tsvshop;
-          if (empty($idnum)) {
-          $idnum = _filter($_REQUEST['idnum']);
-          }
-          $cachevar = $cache->cache("price" . $idnum, 'tsvshop');
-          if (!empty($cachevar)) {
-          ob_start();
-          print $cachevar;
-          ob_end_flush();
-          } else {
-          if ($tsvshop['TypeCat'] == "catalog") {
-          if (file_exists($itemclass)) {
-          require_once($itemclass);
-          $tv = new Item($idnum);
-          }
-          } else {
-          $tv = $modx->getTemplateVar('price', '*', $modx->db->escape($idnum));
-          }
-          if (!$tv) {
-          exit(0);
-          } else {
-          if ($tsvshop['TypeCat'] == "catalog") {
-          $txt = $tv->Get('ptvprice');
-          } else {
-          $txt = $tv['value'];
-          }
-          ob_start();
-          print $txt;
-          $cache->cache("price" . $idnum, 'tsvshop', ob_get_contents());
-          ob_end_flush();
-          }
-          }
-          }
-         */
         $item = tsv_GetTovar($cache, $idnum);
         return $item['price'];
     }
@@ -648,7 +613,7 @@ if (!function_exists("tsv_display_cart")) {
         $piece     = array();
         $addons    = array();
         if (!act) {
-            $act == "basket";
+            $act = "basket";
         }
 
         if ($tsvshop['debug']) {
