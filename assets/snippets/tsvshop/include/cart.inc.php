@@ -350,8 +350,9 @@ if (!function_exists("tsv_add_item")) {
                 "item" => $curid
             ));
             // v5.0.1
-            if (is_array($evt) && !empty($evt[0]))
-                $msg    = $evt[0];
+            if (is_array($evt) && !empty($evt[0])) {
+                $msg = $evt[0];
+            }
         } elseif ($validPrice !== true) {
             return 'error';
         } elseif ($validQty !== true) {
@@ -678,8 +679,9 @@ if (!function_exists("tsv_display_cart")) {
         $evt = $modx->invokeEvent("TSVshopOnTplCartPrerender", array(
             "tpl" => $tpl
         ));
-        if (is_array($evt) && !empty($evt[0]))
+        if (is_array($evt) && !empty($evt[0])) {
             $tpl = $evt[0];
+        }
         // ---
         $tpl = str_replace("[+shop.basket.monetary+]", $tsvshop['MonetarySymbol'], $tpl);
         $tpl = str_replace("[+shop.basket.checkurl+]", $tsvshop['checkurl'], $tpl);
@@ -943,8 +945,9 @@ if (!function_exists("tsv_display_cart")) {
         $evt = $modx->invokeEvent("TSVshopOnTplCartRender", array(
             "tpl" => $tpl
         ));
-        if (is_array($evt) && !empty($evt[0]))
+        if (is_array($evt) && !empty($evt[0])) {
             $tpl = $evt[0];
+        }
 
 //--------
         if ($act == 'fullcheckout') {
@@ -963,8 +966,9 @@ if (!function_exists("tsv_display_cart")) {
             $evt = $modx->invokeEvent("TSVshopOnBeforeUserFormInit", array(
                 "tpl" => $tpl
             ));
-            if (is_array($evt) && !empty($evt[0]))
+            if (is_array($evt) && !empty($evt[0])) {
                 $tpl = $evt[0];
+            }
             if (!empty($_SESSION[$session]['result']['count']) && _filter($_REQUEST['act']) != 'recalc') {
                 $userform = tsv_display_checkoutform($cache);
             } else {
@@ -1031,8 +1035,9 @@ if (!function_exists("tsv_Finish")) {
         $evt    = $modx->invokeEvent("TSVshopOnUserFormFieldsRender", array(
             "fields" => $fields
         ));
-        if (is_array($evt) && !empty($evt[0]))
+        if (is_array($evt) && !empty($evt[0])) {
             $fields = $evt[0];
+        }
 
         if (sizeof($tsvshop['customfields']) > 0) {
             //v5.3
