@@ -467,12 +467,10 @@ if (!function_exists("tsv_display_infoblock")) {
             $tmp .= $tabletmp;
         }
 
-        //$full = str_replace("[+shop.info.count+]", $items, $full);
-        //$full = str_replace("[+shop.info.ssumma+]", $shop_lang['strSumma'], $full);
-        //$full = str_replace("[+shop.info.total+]", tsv_PriceFormat($total), $full);
         $full = str_replace($table, $tmp, $full);
         $full = str_replace(
-            array('[+shop.info.count+]', '[+shop.info.ssumma+]', '[+shop.info.total+]'), array($items, $shop_lang['strSumma'], tsv_PriceFormat($total)), $full
+            array('[+shop.info.count+]','[+shop.info.ssumma+]','[+shop.info.total+]','[+shop.info.countitems+]'),
+            array($items,$shop_lang['strSumma'],tsv_PriceFormat($total), $count), $full
         );
         $full = str_replace($table, $tmp, $full);
 

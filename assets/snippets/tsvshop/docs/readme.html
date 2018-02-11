@@ -690,8 +690,12 @@ onChange="ChangeQuantity('[+shop.basket.num+]', 4);"  (этот вызов отправит ajax-
 <td>Cлужебные атрибуты, которые служат для создания кнопки удаления товара из корзины. Например: <i>&lt;a href="#" [+shop.basket.delatributs+]&gt;Удалить&lt;/a&gt;</i> на выходе создаст <i>&lt;a href="#" onclick="RemoveFromCart(1); return false" &gt;Удалить&lt;/a&gt;</i>. Или то же самое с тегом <i>button</i>. Т.е. вместо плейсхолдера будут вставлены служебные атрибуты, необходимые для корректной работы кнопки.</td>
 </tr>
 <tr>
-<td  width="200">[+shop.info.count+]</td>
+<td>[+shop.info.count+]</td>
 <td>Общее количество товаров в корзине</td>
+</tr>
+<tr>
+<td>[+shop.info.countitems+]</td>
+<td>Количество разных наименований товаров в корзине</td>
 </tr>
 <tr>
 <td>[+shop.info.stovar+]</td>
