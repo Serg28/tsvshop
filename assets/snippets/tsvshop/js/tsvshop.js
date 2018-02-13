@@ -25,7 +25,6 @@ var sTimeClose = 3000;
 var op = 0; // переменная отвечающая за текущую прозрачность
 var tsvres = '';
 var position = 'top-right'; // позиция всплывающего сообщения: top-left, top-right, bottom-left, bottom-right, center
-
 function addClass(o, c) {
     var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g");
     if (re.test(o.className)) return;
@@ -75,7 +74,6 @@ function tsvwclose() // ф-я которая проявляет объект (di
     }
 }
 // ----------------
-
 function AJAXInteraction(url, callback) {
     function getHTTPObject() {
         if (typeof XMLHttpRequest === 'undefined') {
@@ -351,7 +349,7 @@ function getId(id) {
 }
 
 function getClass(classname) {
-  return document.getElementsByClassName(classname);
+    return document.getElementsByClassName(classname);
 }
 
 function testKey(k) {
@@ -429,9 +427,8 @@ function ChangeQuantity(i, q) {
 }
 
 function AddToCart(ID_NUM, dataset) {
-    
-    var dataset = typeof dataset !== 'undefined' ?  '&'+dataset : false;  //v5.4.5 - теперь можем передать в POST Дополнительные параметры
-    
+
+    var dataset = typeof dataset !== 'undefined' ? '&' + dataset : false; //v5.4.5 - теперь можем передать в POST Дополнительные параметры
     if (DisplayNotice) ShowWindow(strAddLoading, load);
     var thisForm = getId('Tovar' + ID_NUM);
     USelect(ID_NUM, thisForm);
@@ -467,7 +464,7 @@ function AddToCart(ID_NUM, dataset) {
 
         strCART_ICON = (cart_icon) ? cart_icon : "";
         var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
-        param = (dataset) ? param+dataset : param; //v5.4.5 добавляем дополнительные параметры из атрибутов data
+        param = (dataset) ? param + dataset : param; //v5.4.5 добавляем дополнительные параметры из атрибутов data
         var add = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', AddSuccess);
         add.doPost('mode=additem' + param);
     }
@@ -579,23 +576,23 @@ function loading(id) {
     span.style.position = 'absolute';
     span.style.opacity = '0.3';
     span.style.margin = "-" + height + "px 0 0 0";
-    span.style.background = '#ccc url(\''+TSVSHOP_URL+'images/ajax-loader.gif\') no-repeat center center';
+    span.style.background = '#ccc url(\'' + TSVSHOP_URL + 'images/ajax-loader.gif\') no-repeat center center';
 
     if (div) div.appendChild(span);
 }
 
 // Преобразование объекта в URL
-function getAsUriParameters (data) {
-  return Object.keys(data).map(function (k) {
-    if (Array.isArray(data[k])) {
-      var keyE = encodeURIComponent(k + '[]');
-      return data[k].map(function (subData) {
-        return keyE + '=' + encodeURIComponent(subData);
-      }).join('&');
-    } else {
-      return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
-    }
-  }).join('&');
+function getAsUriParameters(data) {
+    return Object.keys(data).map(function(k) {
+        if (Array.isArray(data[k])) {
+            var keyE = encodeURIComponent(k + '[]');
+            return data[k].map(function(subData) {
+                return keyE + '=' + encodeURIComponent(subData);
+            }).join('&');
+        } else {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+        }
+    }).join('&');
 }
 
 //Init nopcart
@@ -609,25 +606,24 @@ function init() {
         c.innerHTML = '<div id="' + divnotice + '" class="jGrowl ie6 ' + position + '"></div>';
         document.body.appendChild(c);
     }
-    
+
     // v5.4.5 Кнопка добавления товара в корзину. Помимо ИД товара теперь принимает атрибуты data, которые передает в POST
-    document.body.onclick= function(e){
-      e=window.event? event.srcElement: e.target;
-      if(e.className && e.className.indexOf(buttonclass)!=-1){
-        var idnum = e.dataset.id;
-        var dataset = getAsUriParameters(e.dataset); // данные из атрибутов data преобразуем в URL
-        AddToCart(idnum,dataset);
-        return false;
-      };
-    }
+    document.body.onclick = function(e) {
+        e = window.event ? event.srcElement : e.target;
+        if (e.className && e.className.indexOf(buttonclass) != -1) {
+            var idnum = e.dataset.id;
+            var dataset = getAsUriParameters(e.dataset); // данные из атрибутов data преобразуем в URL
+            AddToCart(idnum, dataset);
+            return false;
+        };
+    };
     //--------
-    
     GetInfoblock(false);
 };
 
 function addLoadEvent(func) {
     var oldonload = window.onload;
-    if (typeof window.onload != 'function') {
+    if (typeof window.onload !== 'function') {
         window.onload = func;
     } else {
         window.onload = function() {
