@@ -10,6 +10,7 @@ var ID = null;
 var selOptKo;
 var selOptTXT;
 var get = (!location.search) ? "?" : "&";
+var buttonclass = 'tsv-addtocart'; // класс для кнопки В корзину
 
 
 // Для всплывающего сообщения
@@ -349,6 +350,10 @@ function getId(id) {
     return document.getElementById(id);
 }
 
+function getClass(classname) {
+  return document.getElementsByClassName(classname);
+}
+
 function testKey(k) {
     var key = (typeof k.charCode == 'undefined' ? k.keyCode : k.charCode);
     if (k.ctrlKey || k.altKey || key < 32) return true;
@@ -423,7 +428,10 @@ function ChangeQuantity(i, q) {
     }
 }
 
-function AddToCart(ID_NUM) {
+function AddToCart(ID_NUM, dataset) {
+    
+    var dataset = typeof dataset !== 'undefined' ?  '&'+dataset : false;  //v5.4.5 - теперь можем передать в POST Дополнительные параметры
+    
     if (DisplayNotice) ShowWindow(strAddLoading, load);
     var thisForm = getId('Tovar' + ID_NUM);
     USelect(ID_NUM, thisForm);
@@ -459,6 +467,7 @@ function AddToCart(ID_NUM) {
 
         strCART_ICON = (cart_icon) ? cart_icon : "";
         var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
+        param = (dataset) ? param+dataset : param; //v5.4.5 добавляем дополнительные параметры из атрибутов data
         var add = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', AddSuccess);
         add.doPost('mode=additem' + param);
     }
@@ -575,6 +584,19 @@ function loading(id) {
     if (div) div.appendChild(span);
 }
 
+// Преобразование объекта в URL
+function getAsUriParameters (data) {
+  return Object.keys(data).map(function (k) {
+    if (Array.isArray(data[k])) {
+      var keyE = encodeURIComponent(k + '[]');
+      return data[k].map(function (subData) {
+        return keyE + '=' + encodeURIComponent(subData);
+      }).join('&');
+    } else {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }
+  }).join('&');
+}
 
 //Init nopcart
 function init() {
@@ -587,6 +609,18 @@ function init() {
         c.innerHTML = '<div id="' + divnotice + '" class="jGrowl ie6 ' + position + '"></div>';
         document.body.appendChild(c);
     }
+    
+    // v5.4.5 Кнопка добавления товара в корзину. Помимо ИД товара теперь принимает атрибуты data, которые передает в POST
+    document.body.onclick= function(e){
+      e=window.event? event.srcElement: e.target;
+      if(e.className && e.className.indexOf(buttonclass)!=-1){
+        var idnum = e.dataset.id;
+        var dataset = getAsUriParameters(e.dataset); // данные из атрибутов data преобразуем в URL
+        AddToCart(idnum,dataset);
+      };
+    }
+    //--------
+    
     GetInfoblock(false);
 };
 
