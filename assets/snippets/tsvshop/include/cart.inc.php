@@ -473,7 +473,7 @@ if (!function_exists("tsv_display_infoblock")) {
             array($items,$shop_lang['strSumma'],tsv_PriceFormat($total), $count), $full
         );
         $full = str_replace($table, $tmp, $full);
-
+        
         if (!$items)
             $output .= str_replace("[+shop.info.sempty+]", $shop_lang['strEmptyInfo'], $empty);
         if ($items == 1)
@@ -484,11 +484,11 @@ if (!function_exists("tsv_display_infoblock")) {
             $output .= str_replace("[+shop.info.stovar+]", $shop_lang['strTovar5'], $full);
 
 
-        $tpl = str_replace($empty, "", $tpl);
+        //$tpl = str_replace($empty, "", $tpl);
 
-        $output = preg_replace('/(\[\+.*?\+\])/', '', $output);
-        unset($tpl);
-        return $output;
+        //$output = preg_replace('/(\[\+.*?\+\])/', '', $output);
+        unset($tpl,$empty,$full,$table,$tmp);
+        return preg_replace('/(\[\+.*?\+\])/', '', $output);
     }
 }
 
@@ -496,15 +496,16 @@ if (!function_exists("tsv_ParseUserForm")) {
 
     function tsv_ParseUserForm(&$fields, &$templates)
     {
-        global $modx, $shop_lang, $folders, $tsvshop, $session, $tables, $cache;
+        global $modx, $folders, $tsvshop, $tables;
         $tables['payments'] = $modx->getFullTableName('shop_payments');
 
         // Плагин TSVshopOnUserFormRender
         $evt = $modx->invokeEvent("TSVshopOnUserFormRender", array(
             "tpl" => $templates['tpl']
         ));
-        if (is_array($evt) && !empty($evt[0]))
+        if (is_array($evt) && !empty($evt[0])) {
             $templates['tpl'] = $evt[0];
+        }
 
         foreach ($folders as $folder) {
             if ($folder != "." && $folder != "..") {
