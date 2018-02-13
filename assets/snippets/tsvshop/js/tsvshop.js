@@ -617,6 +617,7 @@ function init() {
         var idnum = e.dataset.id;
         var dataset = getAsUriParameters(e.dataset); // данные из атрибутов data преобразуем в URL
         AddToCart(idnum,dataset);
+        return false;
       };
     }
     //--------
