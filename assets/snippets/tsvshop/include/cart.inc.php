@@ -920,7 +920,7 @@ if (!function_exists("tsv_display_cart")) {
             $tplfc = $cache->cache($tvar, 'tsvshop');
             if (!$tplfc) {
                 if (!$tplfc = getTpl($chunk)) {
-                    $$tplfc = "<div>[+shop.basket.checkouttable+]</div> <div>[+shop.basket.userform+]</div>";
+                    $tplfc = "<div>[+shop.basket.checkouttable+]</div> <div>[+shop.basket.userform+]</div>";
                 } else {
                     $cache->cache($tvar, 'tsvshop', $tplfc);
                 }
