@@ -8,7 +8,7 @@ $output .= '
         <link rel="stylesheet" type="text/css" href="media/style' . $theme . '/style.css" />
 		
         <!-- jeasyui -->
-        <link rel="stylesheet" type="text/css" href="/assets/js/easy-ui/themes/modx' . $theme . '/easyui.css">
+        <link rel="stylesheet" type="text/css" href="/assets/js/easy-ui/themes/modxevo/easyui.css">
 	    <link rel="stylesheet" type="text/css" href="/assets/js/easy-ui/themes/icon.css">     
 	    <script type="text/javascript" src="/assets/js/jquery.min.js" language="javascript" ></script> 	
 	    <script type="text/javascript" src="/assets/js/easy-ui/locale/easyui-lang-ru.js"></script>
