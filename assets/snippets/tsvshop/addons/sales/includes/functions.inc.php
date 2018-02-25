@@ -477,8 +477,11 @@ function vieworder($filename)
                     $out = str_replace($tpltr, $out, $tpl);
 
                     //подсчет и заполнение итоговых сумм
-                    $discountsize = ($subtotal * $discount) / 100;
+                    //$discountsize = ($subtotal * $discount) / 100;
+		    $discountsize = ($row['discounttype']=='persent') ? (($subtotal * $discount) / 100) : $discount; 
                     $total = ($subtotal + $shipping + $nalog) - $discountsize;
+		    $discountsymb = ($row['discounttype']=='persent') ? '%' : $tsvshop['MonetarySymbol'];
+		    $out = str_replace('[+discountsymb+]', $discountsymb, $out);
                     //echo 'subtotal='.$subtotal.": shipping=".$shipping."; nalog=".$nalog."; discountsize=".$discountsize."; total=".$total;
                     $out = str_replace('[+total+]', tsv_PriceFormat($total), $out);
                     $out = str_replace('[+topay+]', tsv_PriceFormat($total), $out);
