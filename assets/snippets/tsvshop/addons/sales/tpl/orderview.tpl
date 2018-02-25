@@ -180,7 +180,7 @@
 				<td class="gridAltItem" align="center"><input type="text" name="nalog" value="[+nalog+]" style="width:80%;"></td>
 			</tr>
 			<tr>
-				<td colspan="5" align="left" class="gridAltItem"; ><div style="margin-top:8px; float:left">[+sales_discount+]</div> <span style="float:right"><input type="text" name="discount" value="[+discount+]" style="width:80%;">%</span></td>
+				<td colspan="5" align="left" class="gridAltItem"; ><div style="margin-top:8px; float:left">[+sales_discount+]</div> <span style="float:right"><input type="text" name="discount" value="[+discount+]" style="width:80%;">[+discountsymb+]</span></td>
 				<td class="gridAltItem" align="center"> <input type="text" name="discountsize" disabled value="[+discountsize+]" style="width:80%;"></td>
 			</tr>
 			<tr>
