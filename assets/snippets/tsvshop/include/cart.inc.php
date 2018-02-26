@@ -794,7 +794,7 @@ if (!function_exists("tsv_display_cart")) {
             $tot = (($sub - $tsvshop['discountsize']) + (floatval($tsvshop['TaxRate']) + floatval($tsvshop['shipping'])));
 
             $tpl = str_replace("[+shop.basket.total+]", tsv_PriceFormat($tot), $tpl);
-            $_SESSION[$session]['result']['total'] = $tot;
+            $_SESSION[$session]['result']['total'] = tsv_PriceFormat($tot);
             $_SESSION[$session]['result']['count'] = $count;
 
             //добавлено с v5.3 ----------------------------------------------------
