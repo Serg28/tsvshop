@@ -64,7 +64,7 @@ class SqlParser {
             $this->CONTENT_MAIN = $r['id'];
         } else {
             $r                  = $modx->db->getRow( $modx->db->query( "SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_MAIN = $r['id'];
+            $this->CONTENT_MAIN = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -73,7 +73,7 @@ class SqlParser {
             $this->CONTENT_KABINET = $r['id'];
         } else {
             $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_KABINET = $r['id'];
+            $this->CONTENT_KABINET = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -82,7 +82,7 @@ class SqlParser {
             $this->CONTENT_CART = $r['id'];
         } else {
             $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_CART = $r['id'];
+            $this->CONTENT_CART = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -91,7 +91,7 @@ class SqlParser {
             $this->CONTENT_CHECKOUT = $r['id'];
         } else {
             $r                      = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_CHECKOUT = $r['id'];
+            $this->CONTENT_CHECKOUT = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -100,7 +100,7 @@ class SqlParser {
             $this->CONTENT_FINISH = $r['id'];
         } else {
             $r                    = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_FINISH = $r['id'];
+            $this->CONTENT_FINISH = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -109,7 +109,7 @@ class SqlParser {
             $this->CONTENT_ABOUT = $r['id'];
         } else {
             $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_ABOUT = $r['id'];
+            $this->CONTENT_ABOUT = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -118,7 +118,7 @@ class SqlParser {
             $this->CONTENT_CATALOG = $r['id'];
         } else {
             $r                     = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_CATALOG = $r['id'];
+            $this->CONTENT_CATALOG = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -127,7 +127,7 @@ class SqlParser {
             $this->CONTENT_TEHN = $r['id'];
         } else {
             $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_TEHN = $r['id'];
+            $this->CONTENT_TEHN = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -136,7 +136,7 @@ class SqlParser {
             $this->CONTENT_KANC = $r['id'];
         } else {
             $r                  = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_KANC = $r['id'];
+            $this->CONTENT_KANC = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -145,7 +145,7 @@ class SqlParser {
             $this->CONTENT_LCD = $r['id'];
         } else {
             $r                 = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_LCD = $r['id'];
+            $this->CONTENT_LCD = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -154,7 +154,7 @@ class SqlParser {
             $this->CONTENT_MV = $r['id'];
         } else {
             $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_MV = $r['id'];
+            $this->CONTENT_MV = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -163,7 +163,7 @@ class SqlParser {
             $this->CONTENT_MZ = $r['id'];
         } else {
             $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_MZ = $r['id'];
+            $this->CONTENT_MZ = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -172,7 +172,7 @@ class SqlParser {
             $this->CONTENT_VZ = $r['id'];
         } else {
             $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_VZ = $r['id'];
+            $this->CONTENT_VZ = (!empty($r['id'])) ? $r['id'] : $ic;
             $ic++;
         }
 
@@ -181,7 +181,7 @@ class SqlParser {
             $this->CONTENT_RP = $r['id'];
         } else {
             $r                = $modx->db->getRow($modx->db->query("SELECT id+".$ic." as id FROM ".$modx->db->config['table_prefix']."site_content order by id desc limit 1"));
-            $this->CONTENT_RP = $r['id'];
+            $this->CONTENT_RP = (!empty($r['id'])) ? $r['id'] : $ic;
         }
 
         //templates
@@ -191,7 +191,7 @@ class SqlParser {
             $this->TEMPLATE_ITEM = $r['id'];
         } else {
             $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
-            $this->TEMPLATE_ITEM = $r['id'];
+            $this->TEMPLATE_ITEM = (!empty($r['id'])) ? $r['id'] : $it;
             $it++;
         }
 
@@ -200,7 +200,7 @@ class SqlParser {
             $this->TEMPLATE_MAIN = $r['id'];
         } else {
             $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
-            $this->TEMPLATE_MAIN = $r['id'];
+            $this->TEMPLATE_MAIN = (!empty($r['id'])) ? $r['id'] : $it;
             $it++;
         }
 
@@ -209,7 +209,7 @@ class SqlParser {
             $this->TEMPLATE_INDX = $r['id'];
         } else {
             $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
-            $this->TEMPLATE_INDX = $r['id'];
+            $this->TEMPLATE_INDX = (!empty($r['id'])) ? $r['id'] : $it;
             $it++;
         }
 
@@ -218,7 +218,7 @@ class SqlParser {
             $this->TEMPLATE_CART = $r['id'];
         } else {
             $r                   = $modx->db->getRow($modx->db->query("SELECT id+".$it." as id FROM ".$modx->db->config['table_prefix']."site_templates order by id desc limit 1"));
-            $this->TEMPLATE_CART = $r['id'];
+            $this->TEMPLATE_CART = (!empty($r['id'])) ? $r['id'] : $it;
         }
 
         //TV
@@ -228,7 +228,7 @@ class SqlParser {
             $this->TV_PRICE = $r['id'];
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_PRICE = $r['id'];
+            $this->TV_PRICE = (!empty($r['id'])) ? $r['id'] : $itv;
             $itv++;
         }
 
@@ -237,7 +237,7 @@ class SqlParser {
             $this->TV_REDIT = $r['id'];
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_REDIT = $r['id'];
+            $this->TV_REDIT = (!empty($r['id'])) ? $r['id'] : $itv;
             $itv++;
         }
 
@@ -246,7 +246,7 @@ class SqlParser {
             $this->TV_TMINI = $r['id'];
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_TMINI = $r['id'];
+            $this->TV_TMINI = (!empty($r['id'])) ? $r['id'] : $itv;
             $itv++;
         }
 
@@ -255,7 +255,7 @@ class SqlParser {
             $this->TV_ARTCL = $r['id'];
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_ARTCL = $r['id'];
+            $this->TV_ARTCL = (!empty($r['id'])) ? $r['id'] : $itv;
             $itv++;
         }
 
@@ -264,7 +264,7 @@ class SqlParser {
             $this->TV_IMAGE = $r['id'];
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_IMAGE = $r['id'];
+            $this->TV_IMAGE = (!empty($r['id'])) ? $r['id'] : $itv;
             $itv++;
         }
 
@@ -274,7 +274,7 @@ class SqlParser {
             
         } else {
             $r              = $modx->db->getRow($modx->db->query("SELECT id+".$itv." as id FROM ".$modx->db->config['table_prefix']."site_tmplvars order by id desc limit 1"));
-            $this->TV_INVEN = $r['id']; 
+            $this->TV_INVEN = (!empty($r['id'])) ? $r['id'] : $itv; 
         }
 
 
