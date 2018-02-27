@@ -30,6 +30,10 @@ $table3 = $modx->getFullTableName( 'site_tmplvars' );
 $query31="SELECT *
 		FROM  ".$table3."
 		WHERE  `name` =  'price'";
+if (empty($row3['id'])) {
+  echo '<div class="widget-wrapper alert alert-warning"><h3>'.$shop_lang['prices_error'].'</h3><fieldset>'.$shop_lang['prices_notvs'].'</fieldset></div>';
+  return;
+}
 $res3=$modx->db->query($query31);
 $row3 = $modx->db->getRow($res3);
 $query21='SELECT *
