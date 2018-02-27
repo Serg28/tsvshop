@@ -46,6 +46,7 @@ $shop_lang['sales_id'] = 'Артикул';
 $shop_lang['sales_name'] = 'Наименование товара';
 
 $shop_lang['sales_subtotal'] = 'Подитог';
+$shop_lang['sales_paidsum'] = 'Оплачено';
 
 $shop_lang['sales_del_checked'] = 'Удалить отмеченные';
 $shop_lang['sales_check_del_ok'] = 'Выбранные заказы успешно удалены.';

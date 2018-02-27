@@ -8,7 +8,7 @@ $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateord
 //Ниже - список имен полей в таблице заказа shop_order . Служит как проверочный список допустимых полей при добавлении заказа в БД
 //т.е. значение поля в форме заказа не будет добавлено в БД, если названия этого поля нету в данном списке.
 //также этот список служит для формирования списка полей, доступных для шифрования в аддоне модуле TSVshop, аддон Конфигурация, вкладка Безопасность, поле Поля для шифрования
-$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid,discount,discountnum,shipping,shiptype,payments";
+$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,paidsum,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid,discount,discountnum,shipping,shiptype,payments";
 //список меток аддона Заказы, которые используются в чанках Shop_Cart, Shop_Checkout, которые нельзя вырезать.
 $tsvshop['syslabels'] = "noempty,empty,subtotal,total,buttons,repeat,full,table";
 
@@ -260,8 +260,12 @@ function updateorder($idorder)
             $fields['subtotal'] = $subtotal;
             $fields['discountsize'] = tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100);
             $fields['total'] = tsv_PriceFormat(($fields['subtotal'] + $fields['shipping'] + $fields['nalog']) - $fields['discountsize']);
-
-            //------
+            
+            $orderinfo = getOrderInfo($idorder);
+            $paidsum = (!empty($orderinfo['paidsum'])) ? $orderinfo['paidsum'] : $orderinfo['sertificatsum'];
+            $fields['topay'] = (empty($paidsum)) ?  $fields['total'] : ($fields['total'] - floatval($paidsum));
+            
+//------
             //updateMail($modx->db->escape($_GET['status']),$idorder);
             if ($modx->db->update($fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"')) {
                 //Запускаем событие TSVshopOnOrderStatusUpdate
@@ -477,14 +481,17 @@ function vieworder($filename)
                     $out = str_replace($tpltr, $out, $tpl);
 
                     //подсчет и заполнение итоговых сумм
+                    $orderinfo = getOrderInfo($id);
+                    $paidsum = (!empty($orderinfo['paidsum'])) ? $orderinfo['paidsum'] : $orderinfo['sertificatsum'];
                     //$discountsize = ($subtotal * $discount) / 100;
-		    $discountsize = ($row['discounttype']=='persent') ? (($subtotal * $discount) / 100) : $discount; 
+                    $discountsize = ($row['discounttype']=='persent') ? (($subtotal * $discount) / 100) : $discount; 
                     $total = ($subtotal + $shipping + $nalog) - $discountsize;
-		    $discountsymb = ($row['discounttype']=='persent') ? '%' : $tsvshop['MonetarySymbol'];
-		    $out = str_replace('[+discountsymb+]', $discountsymb, $out);
+                    $discountsymb = ($row['discounttype']=='persent') ? '%' : $tsvshop['MonetarySymbol'];
+                    $out = str_replace('[+discountsymb+]', $discountsymb, $out);
                     //echo 'subtotal='.$subtotal.": shipping=".$shipping."; nalog=".$nalog."; discountsize=".$discountsize."; total=".$total;
                     $out = str_replace('[+total+]', tsv_PriceFormat($total), $out);
-                    $out = str_replace('[+topay+]', tsv_PriceFormat($total), $out);
+                    $out = str_replace('[+topay+]', tsv_PriceFormat($total-floatval($paidsum)), $out);
+                    $out = str_replace('[+paidsum+]', tsv_PriceFormat($paidsum), $out);
                     $out = str_replace('[+subtotal+]', tsv_PriceFormat($subtotal), $out);
                     $out = str_replace('[+discountsize+]', tsv_PriceFormat($discountsize), $out);
 

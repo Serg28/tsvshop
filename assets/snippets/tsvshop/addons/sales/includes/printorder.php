@@ -417,6 +417,8 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
     $orderdata[0]['discountsize'] = tsv_PriceFormat($orderdata[0]['discountsize']);
     $orderdata[0]['tax']          = tsv_PriceFormat($orderdata[0]['tax']);
     $orderdata[0]['subtotal']     = tsv_PriceFormat($orderdata[0]['subtotal']);
+    $paidsum = (!empty($orderdata[0]['paidsum'])) ? $orderdata[0]['paidsum'] : $orderdata[0]['sertificatsum'];
+    $orderdata[0]['paidsum']     = tsv_PriceFormat($paidsum);
 
     $orderdata[0]['count']        = $r;
     $orderdata[0]['totalcount']   = $items;

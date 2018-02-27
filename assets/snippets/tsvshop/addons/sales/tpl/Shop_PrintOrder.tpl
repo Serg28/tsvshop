@@ -83,10 +83,14 @@
 <tr>
     <td colspan="30" style="border: 1pt solid #000000; border-right:1; border-top:1;" align="right" bgcolor="#ffffff"><b>Доставка: </b>&nbsp; [+shop.order.shiptype+]</td>
     <td colspan="5" style="border: 1pt solid #000000; border-right:1;" align="center">[+shop.order.shipping+] руб.</td>
-</tr>    
+</tr>   
+<tr bgcolor="#E2E2E2">
+    <td colspan="30" style="border: 1pt solid #000000; border-right:1; border-top:1;" align="right" bgcolor="#ffffff"><b>Уже оплачено:</b></td>
+    <td colspan="5" style="border: 1pt solid #000000; border-right:1;" align="center"><b>[+shop.order.paidsum+] руб.</b></td>
+</tr>
 <tr bgcolor="#E2E2E2">
     <td bgcolor="#E2E2E2" colspan="30" style="border: 1pt solid #000000; border-right:1; border-top:1;" align="right" bgcolor="#ffffff"><b>Итого к оплате:</b>&nbsp; [+shop.order.total_propis+]</td>
-    <td bgcolor="#E2E2E2" colspan="5" style="border: 1pt solid #000000; border-right:1;" align="center"><b>[+shop.order.total+] руб.</b></td>
+    <td bgcolor="#E2E2E2" colspan="5" style="border: 1pt solid #000000; border-right:1;" align="center"><b>[+shop.order.topay+] руб.</b></td>
 </tr>
 </tbody>
 </table>
