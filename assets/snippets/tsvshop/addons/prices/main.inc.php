@@ -1,6 +1,8 @@
 <?php
 include_once ($addonspath.'prices/includes/price.inc.php');
-$modx->regClientStartupScript('/assets/snippets/tsvshop/addons/prices/js/saveprice.js');
+$output.= '
+<script src="'.TSVSHOP_SURL.'addons/prices/js/saveprice.js" language="javascript" type="text/javascript"></script>
+';
 $output.= '<div class="tab-page" id="ShopPrice" width="100%" position="absolute">';
 $output.= '<h2 class="tab">'.$shop_lang['prices_title'].'</h2>';
 $output.= '<p><img src="'.$siteURL.'assets/snippets/tsvshop/addons/prices/img/price.png" alt="'.$shop_lang['prices_title'].'" class="icon" style="vertical-align: middle; text-align: left; " />'.$shop_lang['prices_intro'];
