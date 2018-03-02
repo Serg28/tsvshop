@@ -47,7 +47,7 @@
 <!--discount-->
 <tr class="subtotal">
 <td colspan="3"></td>
-<td colspan="1">Скидка <b>[+shop.basket.discount+]</b> %</td>
+<td colspan="1">Скидка <b>[+shop.basket.discount+]</b> [+shop.basket.discountsymb+]</td>
 <td colspan="1">- [+shop.basket.discountsize+] [+shop.basket.monetary+]</td>
 <td></td>
 </tr>
