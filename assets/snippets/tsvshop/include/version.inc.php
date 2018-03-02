@@ -1,4 +1,4 @@
 <?php
 /*версия TSVshop*/
-$tsvshop['version']='5.4.4';
+$tsvshop['version']='5.4.5';
 ?>
