@@ -299,7 +299,7 @@ if (!function_exists("tsv_add_item")) {
                 }
             }
             if (!$incart) {
-                if (!$icon) {
+                if (!$icon || $icon=='/') {
                     $icon = "assets/snippets/tsvshop/images/noimage.png";
                 }
                 $items = array(
