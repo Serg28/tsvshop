@@ -1273,7 +1273,7 @@ if (!function_exists("tsv_display_success")) {
 
 if (!function_exists("tsv_sendMail")) {
 
-    function tsv_sendMail($emails, $subject = '', $body, $isHTML = false)
+    function tsv_sendMail($emails, $subject = '', $body, $isHTML = false, $files = array())
     {
 
         global $modx, $tsvshop;
@@ -1286,7 +1286,7 @@ if (!function_exists("tsv_sendMail")) {
             'subject' => $subject,
             'to' => $emails
         );
-        return $modx->sendmail($params, $body);
+        return $modx->sendmail($params, $body, $files);
     }
 }
 

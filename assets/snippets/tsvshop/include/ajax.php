@@ -7,7 +7,7 @@ $charset=$modx->config['modx_charset'];
 $charset=(isset($charset))?$charset:"utf-8";
 header('Content-type: text/html; charset='.$charset);
 $cache 	= fileCache::GetInstance(3600, $_api_path . 'assets/cache/');
-if (!$tsvshop = $cache->cache('tsvshop','tsvshop')) {$tsvshop['lang']="russian-UTF8";};
+if (!$tsvshop = $cache->cache('tsvshop','tsvshop')) {$tsvshop['lang']="russian-UTF8";}
 
 include_once ($_api_path.'assets/snippets/tsvshop/lang/'.$tsvshop['lang'].'.inc.php');
 include_once ($_api_path.'assets/snippets/tsvshop/admin/includes/core.inc.php');
