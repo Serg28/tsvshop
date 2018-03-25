@@ -22,7 +22,7 @@
 Полное наименование организации: [+shop.mail.fio+] <br />
 Город: [+shop.mail.city+] <br />
 Тип доставки: [+shop.mail.shiptype+] <br />
-Дисконт: Карта [+shop.mail.discountcard+] ([+shop.mail.discount+]%) <br />
+Дисконт: Карта [+shop.mail.discountcard+] ([+shop.mail.discount+] [+shop.mail.discountsymb+]) <br />
 Адрес доставки: [+shop.mail.adress+] <br />
 Телефон для связи: [+shop.mail.phone+] <br />
 E-mail: [+shop.mail.email+] <br />

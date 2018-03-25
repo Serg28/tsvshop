@@ -236,6 +236,7 @@ function updateorder($idorder)
 
     if ($user == "manager") {
         if (!empty($act) && $act == "updateorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder != "0") {
+            $dataorder = getOrderInfo($idorder);
             // ищем данные о товарах в REQUEST  v5.4.1----
             if (!empty($_REQUEST['item'])) {
                 foreach ($_REQUEST['item'] as $key => $val) {
@@ -258,7 +259,8 @@ function updateorder($idorder)
             }
             //пересчет и добавление итоговых сумм  ---v5.4.1----
             $fields['subtotal'] = $subtotal;
-            $fields['discountsize'] = tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100);
+            //$fields['discountsize'] = tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100);
+            $fields['discountsize'] = ($dataorder['discounttype'] == 'persent') ? tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100) : $fields['discount'];
             $fields['total'] = tsv_PriceFormat(($fields['subtotal'] + $fields['shipping'] + $fields['nalog']) - $fields['discountsize']);
 
             $orderinfo = getOrderInfo($idorder);
@@ -466,6 +468,7 @@ function vieworder($filename)
                     $out = str_replace('[+paidsum+]', tsv_PriceFormat($paidsum), $out);
                     $out = str_replace('[+subtotal+]', tsv_PriceFormat($subtotal), $out);
                     $out = str_replace('[+discountsize+]', tsv_PriceFormat($discountsize), $out);
+                    $out = str_replace('[+discounttype+]', $row['discounttype'], $out);
 
                     $out = preg_replace('/(\[\+.*?\+\])/', '', $out);
                     return $out;

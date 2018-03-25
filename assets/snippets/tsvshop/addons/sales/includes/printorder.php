@@ -1,5 +1,4 @@
 <?php
-
 /**
  * TSVreceiptAdmin
  *
@@ -27,19 +26,20 @@ $tsvshop['tplprintorder'] = !empty($tplprintorder) ? $tplprintorder : "@FILE:ass
 
 if (!function_exists("tsv_PriceFormat")) {
 
-    function tsv_PriceFormat($price) {
+    function tsv_PriceFormat($price)
+    {
         global $tsvshop;
-        $price   = (empty($price)) ? 0 : $price;
+        $price = (empty($price)) ? 0 : $price;
         $decimal = ($tsvshop['PriceFormat'] == "0" || $tsvshop['PriceFormat'] == "") ? 0 : 2;
         return number_format($price, $decimal, '.', '');
     }
-
 }
 
 
 if (!function_exists("propis")) {
 
-    function propis($price) {
+    function propis($price)
+    {
         global $tsvshop;
         //цена прописью
         $price = (isset($price)) ? $price : '0';
@@ -51,54 +51,54 @@ if (!function_exists("propis")) {
             $kop = substr($price, $point + 1);
         }
         //преобразуем рубли
-        $str             = write_number_in_words($rub);
+        $str = write_number_in_words($rub);
         //пишем рублей(ь,я)
         //$word = " рублей";
-        $word            = $tsvshop['MonetarySymbol'];
+        $word = $tsvshop['MonetarySymbol'];
         //последнее число
-        $last_digit      = $rub[(strlen($rub) - 1)];
+        $last_digit = $rub[(strlen($rub) - 1)];
         //предпоследнее число
         $pred_last_digit = $rub[(strlen($rub) - 2)];
         if ($last_digit == '1' && $pred_last_digit != '1')
         //$word = " рубль";
-            $word            = $tsvshop['MonetarySymbol'];
+            $word = $tsvshop['MonetarySymbol'];
         elseif (($last_digit == '2' || $last_digit == '3' || $last_digit == '4') && $pred_last_digit != '1')
         //$word = " рубля";
-            $word            = $tsvshop['MonetarySymbol'];
-        $str             .= $word;
+            $word = $tsvshop['MonetarySymbol'];
+        $str .= $word;
         //преобразуем копейки
         if (!empty($kop)) {
 
-            $str             .= write_number_in_words($kop, 'femininum');
+            $str .= write_number_in_words($kop, 'femininum');
             //пишем копейка (и, ек)
-            $word            = " копеек";
+            $word = " копеек";
             //последнее число
-            $last_digit      = $kop[(strlen($kop) - 1)];
+            $last_digit = $kop[(strlen($kop) - 1)];
             //предпоследнее число
             $pred_last_digit = $kop[(strlen($kop) - 2)];
             if ($last_digit == '1' && $pred_last_digit != '1')
-                $word            = " копейка";
+                $word = " копейка";
             elseif (($last_digit == '2' || $last_digit == '3' || $last_digit == '4') && $pred_last_digit != '1')
-                $word            = " копейки";
-            $str             .= $word;
+                $word = " копейки";
+            $str .= $word;
         }
         return $str;
     }
-
 }
 
 if (!function_exists("write_number_in_words")) {
 
     //допустимый диапазон чисел 0 .. 999999
     //число прописью
-    function write_number_in_words($num, $genus = 'masculinum') {
+    function write_number_in_words($num, $genus = 'masculinum')
+    {
         //разряд: единицы, десятки, сотни, тысячи
-        $cur_order           = "единицы";
+        $cur_order = "единицы";
         $cur_thousands_order = "единицы";
         if ($num == 0)
             return " 00";
-        $num                 = strval($num);
-        $limit               = strlen($num) - 1;
+        $num = strval($num);
+        $limit = strlen($num) - 1;
         for ($i = $limit; $i >= 0; $i--) {
             //тысячный разряд
             if ($cur_order == "тысячи") {
@@ -108,29 +108,29 @@ if (!function_exists("write_number_in_words")) {
                 }
                 //десятки
                 if ($cur_thousands_order == "десятки") {
-                    $str                 = write_units_tens($num[$i], $next_digit) . $str;
+                    $str = write_units_tens($num[$i], $next_digit) . $str;
                     $cur_thousands_order = "сотни";
-                    $next_digit          = '';
+                    $next_digit = '';
                 }
                 //единицы
                 if ($cur_thousands_order == "единицы") {
                     if ($num[$i - 1] == "1") {
                         $next_digit = $num[$i];
-                        $str        = " тысяч" . $str;
+                        $str = " тысяч" . $str;
                     } else
-                        $str                 = write_units_thousands_units($num[$i]) . $str;
+                        $str = write_units_thousands_units($num[$i]) . $str;
                     $cur_thousands_order = "десятки";
                 }
             }
             //сотни
             if ($cur_order == "сотни") {
-                $str       = write_units_hundreds($num[$i]) . $str;
+                $str = write_units_hundreds($num[$i]) . $str;
                 $cur_order = "тысячи";
             }
             //десятки
             if ($cur_order == "десятки") {
-                $str        = write_units_tens($num[$i], $next_digit) . $str;
-                $cur_order  = "сотни";
+                $str = write_units_tens($num[$i], $next_digit) . $str;
+                $cur_order = "сотни";
                 $next_digit = '';
             }
             //единицы
@@ -138,20 +138,20 @@ if (!function_exists("write_number_in_words")) {
                 if ($num[$i - 1] == "1")
                     $next_digit = $num[$i];
                 else
-                    $str        = write_units($num[$i], $genus);
-                $cur_order  = "десятки";
+                    $str = write_units($num[$i], $genus);
+                $cur_order = "десятки";
             }
         }
         return($str);
     }
-
 }
 if (!function_exists("write_units_tens")) {
 
     //принадлежит функции write_number_in_words
     //преобразует десятки
-    function write_units_tens($tens, $next_digit) {
-        $tens     .= $next_digit;
+    function write_units_tens($tens, $next_digit)
+    {
+        $tens .= $next_digit;
         if ($tens == 2)
             $str_tens = " двадцать";
         if ($tens == 3)
@@ -190,14 +190,14 @@ if (!function_exists("write_units_tens")) {
             $str_tens = " девятнадцать";
         return($str_tens);
     }
-
 }
 
 if (!function_exists("write_units_hundreds")) {
 
     //принадлежит функции write_number_in_words
     //преобразует сотни
-    function write_units_hundreds($hundreds) {
+    function write_units_hundreds($hundreds)
+    {
         if ($hundreds == 1)
             $str_hundreds = " сто";
         if ($hundreds == 2)
@@ -218,14 +218,14 @@ if (!function_exists("write_units_hundreds")) {
             $str_hundreds = " девятьсот";
         return($str_hundreds);
     }
-
 }
 
 if (!function_exists("write_units_thousands_units")) {
 
     //принадлежит функции write_number_in_words
     //преобразует единицы тысячного разряда
-    function write_units_thousands_units($hundreds) {
+    function write_units_thousands_units($hundreds)
+    {
         if ($hundreds == 0)
             $str_hundreds = " тысяч";
         if ($hundreds == 1)
@@ -248,13 +248,13 @@ if (!function_exists("write_units_thousands_units")) {
             $str_hundreds = " девять тысяч";
         return($str_hundreds);
     }
-
 }
 //принадлежит функции write_number_in_words
 //преобразует единицы
 if (!function_exists("write_units")) {
 
-    function write_units($units, $genus = 'masculinum') {
+    function write_units($units, $genus = 'masculinum')
+    {
         if ($genus == 'masculinum') {
             if ($units == 1)
                 $str_units = " один";
@@ -283,14 +283,14 @@ if (!function_exists("write_units")) {
             $str_units = " девять";
         return($str_units);
     }
-
 }
 
 if (!function_exists("get_date")) {
 
 //функции для конвертации даты
-    function get_date($date) {
-        $pubDay  = date('d', $date);
+    function get_date($date)
+    {
+        $pubDay = date('d', $date);
         $pubYear = date('Y', $date) . ' г.';
         switch (date('m', $date)) {
             case '01':
@@ -332,14 +332,14 @@ if (!function_exists("get_date")) {
         }
         return $pubDay . " " . $pubMonth . " " . $pubYear;
     }
-
 }
 
 if (!function_exists("get_date_order")) {
 
-    function get_date_order($date) {
+    function get_date_order($date)
+    {
         // Разбиение строки в 3 части - date, time and AM/PM
-        $dt_elements   = explode(' ', $date);
+        $dt_elements = explode(' ', $date);
         // Разбиение даты
         $date_elements = explode('-', $dt_elements[0]);
         // Разбиение времени
@@ -351,52 +351,51 @@ if (!function_exists("get_date_order")) {
         // вывод результата
         return get_date(mktime($time_elements[0], $time_elements[1], $time_elements[2], $date_elements[1], $date_elements[2], $date_elements[0]));
     }
-
 }
 
-function tsv_getOrderData() {
+function tsv_getOrderData()
+{
     global $modx, $tsvshop;
-    $dborders         = $modx->getFullTableName('shop_order');
+    $dborders = $modx->getFullTableName('shop_order');
     $dborders_details = $modx->getFullTableName('shop_order_detail');
     //$userid=$modx->getLoginUserID();
-    $i                = explode(":", _filter($_GET['i'], 1));
-    $n                = $i[0];
-    $c                = $i[1];
+    $i = explode(":", _filter($_GET['i'], 1));
+    $n = $i[0];
+    $c = $i[1];
     //if (!empty($n) && !empty($c) && !empty($userid)) {
     if (!empty($n) && !empty($c)) {
         //$res = $modx->db->select('*', $dborders, 'numorder = "'.$n.'" AND code="'.$c.'" AND userid="'.$userid.'"','numorder','1' );
-        $res           = $modx->db->select('*', $dborders, 'numorder = "' . $n . '" AND code="' . $c . '"', 'numorder', '1');
-        $orders        = $modx->db->select('*', $dborders_details, 'numorder = "' . $n . '"', 'numorder');
-        $out           = $modx->db->makeArray($res);
+        $res = $modx->db->select('*', $dborders, 'numorder = "' . $n . '" AND code="' . $c . '"', 'numorder', '1');
+        $orders = $modx->db->select('*', $dborders_details, 'numorder = "' . $n . '"', 'numorder');
+        $out = $modx->db->makeArray($res);
         $out['orders'] = $modx->db->makeArray($orders);
         return $out;
     }
 }
-
 $orderdata = tsv_getOrderData();
-$output    = '';
+$output = '';
 if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
-    $tplcheck   = getTpl($tsvshop['tplprintorder']);
+    $tplcheck = getTpl($tsvshop['tplprintorder']);
     $tablecheck = preg_replace("#.*?(<!--table-->(.*?)<!--/table-->|$)#is", "$2", $tplcheck);
-    $r          = 0;
-    $table      = "";
-    $items      = 0;
+    $r = 0;
+    $table = "";
+    $items = 0;
     foreach ($orderdata['orders'] as $order) {
         $r++;
         $tablecheck1 = $tablecheck;
         foreach ($order as $key => $val) {
             if ($key == 'price') {
-                $summa       = $val * $order['quantity'];
+                $summa = $val * $order['quantity'];
                 $tablecheck1 = str_replace("[+shop.order.summa+]", tsv_PriceFormat($summa), $tablecheck1);
                 $tablecheck1 = str_replace("[+shop.order.price+]", tsv_PriceFormat($val), $tablecheck1);
             } elseif ($key == 'id') {
                 $tablecheck1 = str_replace("[+shop.order.id+]", $order['url'], $tablecheck1);
             } elseif ($key == 'quantity') {
                 $tablecheck1 = str_replace("[+shop.order.qty+]", $order['quantity'], $tablecheck1);
-                $items       = $items + $order['quantity'];
+                $items = $items + $order['quantity'];
             } elseif ($key == 'name') {
-                $name        = str_replace("rdquo", ")", $order['name']);
-                $name        = str_replace("ldquo", "(", $name);
+                $name = str_replace("rdquo", ")", $order['name']);
+                $name = str_replace("ldquo", "(", $name);
                 $tablecheck1 = str_replace("[+shop.order.name+]", $name, $tablecheck1);
             } else {
                 if (!empty($val))
@@ -412,17 +411,20 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
     $totalkey = (isset($orderdata[0]['topay'])) ? 'topay' : 'total';
     $tplcheck = str_replace($tablecheck, $table, $tplcheck);
 
-    $orderdata[0][$totalkey]      = tsv_PriceFormat($orderdata[0][$totalkey]);
-    $orderdata[0]['shipping']     = tsv_PriceFormat($orderdata[0]['shipping']);
+    $orderdata[0][$totalkey] = tsv_PriceFormat($orderdata[0][$totalkey]);
+    $orderdata[0]['shipping'] = tsv_PriceFormat($orderdata[0]['shipping']);
     $orderdata[0]['discountsize'] = tsv_PriceFormat($orderdata[0]['discountsize']);
-    $orderdata[0]['tax']          = tsv_PriceFormat($orderdata[0]['tax']);
-    $orderdata[0]['subtotal']     = tsv_PriceFormat($orderdata[0]['subtotal']);
+    $orderdata[0]['tax'] = tsv_PriceFormat($orderdata[0]['tax']);
+    $orderdata[0]['subtotal'] = tsv_PriceFormat($orderdata[0]['subtotal']);
     $paidsum = (!empty($orderdata[0]['paidsum'])) ? $orderdata[0]['paidsum'] : $orderdata[0]['sertificatsum'];
-    $orderdata[0]['paidsum']     = tsv_PriceFormat($paidsum);
+    $orderdata[0]['paidsum'] = tsv_PriceFormat($paidsum);
 
-    $orderdata[0]['count']        = $r;
-    $orderdata[0]['totalcount']   = $items;
-    $orderdata[0]['datecreate']   = get_date($orderdata[0]['dateorder']);
+    $orderdata[0]['count'] = $r;
+    $orderdata[0]['totalcount'] = $items;
+    $orderdata[0]['datecreate'] = get_date($orderdata[0]['dateorder']);
+
+    $orderdata[0]['discountsymb'] = ($orderdata[0]['discounttype'] == 'persent') ? '%' : $tsvshop['MonetarySymbol'];
+
     $orderdata[0]['total_propis'] = propis($orderdata[0][$totalkey]);
     foreach ($orderdata[0] as $key => $val) {
         if (in_array($key, explode(",", $tsvshop['SecFields']))) {
@@ -432,4 +434,5 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
     }
     echo $tplcheck;
 }
+
 ?>

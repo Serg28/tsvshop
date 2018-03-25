@@ -75,7 +75,7 @@
 </tr>
 <!--/table-->
 <tr>
-    <td colspan="30" style="border: 1pt solid #000000; border-right:1; border-top:1;" align="right" bgcolor="#ffffff"><b>Скидка по дисконтной карте или промокоду: </b>&nbsp; [+shop.order.discount+]% </td>
+    <td colspan="30" style="border: 1pt solid #000000; border-right:1; border-top:1;" align="right" bgcolor="#ffffff"><b>Скидка по дисконтной карте или промокоду: </b>&nbsp; [+shop.order.discount+] [+shop.order.discountsymb+] </td>
     <td colspan="5" style="border: 1pt solid #000000; border-right:1;" align="center">[+shop.order.discountsize+] руб.</td>
 </tr>
 <tr>

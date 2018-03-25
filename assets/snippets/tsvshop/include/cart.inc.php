@@ -1164,7 +1164,9 @@ if (!function_exists("tsv_Finish")) {
         $strMessageBody = str_replace("[+shop.mail.monetary+]", $tsvshop['MonetarySymbol'], $strMessageBody);
         $strMessageBody1 = str_replace("[+shop.mail.monetary+]", $tsvshop['MonetarySymbol'], $strMessageBody1);
 
-
+        
+        $strMessageBody = ($tsvshop['discounttype']=='persent') ? str_replace("[+shop.mail.discountsymb+]", '%', $strMessageBody) : str_replace("[+shop.mail.discountsymb+]", $tsvshop['MonetarySymbol'], $strMessageBody);
+        $strMessageBody1 = ($tsvshop['discounttype']=='persent') ? str_replace("[+shop.mail.discountsymb+]", '%', $strMessageBody1) : str_replace("[+shop.mail.discountsymb+]", $tsvshop['MonetarySymbol'], $strMessageBody1);
 
         //оплата
         if ($_SESSION[$session]['result']['paytype'] == "none" || empty($_SESSION[$session]['result']['paytype']) || empty($_SESSION[$session]['result']['topay'])) {
