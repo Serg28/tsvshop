@@ -19,7 +19,7 @@ if ($output_notice<>"") $output.= '<div class="notice">'.$output_notice.'</div>'
 if ($output_error<>"") $output.= '<div class="error">'.$output_error.'</div>';
 $output.= '<table width="800px" border="0" cellspacing="0">
 <tbody align="left" valign="top" >
-<tr><td width="35%"><div width="100%">';
+<tr><td width="35%" style="vertical-align:top"><div width="100%">';
 $output.= '<div onclick="tree_toggle(arguments[0])">';
 $output.= '<div><b>'.$shop_lang['prices_tree_title'].'</b></div>';
 //$output.='<ul class="Container">';
