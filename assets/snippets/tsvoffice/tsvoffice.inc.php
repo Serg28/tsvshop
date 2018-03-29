@@ -506,7 +506,7 @@ if ($act == 'listorders') {
 // показ формы авторизации
 if ($act == 'weblogin') {
     $modx->setPlaceholder('manager_folder', MGR_DIR);
-    return $modx->runSnippet('WebLogin', array(
+    echo $modx->runSnippet('WebLogin', array(
                 'loginhomeid'  => $loginhomeid,
                 'logouthomeid' => $logouthomeid,
                 'pwdreqid'     => $pwdreqid,
@@ -518,7 +518,7 @@ if ($act == 'weblogin') {
 }
 if ($act == 'websignup') {
     $modx->setPlaceholder('manager_folder', MGR_DIR);
-    return $modx->runSnippet('WebSignup', array(
+    echo $modx->runSnippet('WebSignup', array(
                 'groups'      => $groups,
                 'useCaptchad' => $useCaptcha,
                 'tpl'         => $tpl
