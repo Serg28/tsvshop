@@ -25,7 +25,7 @@ $output.= '<div><b>'.$shop_lang['prices_tree_title'].'</b></div>';
 //$output.='<ul class="Container">';
 $output.= PrintLi($tsvshop['CatRoot'], $col, $pt, $col_p, $col_pr, $col_id);
 $output.= '</div>';
-$output.= '</td><td width="65%">';
+$output.= '</td><td width="65%"  style="vertical-align:top">';
 $output.= PrintTable(0, $pt, $col_p, $col_pr, $col_id);
 $output.= '</td>   </tr> </tbody> </table>';
 $output.= '</form>';
