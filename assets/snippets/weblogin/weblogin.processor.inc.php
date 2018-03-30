@@ -15,7 +15,7 @@ defined('IN_PARSER_MODE') or die();
             $username = $row["username"];
             list($newpwd,$newpwdkey) = explode("|",$row['cachepwd']);
             if($newpwdkey!=$pwdkey) {
-                $output = webLoginAlert("Invalid password activation key. Your password was NOT activated.");
+                echo webLoginAlert("Invalid password activation key. Your password was NOT activated.");
                 return;
             }
             // activate new password
@@ -45,7 +45,7 @@ defined('IN_PARSER_MODE') or die();
                     "userpassword" => $newpwd
             ));
 
-            if(!$pwdActId) $output = webLoginAlert("Your new password was successfully activated.");
+            if(!$pwdActId) echo webLoginAlert("Your new password was successfully activated.");
             else {
                 // redirect to password activation notification page
                 $url = $modx->makeURL($pwdActId);
@@ -54,7 +54,7 @@ defined('IN_PARSER_MODE') or die();
         }
         else {
             // error
-            $output = webLoginAlert("Error while loading user account. Please contact the Site Administrator");
+            echo webLoginAlert("Error while loading user account. Please contact the Site Administrator");
         }
         return;
     }
@@ -105,10 +105,10 @@ defined('IN_PARSER_MODE') or die();
             else $sent = mail($email, "New Password Activation for $site_name", $message, "From: ".$emailsender."\r\n"."X-Mailer: MODX Content Manager - PHP/".phpversion());
             if(!$sent) {
                 // error
-                $output =  webLoginAlert("Error while sending mail to $email. Please contact the Site Administrator");
+                echo  webLoginAlert("Error while sending mail to $email. Please contact the Site Administrator");
                 return;
             }
-            if(!$pwdReqId) $output = webLoginAlert("Please check your email account ($email) for login instructions.");
+            if(!$pwdReqId) echo webLoginAlert("Please check your email account ($email) for login instructions.");
             else {
                 // redirect to password request notification page
                 $url = $modx->makeURL($pwdReqId);
@@ -116,7 +116,7 @@ defined('IN_PARSER_MODE') or die();
             }
         }
         else {
-            $output = webLoginAlert("We are sorry! We cannot locate an account using that email.");
+            echo webLoginAlert("We are sorry! We cannot locate an account using that email.");
         }
 
         return;
@@ -175,7 +175,7 @@ defined('IN_PARSER_MODE') or die();
     $row = $modx->db->getRow($ds);
 
     if(!$row) {
-        $output = webLoginAlert("Incorrect username or password entered!");
+        echo webLoginAlert("Incorrect username or password entered!");
         return;
     }
 
@@ -203,7 +203,7 @@ defined('IN_PARSER_MODE') or die();
 
     if($failedlogins>=$modx->config['failed_login_attempts'] && $blockeduntildate>time()) {    // blocked due to number of login errors.
         clearWebuserSession();
-        $output = webLoginAlert("Due to too many failed logins, you have been blocked!");
+        echo webLoginAlert("Due to too many failed logins, you have been blocked!");
         return;
     }
 
@@ -220,28 +220,28 @@ defined('IN_PARSER_MODE') or die();
 
     if($blocked=="1") { // this user has been blocked by an admin, so no way he's loggin in!
         clearWebuserSession();
-        $output = webLoginAlert("You are blocked and cannot log in!");
+        echo webLoginAlert("You are blocked and cannot log in!");
         return;
     }
 
     // blockuntil
     if($blockeduntildate>time()) { // this user has a block until date
         clearWebuserSession();
-        $output = webLoginAlert("You are blocked and cannot log in! Please try again later.");
+        echo webLoginAlert("You are blocked and cannot log in! Please try again later.");
         return;
     }
 
     // blockafter
     if($blockedafterdate>0 && $blockedafterdate<time()) { // this user has a block after date
         clearWebuserSession();
-        $output = webLoginAlert("You are blocked and cannot log in! Please try again later.");
+        echo webLoginAlert("You are blocked and cannot log in! Please try again later.");
         return;
     }
 
     // allowed ip
     if (isset($modx->config['allowed_ip'])) {
         if (strpos($modx->config['allowed_ip'],$_SERVER['REMOTE_ADDR'])===false) {
-            $output = webLoginAlert("You are not allowed to login from this location.");
+            echo webLoginAlert("You are not allowed to login from this location.");
             return;
         }
     }
@@ -251,7 +251,7 @@ defined('IN_PARSER_MODE') or die();
         $date = getdate();
         $day = $date['wday']+1;
         if (strpos($modx->config['allowed_days'],"$day")===false) {
-            $output = webLoginAlert("You are not allowed to login at this time. Please try again later.");
+            echo webLoginAlert("You are not allowed to login at this time. Please try again later.");
             return;
         }
     }
@@ -269,14 +269,14 @@ defined('IN_PARSER_MODE') or die();
     if (!$rt||(is_array($rt) && !in_array(TRUE,$rt))) {
         // check user password - local authentication
         if($dbasePassword != md5($givenPassword)) {
-            $output = webLoginAlert("Incorrect username or password entered!");
+            echo webLoginAlert("Incorrect username or password entered!");
             $newloginerror = 1;
         }
     }
 
     if(isset($modx->config['use_captcha']) && $modx->config['use_captcha']==1 && isset($_POST['cmdwebsignup'])) {
         if($_SESSION['veriword']!=$captcha_code) {
-            $output = webLoginAlert("The security code you entered didn't validate! Please try to login again!");
+            echo webLoginAlert("The security code you entered didn't validate! Please try to login again!");
             $newloginerror = 1;
         }
     }
