@@ -824,8 +824,7 @@ if (!function_exists("tsv_display_cart")) {
               $tpl = str_replace("[+shop.basket.userform+]", "", $tpl);
               }
              */
-            //добавлено с v5.3 ----------------------------------------------------
-            $tpl = str_replace("[+shop.basket.topay+]", tsv_PriceFormat($_SESSION[$session]['result']['topay']), $tpl);
+            
 
             //запоминаем основные переменные
             $userid = $modx->getLoginUserID();
@@ -950,6 +949,10 @@ if (!function_exists("tsv_display_cart")) {
             $tplfc = str_replace("[+shop.basket.checkouttable+]", $table, $tplfc);
             $tpl = str_replace("[+shop.basket.userform+]", $userform, $tplfc);
         }
+        
+        //добавлено с v5.3 ----------------------------------------------------
+        $tpl = str_replace("[+shop.basket.topay+]", tsv_PriceFormat($_SESSION[$session]['result']['topay']), $tpl);
+        
         //------
         // Чистим чанк от всех меток
         $tpl = call_user_func_array(tsv_ClearTplfromLabels, array(
