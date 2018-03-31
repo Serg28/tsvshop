@@ -32,6 +32,7 @@ else if ($isPostBack){
     $country = $modx->db->escape($modx->stripTags($_POST['country']));
     $state = $modx->db->escape($modx->stripTags($_POST['state']));
     $zip = $modx->db->escape($modx->stripTags($_POST['zip']));
+    $phone = $modx->db->escape($modx->stripTags($_POST['phone']));
     $formcode = $_POST['formcode'];
 
     // load template section #1
@@ -43,6 +44,7 @@ else if ($isPostBack){
     $tpl = str_replace("[+country+]",$country,$tpl);
     $tpl = str_replace("[+state+]",$state,$tpl);
     $tpl = str_replace("[+zip+]",$zip,$tpl);
+    $tpl = str_replace("[+phone+]",$phone,$tpl);
     $tpl.="<script type='text/javascript'>if (document.websignupfrm) document.websignupfrm.username.focus();</script>";
 
     // check for duplicate user name
@@ -116,6 +118,7 @@ else if ($isPostBack){
 			'zip'         => $zip,
 			'state'       => $state,
 			'country'     => $country,
+            'phone'     => $phone,
 		), $modx->getFullTableName("web_user_attributes"));
 
     // add user to web groups
