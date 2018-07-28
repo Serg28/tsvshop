@@ -337,7 +337,7 @@ function tsv_listorders($id) {
                                     $tpltr_links = str_replace('[+links+]', $files, $tpltr_links);
                                 } else if (!empty($value)) {
                                     //$url         = ($disabled) ? '' : $modx->config['site_url'] . 'file/download/' . $rowlink['downloadcode'];
-                                    $url         = $modx->config['site_url'] . 'file/download/' . $value;
+                                    $url         = $modx->config['site_url'] . 'file/download/' . $rowlink['downloadcode'];
                                     $file        = '<a href="' . $url . '" class="btn btn-primary btn-sm  ' . $disabled . '">Скачать</a>';
                                     $tpltr_links = str_replace('[+links+]', $file, $tpltr_links);
                                 } else {
