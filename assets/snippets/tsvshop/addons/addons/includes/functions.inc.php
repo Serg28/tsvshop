@@ -26,7 +26,7 @@ function parseaddons($addonspath, $filename, $shop_lang) {
                                 	  if ($tables[$folder]=="system") {
                                         $temp = str_replace('[+actions+]', '<img src="'.TSVSHOP_SURL.'addons/addons/img/system.png" alt="" />', $temp);
                                     } else {
-                                    	  $temp = str_replace('[+actions+]', '<a href="/'.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addonuninstall&addon='.$folder.'" title="'.$shop_lang['addons_uninstall'].'" onclick="uninstall(\''.$shop_lang['addons_uninstall_question'].'\');return false"><img src="'.TSVSHOP_SURL.'addons/addons/img/uninstall.png" alt="'.$shop_lang['addons_uninstall'].'" /></a>', $temp);
+                                    	  $temp = str_replace('[+actions+]', '<a href="'.MODX_BASE_URL.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addonuninstall&addon='.$folder.'" title="'.$shop_lang['addons_uninstall'].'" onclick="uninstall(\''.$shop_lang['addons_uninstall_question'].'\');return false"><img src="'.TSVSHOP_SURL.'addons/addons/img/uninstall.png" alt="'.$shop_lang['addons_uninstall'].'" /></a>', $temp);
 									                  }
                                     if (getConf("addons", $folder."_active")=="yes") {
                                     	  if ($tables[$folder]=="system") {
@@ -38,7 +38,7 @@ function parseaddons($addonspath, $filename, $shop_lang) {
                                     	if ($tables[$folder]=="system") {
                                              $temp = str_replace('[+status+]', '<img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="" /> <img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="" />', $temp);
                                         } else {
-                                    		$temp = str_replace('[+status+]', '<a href="/'.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addonon&addon='.$folder.'" title="'.$shop_lang['addons_on_act'].'"><img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on_act'].'" /></a> <img src="'.TSVSHOP_SURL.'addons/addons/img/addon_off.png" alt="'.$shop_lang['addons_off'].'" title="'.$shop_lang['addons_off'].'" />', $temp);
+                                    		$temp = str_replace('[+status+]', '<a href="'.MODX_BASE_URL.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addonon&addon='.$folder.'" title="'.$shop_lang['addons_on_act'].'"><img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on_act'].'" /></a> <img src="'.TSVSHOP_SURL.'addons/addons/img/addon_off.png" alt="'.$shop_lang['addons_off'].'" title="'.$shop_lang['addons_off'].'" />', $temp);
 										                    }
                                     }
                                 } else {
@@ -46,7 +46,7 @@ function parseaddons($addonspath, $filename, $shop_lang) {
                                       $temp = str_replace('[+actions+]', '<img src="'.TSVSHOP_SURL.'addons/addons/img/system.png" alt="" />', $temp);
                                     	$temp = str_replace('[+status+]', '<img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on'].'" title="'.$shop_lang['addons_on'].'" /> <img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on'].'" title="'.$shop_lang['addons_on'].'" />', $temp);
                                     } else {
-                                		  $temp = str_replace('[+actions+]', '<a href="/'.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addoninstall&addon='.$folder.'" title="'.$shop_lang['addons_install'].'"><img src="'.TSVSHOP_SURL.'addons/addons/img/install.png" alt="'.$shop_lang['addons_install'].'" /></a>', $temp);
+                                		  $temp = str_replace('[+actions+]', '<a href="'.MODX_BASE_URL.MGR_DIR.'/index.php?id='.$moduleid.'&a='.$modulea.'&act=addoninstall&addon='.$folder.'" title="'.$shop_lang['addons_install'].'"><img src="'.TSVSHOP_SURL.'addons/addons/img/install.png" alt="'.$shop_lang['addons_install'].'" /></a>', $temp);
                                     	$temp = str_replace('[+status+]', '<img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on'].'" title="'.$shop_lang['addons_on'].'" /> <img src="'.TSVSHOP_SURL.'addons/addons/img/addon_un.png" alt="'.$shop_lang['addons_on'].'" title="'.$shop_lang['addons_on'].'" />', $temp);
 									                  }
                                 }
