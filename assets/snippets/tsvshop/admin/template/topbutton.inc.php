@@ -3,7 +3,7 @@ $output.='
  
 
 
-<h1>'.$shop_lang['modulename'].' <sup style="position:relative; font-weight:normal; font-size:12px; top:3px"><i>'.$tsvshop['version'].'</i></sup></h1>
+<h1><i class="fa fa-shopping-bag"></i>'.$shop_lang['modulename'].' <sup style="font-size:12px;"><i>'.$tsvshop['version'].'</i></sup></h1>
         <div id="actions">
             <ul class="actionButtons">
 
