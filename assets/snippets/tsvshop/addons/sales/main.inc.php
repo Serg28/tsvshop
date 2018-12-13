@@ -8,7 +8,7 @@ $output.= '<ul class="actionButtons">';
 if ($_GET['act']=='vieworder') { 
   $output.= '<li id="Button1"><a href="index.php?a='.$modulea.'&id='.$moduleid.'" ><img src="'.TSVSHOP_SURL.'addons/sales/img/back.png"> '.$shop_lang['sales_back'].'</a></li>';
 }
-$output.= '<li id="Button1"><a href="javascript:void(0)" onclick=\'window.location.reload(true);\'><img src="media/style'.$theme.'/images/icons/refresh.png"> '.$shop_lang['refresh'].'</a></li>';
+$output.= '<li id="Button1"><a href="index.php?a='.$modulea.'&id='.$moduleid.'" ><img src="media/style'.$theme.'/images/icons/refresh.png"> '.$shop_lang['refresh'].'</a></li>';
 $res = $modx->db->select("*", $tsvshop['dborders'], '','numorder desc');
 if ($modx->db->getRecordCount($res) >= 1 && $_GET['act']!='vieworder') { 
   $output.='<li id="Button1"><a href="index.php?a='.$modulea.'&id='.$moduleid.'&act=clearorders"><img src="media/style'.$theme.'/images/icons/delete.png"> '.$shop_lang['sales_delete_all'].'</a></li><li id="Button1"><a href="#" onclick=\'document.getElementById("check_del").submit();return false;\'><img src="media/style'.$theme.'/images/icons/delete.png"> '.$shop_lang['sales_del_checked'].'</a></li>';
