@@ -677,16 +677,19 @@ if (!function_exists("tsv_minregjs")) {
                 fwrite($tmp, $data);
                 flock($tmp, LOCK_UN);
                 fclose($tmp);
-                $modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+                //$modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+				$modx->regClientScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
             }
             else {
-                $modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+                //$modx->regClientStartupScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
+				$modx->regClientScript(TSVSHOP_SURL . 'cache/' . $fn . '.js');
             }
         }
         else {
             foreach($jsfiles as $file) {
                 if (file_exists(TSVSHOP_PATH . $file)) {
-                    $modx->regClientStartupScript(TSVSHOP_SURL . $file);
+                    //$modx->regClientStartupScript(TSVSHOP_SURL . $file);
+					$modx->regClientScript(TSVSHOP_SURL . $file);
                 }
             }
         }
