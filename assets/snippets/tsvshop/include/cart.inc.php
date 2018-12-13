@@ -697,7 +697,7 @@ if (!function_exists("tsv_display_cart")) {
                             $tabletmp = str_replace('[+shop.basket.price+]', tsv_PriceFormat($price), $tabletmp);
                             break;
                         case 'url':
-                            $url = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->makeUrl($val) : "&tovar=" . $val;
+                            $url = ($tsvshop['TypeCat'] == 'docs' || empty($tsvshop['TypeCat'])) ? $modx->config['site_url'].$modx->makeUrl($val) : "&tovar=" . $val;
                             $tabletmp = str_replace('[+shop.basket.link+]', $url, $tabletmp);
                             //$tabletmp = str_replace('[+shop.basket.id+]', $val, $tabletmp);
                             break;
@@ -995,8 +995,19 @@ if (!function_exists("tsv_Finish")) {
         //$fields['status'] = $status[0];   //тут выводим статус по умолчанию
         $tmpstatus = explode("==", $status[0]); //тут выводим статус по умолчанию
         $fields['status'] = $tmpstatus[0];
-        $payinfo = explode("_", $fields['payments']);
-        $fields['payments'] = $payinfo[1];
+        //$payinfo = explode("_", $fields['payments']);
+        //$fields['payments'] = $payinfo[1];
+        //----YandexMoney
+		if (in_array($fields['payments'], array('PC','AC','MC','GP','WM','AB','SB','MA','PB','QW','QP'))) {
+			$_SESSION[$session]['result']['YMPayType'] = $fields['payments'];
+			$payinfo[1]="Yandex.Money";
+        	$payinfo[0]="yandexmoney";
+			$fields['payments']="Yandex.Money";
+		} else {
+		//----
+        	$payinfo             = explode("_", $fields['payments']);
+        	$fields['payments']  = $payinfo[1];
+		}
 
         $evt = $modx->invokeEvent("TSVshopOnUserFormFieldsRender", array(
             "fields" => $fields
