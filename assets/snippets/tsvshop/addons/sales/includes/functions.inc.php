@@ -367,6 +367,8 @@ function updateMail($newstatus, $idorder)
         }
     }
     $body = str_replace("[+shop.order.sitename+]", $modx->config['site_name'], $body);
+    //обрабатываем текст писем на сниппеты и чанки
+    $body = $modx->parseDocumentSource($body);
     if ($row['status'] != $newstatus) {
         $sysfields = explode(',', $tsvshop['sysfields']);
         $row['email'] = (in_array($row['email'], $sysfields)) ? DeCryptMessage($row['email'], $tsvshop['SecPassword']) : $row['email'];
