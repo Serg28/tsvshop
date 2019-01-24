@@ -36,7 +36,7 @@ if (!function_exists("setConf")) {
     {
         global $modx;
         if (is_array($value)) {
-            print_r($value);
+            //print_r($value);
             $value = implode(",", $value);
         }
 

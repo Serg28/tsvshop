@@ -78,8 +78,10 @@ foreach ($folders as $folder) {
                          require_once($langfile);
                          $jsfunc = 'addons/'.$folder.'/js/funct.js';
                          if (file_exists(TSVSHOP_PATH.$jsfunc)) {tsv_jsadd($jsfunc); /*$modx->regClientStartupScript($jsfunc);*/}
-                         if (sizeof($tsvshop['cf_'.$folder])>0) {
-                            $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
+                         if (!empty($tsvshop['cf_'.$folder])) {
+                            if (sizeof($tsvshop['cf_'.$folder])>0) {
+                               $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
+                            }
                          }
                      }
                  }

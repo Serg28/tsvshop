@@ -5,6 +5,15 @@ if (!$cache) {
     include_once 'cache.class.php';
     $cache = fileCache::GetInstance(3600, MODX_BASE_PATH . 'assets/cache/');
 }
+
+if (!function_exists("size")) {
+    function size($array)
+    {
+        //если не массив то делаем массивом и чистим от пустіх значений
+		return (!empty($array)) ? sizeof($array) : 0;
+	}
+}
+
 if (!function_exists("session")) {
 
     function session($cache)
@@ -288,7 +297,7 @@ if (!function_exists("tsv_add_item")) {
         // Add the item
         if ($validQty !== false) {
 
-            $count = sizeof($_SESSION[$session]['orders']);
+            $count = size($_SESSION[$session]['orders']);
 
             for ($i = $count; $i >= 0; $i--) {
                 $order = $_SESSION[$session]['orders'][$i];
@@ -425,7 +434,7 @@ if (!function_exists("tsv_display_infoblock")) {
         $full = getStr($tpl, '<!--full-->', '<!--/full-->');
         $table = getStr($tpl, '<!--table-->', '<!--/table-->');
 
-        $count = sizeof($_SESSION[$session]['orders']);
+        $count = size($_SESSION[$session]['orders']);
         for ($i = ($count - 1); $i >= 0; $i--) {
             $total = $total + (tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty']);
             $items = $items + $_SESSION[$session]['orders'][$i]['qty'];
@@ -433,6 +442,7 @@ if (!function_exists("tsv_display_infoblock")) {
             $summa = (tsv_CalcPrice($_SESSION[$session]['orders'][$i]['price'], $_SESSION[$session]['orders'][$i]['qty'], $_SESSION[$session]['orders'][$i]['opt']) * $_SESSION[$session]['orders'][$i]['qty']);
             $tabletmp = $table;
             $tabletmp = str_replace('[+shop.info.iconpath+]', $_SESSION[$session]['orders'][$i]['icon'], $tabletmp);
+            $tabletmp = str_replace('[+shop.info.id+]', $_SESSION[$session]['orders'][$i]['id'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.articul+]', $_SESSION[$session]['orders'][$i]['articul'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.quantity+]', $_SESSION[$session]['orders'][$i]['qty'], $tabletmp);
             $tabletmp = str_replace('[+shop.info.price+]', tsv_PriceFormat($price), $tabletmp);
@@ -524,7 +534,7 @@ if (!function_exists("tsv_ParseUserForm")) {
             }
         }
         //чистим
-        $templates['tpl'] = call_user_func_array(tsv_ClearTplfromLabels, array(
+        $templates['tpl'] = call_user_func_array("tsv_ClearTplfromLabels", array(
             $templates['tpl']
         ));
 
@@ -586,7 +596,7 @@ if (!function_exists("tsv_display_fullcheckout")) {
         }
         $userform = '<div id="checkoutform_cont">' . tsv_display_checkoutform($cache) . '</div>';
         $table = '<div id="checkout_cont">' . tsv_display_cart($cache, "checkout") . '</div>';
-        $userform = (!sizeof($_SESSION[$session]['orders'])) ? '' : $userform;
+        $userform = (!size($_SESSION[$session]['orders'])) ? '' : $userform;
         $tpl = str_replace("[+shop.basket.userform+]", $userform, $tpl);
         $tpl = str_replace("[+shop.basket.checkouttable+]", $table, $tpl);
         return $tpl;
@@ -611,14 +621,14 @@ if (!function_exists("tsv_display_cart")) {
         $disc = 0;
         $piece = array();
         $addons = array();
-        if (!act) {
+        if (!$act) {
             $act = "basket";
         }
 
         if ($tsvshop['debug']) {
             $output .= print_r($_SESSION[$session]);
         }
-        $count = sizeof($_SESSION[$session]['orders']);
+        $count = size($_SESSION[$session]['orders']);
         if ($act == "basket") {
             $tvar = "ct";
             $chunk = $tsvshop['tplcart'];
@@ -941,11 +951,11 @@ if (!function_exists("tsv_display_cart")) {
             $userform = '<div id="checkoutform_cont">' . $userform . '</div>';
             $table = '<div id="checkout_table">' . $tpl . '</div>';
 
-            $table = call_user_func_array(tsv_ClearTplfromLabels, array(
+            $table = call_user_func_array("tsv_ClearTplfromLabels", array(
                 $table
             ));
 
-            $userform = (!sizeof($_SESSION[$session]['orders'])) ? '' : $userform;
+            $userform = (!size($_SESSION[$session]['orders'])) ? '' : $userform;
             $tplfc = str_replace("[+shop.basket.checkouttable+]", $table, $tplfc);
             $tpl = str_replace("[+shop.basket.userform+]", $userform, $tplfc);
         }
@@ -955,7 +965,7 @@ if (!function_exists("tsv_display_cart")) {
         
         //------
         // Чистим чанк от всех меток
-        $tpl = call_user_func_array(tsv_ClearTplfromLabels, array(
+        $tpl = call_user_func_array("tsv_ClearTplfromLabels", array(
             $tpl
         ));
         $tpl = preg_replace('/(\[\+.*?\+\])/', "", $tpl);
@@ -1016,7 +1026,7 @@ if (!function_exists("tsv_Finish")) {
             $fields = $evt[0];
         }
 
-        if (sizeof($tsvshop['customfields']) > 0) {
+        if (size($tsvshop['customfields']) > 0) {
             //v5.3
             //добавление в БД недостающих полей
             tsv_AddFieldstoDB($tsvshop['dborders'], $tsvshop['customfields']);
@@ -1067,7 +1077,7 @@ if (!function_exists("tsv_Finish")) {
 
 
         //запись данных о заказе в базу данных
-        if (sizeof($order) > 0) {
+        if (size($order) > 0) {
             $modx->db->insert($order, $tsvshop['dborders']);
         }
 
@@ -1080,7 +1090,7 @@ if (!function_exists("tsv_Finish")) {
         $order['numorder'] = _filter($_SESSION[$session]['result']['numorder']);
 
         //формируем поля для подробностей заказа
-        $count = sizeof($_SESSION[$session]['orders']);
+        $count = size($_SESSION[$session]['orders']);
         if (!empty($count)) {
             for ($i = ($count - 1); $i >= 0; $i--) {
                 $tmp = $tablemail; // для письма
@@ -1157,7 +1167,7 @@ if (!function_exists("tsv_Finish")) {
                 $table1 .= $tmp1;
 
                 //записываем заказы в таблицу
-                if (sizeof($orderfields) > 0) {
+                if (size($orderfields) > 0) {
                     $modx->db->insert($orderfields, $tsvshop['dborders_details']);
                 }
             }
@@ -1208,8 +1218,8 @@ if (!function_exists("tsv_Finish")) {
             }
         }
         //
-        //if (sizeof($order)>0) {
-        if (sizeof($_SESSION[$session]['result']) > 0) {
+        //if (size($order)>0) {
+        if (size($_SESSION[$session]['result']) > 0) {
             foreach ($_SESSION[$session]['result'] as $key => $val) {
                 if ($key == "dateorder") {
                     $val = date("d.m.Y H:i:s", $val);

@@ -45,9 +45,11 @@ foreach ($folders as $folder) {
                      if (file_exists($file) && file_exists($langfile)) {
                          require_once($file);
                          require_once($langfile);
-                         if (sizeof($tsvshop['cf_'.$folder])>0) {
-                            if (!is_array($tsvshop['customfields'])) {$tsvshop['customfields']=explode(',',$tsvshop['customfields']);}
-                            $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
+                         if (!empty($tsvshop['cf_'.$folder])) {
+                            if (sizeof($tsvshop['cf_'.$folder])>0) {
+                               if (!is_array($tsvshop['customfields'])) {$tsvshop['customfields']=explode(',',$tsvshop['customfields']);}
+                               $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
+                            }
                          }
                      }
                  }

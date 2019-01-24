@@ -24,14 +24,11 @@ global $cache, $session, $tsvshop, $shop_lang, $tables, $folders, $jsfiles;
 //$tsvshop = array();
 $jsfiles = array();
 
-if (!$cache) {
-    include_once TSVSHOP_PATH.'include/cache.class.php';
-    $cache = fileCache::GetInstance(3600,MODX_BASE_PATH.'assets/cache/');
-}
 include TSVSHOP_PATH."include/config.inc.php";
 include_once (TSVSHOP_PATH. 'admin/includes/core.inc.php');
 include_once (TSVSHOP_PATH. 'include/cart.inc.php'); 
 include TSVSHOP_PATH."include/tsvshop.inc.php";
+session_write_close();
 session_set_cookie_params("",'/');
 session_name($session);
 session_start();

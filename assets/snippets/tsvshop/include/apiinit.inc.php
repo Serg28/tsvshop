@@ -34,7 +34,7 @@ function executeDocument($docid = 0) {
     $_REQUEST['id'] = $tmp; // restore old id
     return $html;
 }
-
+session_write_close();
 session_set_cookie_params("", '/');
 session_name($site_sessionname);
 session_start();
