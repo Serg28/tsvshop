@@ -491,6 +491,7 @@ function AddSuccess(res) {
     res = replaceS(res, '<br />', '');
     res = replaceS(res, '\r', '');
     res = replaceS(res, '\n', '');
+    res = replaceS(res, '\ufeff', '');
     if (res == 'success') {
         if (DisplayNotice) {
             HideWindow(succ, strAddSuccess);
