@@ -8,7 +8,7 @@ $tsvshop['tplmailupdateorder'] = !empty($tplmailupdateorder) ? $tplmailupdateord
 //Ниже - список имен полей в таблице заказа shop_order . Служит как проверочный список допустимых полей при добавлении заказа в БД
 //т.е. значение поля в форме заказа не будет добавлено в БД, если названия этого поля нету в данном списке.
 //также этот список служит для формирования списка полей, доступных для шифрования в аддоне модуле TSVshop, аддон Конфигурация, вкладка Безопасность, поле Поля для шифрования
-$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,paidsum,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid,discount,discountnum,shipping,shiptype,payments";
+$tsvshop['sysfields'] = "dateorder,datepay,status,fio,total,topay,paidsum,comments,adress,city,region,province,zip,tracking,phone,email,commentadmin,subtotal,nalog,code,userid,discount,discountnum,discounttype,shipping,shiptype,payments";
 //список меток аддона Заказы, которые используются в чанках Shop_Cart, Shop_Checkout, которые нельзя вырезать.
 $tsvshop['syslabels'] = "noempty,empty,subtotal,total,buttons,repeat,full,table";
 
@@ -236,11 +236,11 @@ function updateorder($idorder)
 
     if ($user == "manager") {
         if (!empty($act) && $act == "updateorder" && !empty($idorder) && is_numeric(intval($idorder)) && $idorder != "0") {
-            $dataorder = getOrderInfo($idorder);
+            $orderinfo = getOrderInfo($idorder);
             // ищем данные о товарах в REQUEST  v5.4.1----
             if (!empty($_REQUEST['item'])) {
                 foreach ($_REQUEST['item'] as $key => $val) {
-                    $res = $modx->db->update($val, $tsvshop['dborders_details'], 'id = ' . intval($key));
+                    $modx->db->update($val, $tsvshop['dborders_details'], 'id = ' . intval($key));
                     $summa = $val['price'] * $val['quantity'];
                     $subtotal = $subtotal + $summa;
                 }
@@ -259,20 +259,20 @@ function updateorder($idorder)
             }
             //пересчет и добавление итоговых сумм  ---v5.4.1----
             $fields['subtotal'] = $subtotal;
-            //$fields['discountsize'] = tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100);
-            $fields['discountsize'] = ($dataorder['discounttype'] == 'persent') ? tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100) : $fields['discount'];
+            $fields['discountsize'] = ($orderinfo['discounttype'] == 'persent') ? tsv_PriceFormat(($fields['subtotal'] * $fields['discount']) / 100) : $fields['discount'];
             $fields['total'] = tsv_PriceFormat(($fields['subtotal'] + $fields['shipping'] + $fields['nalog']) - $fields['discountsize']);
 
-            $orderinfo = getOrderInfo($idorder);
             $paidsum = (!empty($orderinfo['paidsum'])) ? $orderinfo['paidsum'] : $orderinfo['sertificatsum'];
             $fields['topay'] = (empty($paidsum)) ? $fields['total'] : ($fields['total'] - floatval($paidsum));
 
 //------
             //updateMail($modx->db->escape($_GET['status']),$idorder);
             if ($modx->db->update($fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"')) {
-                //Запускаем событие TSVshopOnOrderStatusUpdate
-                $modx->invokeEvent("TSVshopOnOrderStatusUpdate", array("idorder" => $idorder, "newstatus" => $modx->db->escape($_GET['status'])));
-                updateMail($modx->db->escape($_GET['status']), $idorder);
+                if ($orderinfo['status'] !== $_GET['status']) {
+                    //Запускаем событие TSVshopOnOrderStatusUpdate
+                    $modx->invokeEvent("TSVshopOnOrderStatusUpdate", array("idorder" => $idorder, "newstatus" => $modx->db->escape($_GET['status'])));
+                    ajaxupdateMail($modx->db->escape($_GET['status']), $idorder);
+                }
                 return "<span class='ok'>" . $shop_lang['sales_update_ok'] . "</span>";
             } else {
                 return "<span class='error'>" . $shop_lang['sales_update_error'] . "</span>";
@@ -295,14 +295,15 @@ function updstorder($idorder)
             if ($_GET['status'] == "Оплачено")
                 $fields['datepay'] = time();
             //---v5.2rc2----
-            $sysfielad = explode(',', $tsvshop['sysfields']);
+            $sysfields = (is_string($tsvshop['sysfields'])) ? explode(',', $tsvshop['sysfields']) : $tsvshop['sysfields'];
             foreach ($_GET as $key => $value) {
-                if (in_array($key, $sysfielad)) {
+                if (in_array($key, $sysfields)) {
                     $fields[$key] = $modx->db->escape($value);
                 }
             }
             //------
-            updateMail($modx->db->escape($_GET['status']), $idorder);
+            //updateMail($modx->db->escape($_GET['status']), $idorder);
+            $orderinfo = getOrderInfo($idorder);
             $result = $modx->db->update($fields, $tsvshop['dborders'], 'numorder = "' . intval($idorder) . '"');
             if ($result) {
                 $status = explode("||", $tsvshop['StatusOrder']);
@@ -312,8 +313,11 @@ function updstorder($idorder)
                         $color = $tmpstatus[1];
                     }
                 }
-                //Запускаем событие TSVshopOnOrderStatusUpdate
-                $modx->invokeEvent("TSVshopOnOrderStatusUpdate", array("idorder" => $idorder, "newstatus" => $modx->db->escape($_GET['status'])));
+                if ($orderinfo['status'] !== $_GET['status']) {
+                    //Запускаем событие TSVshopOnOrderStatusUpdate
+                    $modx->invokeEvent("TSVshopOnOrderStatusUpdate", array("idorder" => $idorder, "newstatus" => $modx->db->escape($_GET['status'])));
+                    ajaxupdateMail($modx->db->escape($_GET['status']), $idorder);
+                }
                 return $idorder . "||" . $color . "||success";
             } else {
                 return $idorder . "||" . $color . "||error";
@@ -348,7 +352,7 @@ function sendMailUpdate($emails, $subject = '', $body, $isHTML = false)
 function updateMail($newstatus, $idorder)
 {
     global $modx, $tsvshop, $shop_lang;
-    $body = getTpl($tsvshop['tplmailupdateorder']);
+    $body = $modx->getTpl($tsvshop['tplmailupdateorder']);
     $row = getOrderInfo($idorder);
     $i = 0;
     $body = str_replace("[+shop.order.status+]", $newstatus, $body);
@@ -370,13 +374,45 @@ function updateMail($newstatus, $idorder)
     //обрабатываем текст писем на сниппеты и чанки
     $body = $modx->parseDocumentSource($body);
     if ($row['status'] != $newstatus) {
-        $sysfields = explode(',', $tsvshop['sysfields']);
+        $sysfields = (is_string($tsvshop['sysfields'])) ? explode(',', $tsvshop['sysfields']) : $tsvshop['sysfields'];
         $row['email'] = (in_array($row['email'], $sysfields)) ? DeCryptMessage($row['email'], $tsvshop['SecPassword']) : $row['email'];
         if (sendMailUpdate($row['email'], $tsvshop['SubjectUpdateStatus'], $body, 'true')) {
             return true;
         } else {
             return false;
         }
+    }
+}
+
+function ajaxupdateMail($newstatus, $idorder)
+{
+    global $modx, $tsvshop, $shop_lang;
+    $body = $modx->getTpl($tsvshop['tplmailupdateorder']);
+    $row = getOrderInfo($idorder);
+    $i = 0;
+    $body = str_replace("[+shop.order.status+]", $newstatus, $body);
+    if (!empty($row)) {
+        foreach ($row as $key => $val) {
+            if (in_array($key, explode(",", $tsvshop['SecFields']))) {
+                $val = DeCryptMessage($val, $tsvshop['SecPassword']);
+            }
+            if ($key == "dateorder") {
+                $body = str_replace("[+shop.order." . $key . "+]", date("d.m.Y H:i:s", $val), $body);
+            } else {
+                $body = str_replace("[+shop.order." . $key . "+]", $val, $body);
+            }
+            $body = str_replace("[+shop.order.num+]", $i, $body);
+            $i++;
+        }
+    }
+    $body = str_replace("[+shop.order.sitename+]", $modx->config['site_name'], $body);
+    $body = $modx->parseDocumentSource($body);
+    $sysfields = (is_string($tsvshop['sysfields'])) ? explode(',', $tsvshop['sysfields']) : $tsvshop['sysfields'];
+    $row['email'] = (in_array($row['email'], $sysfields)) ? DeCryptMessage($row['email'], $tsvshop['SecPassword']) : $row['email'];
+    if (sendMailUpdate($row['email'], $tsvshop['SubjectUpdateStatus'], $body, 'true')) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -450,6 +486,10 @@ function vieworder($filename)
                                 $temp = str_replace('[+summa+]', tsv_PriceFormat($summa), $temp);
                                 $subtotal = $subtotal + $summa;
                             }
+                            if ($key == 'url') {
+                                $temp = str_replace('[+url+]', $value, $temp);
+                                $temp = str_replace('[+link+]', $modx->makeUrl($value), $temp);
+                            }
                         }
                         $temp = str_replace('[+num+]', $r, $temp);
                         $out .= $temp;
@@ -461,7 +501,7 @@ function vieworder($filename)
                     $paidsum = (!empty($orderinfo['paidsum'])) ? $orderinfo['paidsum'] : $orderinfo['sertificatsum'];
 
                     $discountsize = ($row['discounttype'] == 'persent') ? (($subtotal * $discount) / 100) : $discount;
-                    $total = ($subtotal + $shipping + $nalog) - $discountsize;
+                    $total = (floatval($orderinfo) + floatval($subtotal) + floatval($shipping) + floatval($nalog)) - floatval($discountsize);
                     $discountsymb = ($row['discounttype'] == 'persent') ? '%' : $tsvshop['MonetarySymbol'];
                     $out = str_replace('[+discountsymb+]', $discountsymb, $out);
 
@@ -471,7 +511,7 @@ function vieworder($filename)
                     $out = str_replace('[+subtotal+]', tsv_PriceFormat($subtotal), $out);
                     $out = str_replace('[+discountsize+]', tsv_PriceFormat($discountsize), $out);
                     $out = str_replace('[+discounttype+]', $row['discounttype'], $out);
-
+                    $out = $modx->parseDocumentSource($out); //v5.4.5 обработка шаблона парсером; можно запускать сниппеты и т.д.
                     $out = preg_replace('/(\[\+.*?\+\])/', '', $out);
                     return $out;
                 }

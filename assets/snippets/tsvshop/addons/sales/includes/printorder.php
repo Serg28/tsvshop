@@ -412,6 +412,8 @@ if (is_array($orderdata) && !empty($tsvshop['tplprintorder'])) {
     $tplcheck = str_replace($tablecheck, $table, $tplcheck);
 
     $orderdata[0][$totalkey] = tsv_PriceFormat($orderdata[0][$totalkey]);
+    $orderdata[0]['total']      = tsv_PriceFormat($orderdata[0]['total']);
+	$orderdata[0]['topay']      = tsv_PriceFormat($orderdata[0]['topay']);
     $orderdata[0]['shipping'] = tsv_PriceFormat($orderdata[0]['shipping']);
     $orderdata[0]['discountsize'] = tsv_PriceFormat($orderdata[0]['discountsize']);
     $orderdata[0]['tax'] = tsv_PriceFormat($orderdata[0]['tax']);
