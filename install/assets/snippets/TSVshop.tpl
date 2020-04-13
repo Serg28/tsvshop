@@ -4,7 +4,7 @@
  * Сниппет магазина TSVshop
  *
  * @category    snippet
- * @version     5.4.4
+ * @version     5.4.5
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @internal    @properties
  * @internal    @modx_category TSVshop
@@ -21,7 +21,6 @@ define("TSVSHOP_PUREPATH", "assets/snippets/tsvshop/");
 define('IN_TSVSHOP_MODE','true');
 
 global $cache, $session, $tsvshop, $shop_lang, $tables, $folders, $jsfiles;
-//$tsvshop = array();
 $jsfiles = array();
 
 include TSVSHOP_PATH."include/config.inc.php";
