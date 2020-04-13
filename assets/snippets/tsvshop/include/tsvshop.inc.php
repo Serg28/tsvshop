@@ -79,7 +79,7 @@ foreach ($folders as $folder) {
                          $jsfunc = 'addons/'.$folder.'/js/funct.js';
                          if (file_exists(TSVSHOP_PATH.$jsfunc)) {tsv_jsadd($jsfunc); /*$modx->regClientStartupScript($jsfunc);*/}
                          if (!empty($tsvshop['cf_'.$folder])) {
-                            if (sizeof($tsvshop['cf_'.$folder])>0) {
+                            if (size($tsvshop['cf_'.$folder])>0) {
                                $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
                             }
                          }
@@ -125,12 +125,12 @@ if ($act == "itemcard") {
 
 
     $vars = $modx->getTemplateVarOutput(array('typeitem','cart_icon'),$modx->documentIdentifier);
-
+    /*
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
     $modx->setPlaceholder('tsvservices','<input type="hidden" name="formula" value="'.$vars['price'].'" /><input type="hidden" name="cart_icon" value="'.$vars['cart_icon'].'" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
     $modx->setPlaceholder('tsvprice','<span id="price'.$modx->documentIdentifier.'" class="tsvprice">'.$vars['price'].'</span>');
     $modx->setPlaceholder('tsvbattr','onkeypress="return testKey(event)" onChange="UserCalc(\''.$modx->documentIdentifier.'\')"');
-    $evt = $modx->invokeEvent("TSVshopOnViewItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat']));
+    $evt = $modx->invokeEvent("TSVshopOnViewItemCard",array("itemid" => $modx->documentIdentifier,"type" => $tsvshop['TypeCat']));*/
 
     $modx->setPlaceholder('tsvoptions',$modx->runSnippet('TSVshop_options',array('docid'=>$modx->documentIdentifier)));
     $modx->setPlaceholder('tsvservices','<input type="hidden" name="typeitem" value="'.$vars['typeitem'].'" /><input type="hidden" name="formula" value="'.$formula.'" /><input type="hidden" name="cart_icon" value="[(base_url)]'.$vars['cart_icon'].'" /><script type="text/javascript">Ucalc("'.$modx->documentIdentifier.'")</script>');
@@ -185,4 +185,3 @@ if ($a == "add" ) {
 if ($a == "chq" ) {
         tsv_modify_quantity(_filter(intval($_GET['num'])), _filter(floatval($_GET['qnt'])));
 }
-?>
