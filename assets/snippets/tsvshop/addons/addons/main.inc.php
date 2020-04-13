@@ -1,6 +1,6 @@
 <?php
 if(IN_MANAGER_MODE!="true") die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODx Content Manager instead of accessing this file directly.");
-$output.= '<div class="tab-page" id="ShopSales">';
+$output.= '<div class="tab-page" id="ShopAddons">';
 $output.= '<h2 class="tab">'.$shop_lang['addons_title'].'</h2>';
 $output.= '<p><img src="'.TSVSHOP_SURL.'addons/addons/img/addons.png" alt="'.$shop_lang['sales_title'].'" class="icon" style="vertical-align: middle; text-align: left; " />'.$shop_lang['addons_intro'];
 $path = $siteURL.MGR_DIR."/index.php";

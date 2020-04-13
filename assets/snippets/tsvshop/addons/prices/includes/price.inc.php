@@ -70,8 +70,8 @@ while ($row3 = $modx->db->getRow($res3)) {
             $n = $col[$t_parent]['col'];
         };
         $n += 1;
-        settype($n, integer);
-        settype($t_id, integer);
+        settype($n, 'integer');
+        settype($t_id, 'integer');
         $col[$t_parent]['col'] = $n;
         $col[$t_parent][$n] = $t_id;
     } else {
@@ -81,8 +81,8 @@ while ($row3 = $modx->db->getRow($res3)) {
             $n = $col_p[$t_parent]['col'];
         };
         $n += 1;
-        settype($n, integer);
-        settype($t_id, integer);
+        settype($n, 'integer');
+        settype($t_id, 'integer');
         $col_p[$t_parent]['col'] = $n;
         $col_p[$t_parent][$n] = $t_id;
     }
@@ -101,7 +101,7 @@ function PrintTable($j, $pt, $col_p, $col_pr, $col_id)
     if ($j == 0) {
         return $txt;
     };
-    settype($j, integer);
+    settype($j, 'integer');
     $txt .= '<table class="grid" id="teble' . $j . '" STYLE="display:none">
  <thead>
    <tr align="center"><th colspan="3" style="font-size: 100%; font-family: sans-serif">';
@@ -117,11 +117,11 @@ function PrintTable($j, $pt, $col_p, $col_pr, $col_id)
 
     $n = $col_p[$j]['col'];
     if ($n != "") {
-        settype($n, integer);
+        settype($n, 'integer');
         for ($i = 1; $i <= $n; $i++) {
             $r++;
             $z = $col_p[$j][$i];
-            settype($z, integer);
+            settype($z, 'integer');
 
             $txt .= '<tbody><tr><td>';
             $txt .= $i;
@@ -148,13 +148,13 @@ function PriceCol()
 
 function PrintLi($j, $col, $pt, $col_p, $col_pr, $col_id)
 {
-    settype($j, integer);
+    settype($j, 'integer');
     $n = $col[$j]['col'];
     if ($n != "") {
-        settype($n, integer);
+        settype($n, 'integer');
         for ($i = 1; $i <= $n; $i++) {
             $z = $col[$j][$i];
-            settype($z, integer);
+            settype($z, 'integer');
             $nu .= '<ul class="Container">';
             $n2 = $col[$z]['col'];
             if ($n2 != "") {
