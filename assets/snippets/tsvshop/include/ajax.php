@@ -46,7 +46,7 @@ foreach ($folders as $folder) {
                          require_once($file);
                          require_once($langfile);
                          if (!empty($tsvshop['cf_'.$folder])) {
-                            if (sizeof($tsvshop['cf_'.$folder])>0) {
+                            if (size($tsvshop['cf_'.$folder])>0) {
                                if (!is_array($tsvshop['customfields'])) {$tsvshop['customfields']=explode(',',$tsvshop['customfields']);}
                                $tsvshop['customfields'] = array_merge($tsvshop['customfields'],$tsvshop['cf_'.$folder]);
                             }
@@ -73,6 +73,10 @@ switch ($mode) {
     case 'recalc':
         //echo tsv_display_cart($cache, "checkout"); break;
         $output = $modx->parseDocumentSource(tsv_display_cart($cache, "checkout")); break;
+    case 'changeqty' :
+        $q=_filter($_REQUEST['qty']);
+		$qty	= (isset($q)) ? $q : 1;
+        $output = tsv_changeqty($cache, $idnum, $name, $opt, $icon, $qty, $url, $typeitem); break;
 }
 
 
@@ -87,5 +91,4 @@ echo $output;
 
 //tsv_minregjs();
 
-?>
 
