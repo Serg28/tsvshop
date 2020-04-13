@@ -77,10 +77,10 @@
 </table>
 
 <!--buttons-->
-<p>
+<div>
 <a class="button right" href="[+shop.basket.checkurl+]">Оформить заказ</a>
 <form class="left" method="GET" id="basketClearLink"><input name="a" value="clear" type="hidden"/><a href="javascript:void(0);" onClick="getId('basketClearLink').submit();" class="button right">Очистить корзину</a></form>&nbsp;&nbsp;
-</p>
+</div>
 <!--/buttons-->
 
 

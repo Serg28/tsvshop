@@ -15,30 +15,37 @@
 <!-- #declare:separator <hr> --> 
 <!-- login form section-->
 <fieldset>
-<form method="post" name="loginfrm" action="[+action+]" style="margin: 0px; padding: 0px;"> 
-<h4>Вход для клиентов</h4> <p><small>Важно: маленькие и большие буквы различаются</small></p>
-<input type="hidden" value="[+rememberme+]" name="rememberme" /> 
-<table>
-<tr>
-<td width="115">Логин: </td><td><input type="text" name="username" tabindex="2" onkeypress="return webLoginEnter(document.loginfrm.password);" class="text" value="[+username+]" onfocus="this.value=(this.value=='Логин')? '' : this.value ;"  /> </td>
-</tr>
-<tr>
-<td>Пароль: </td><td><input type="password" name="password" tabindex="3" onkeypress="return webLoginEnter(document.loginfrm.cmdweblogin);" class="text" value="Пароль" onfocus="this.value=(this.value=='Пароль')? '' : this.value ;" /></td>
-</tr>
-<tr>
-<td colspan="2" style="text-align:right">
- <label for="chkbox" style="cursor:pointer">Запомнить меня:&nbsp; </label> <input type="checkbox" id="chkbox" name="chkbox" tabindex="4" size="1" value="" [+checkbox+] onClick="webLoginCheckRemember()" />&nbsp;&nbsp;<input type="submit" class="submit" name="cmdweblogin" value="Войти" />
-
-</td>
-</tr>
-
-<tr>
-<td colspan="2">
-<a href="#" onclick="webLoginShowForm(2);return false;"><small>Забыли пароль?</small></a> 
-</td>
-</tr>
-</table>
-		</form>
+<form method="post" name="loginfrm" action="[+action+]" class="form-horizontal"> 
+	<h4>Вход для клиентов</h4> <p><small>Важно: маленькие и большие буквы различаются</small></p>
+	<input type="hidden" value="[+rememberme+]" name="rememberme" /> 
+  <div class="form-group">
+    <label for="username" class="col-sm-2 control-label">Логин:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="username" placeholder="login" name="username" tabindex="2"  value="[+username+]">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password" class="col-sm-2 control-label">Пароль:</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="password" placeholder="Пароль" tabindex="3" value="" >
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label for="chkbox">
+          <input type="checkbox" id="chkbox" name="chkbox" tabindex="4" size="1" value="" [+checkbox+] onClick="webLoginCheckRemember()"> Запомнить меня
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" name="cmdweblogin">Войти</button>
+		<a href="#" onclick="webLoginShowForm(2);return false;"><small>Забыли пароль?</small></a> 
+    </div>
+  </div>
+</form>	
 </fieldset>
 <hr>
 <!-- log out hyperlink section -->
@@ -47,12 +54,20 @@
 <hr>
 <!-- Password reminder form section -->
 <fieldset>
-<b>Напоминание забытого пароля</b><br />
-<form name="loginreminder" method="post" action="[+action+]">
-<input type="hidden" name="txtpwdrem" value="0" />
-<p>Введите Ваш email адрес для восстановления пароля:</p>
-<input type="text" class="text" name="txtwebemail" /><br />
-<input type="submit" class="submit" value="Напомнить" name="cmdweblogin" /> 
-<input type="reset" class="submit" value="Отмена" name="cmdcancel" onclick="webLoginShowForm(1);" />
-</form>
+<form class="form-horizontal" name="loginreminder" method="post" action="[+action+]">
+	<h4>Напоминание забытого пароля</h4>
+	<input type="hidden" name="txtpwdrem" value="0" />
+  <div class="form-group">
+    <label for="txtwebemail" class="col-sm-2 control-label">Ваш email:</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="txtwebemail" placeholder="email@email.com">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" name="cmdweblogin">Напомнить</button>
+	  <button type="reset" class="btn btn-default" name="cmdweblogin" name="cmdcancel" onclick="webLoginShowForm(1);">Отмена</button>
+    </div>
+  </div>
+</form>	
 </fieldset>

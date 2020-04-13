@@ -13,7 +13,7 @@
 
 
 <div class="product">
-<form action="[~[+id+]~]" method="post" name="Tovar[+id+]" id="Tovar[+id+]">
+<form action="[~[+id+]~]" method="post" name="Tovar[+id+]">
 <center><a href="[~[+id+]~]"><img src="[(base_url)][+tv.cart_icon+]" width="138" height="118" /></a></center>
 <div class="dashed">
 <h3><a href="[~[+id+]~]" class="title">[+pagetitle+] [+tv.articul+]</a></h3>

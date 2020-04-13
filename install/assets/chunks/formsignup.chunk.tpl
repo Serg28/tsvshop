@@ -14,61 +14,83 @@
 <!-- #declare:separator <hr> --> 
 <!-- login form section-->
 <p>Если вы еще не зарегистрированы, то можете сделать это, заполнив нижеприведенную форму.</p>
-<form method="post" name="websignupfrm" action="[+action+]">
+
+<form method="post" name="websignupfrm" action="[+action+]" class="form-horizontal">
 <fieldset>
-<h4>Регистрация пользователя</h4> <p><small>Ячейки помеченые <span class="orange">*</span> обязательны для заполнения</small></p>
-<table>
-<tr>
-<td width="110">Логин</td>
-<td width="5"><span class="orange">*</span></td>
-<td><input type="text" class="text" name="username" id="username" size="20" maxlength="30" value="[+username+]" /></td>
-</tr>
-<tr>
-<td>Ф.И.О</td>
-<td><span class="orange"></span></td>
-<td><input type="text" class="text" name="fullname" id="fullname" size="20" maxlength="100" value="[+fullname+]" /></td>
-</tr>
+	<h4>Регистрация пользователя</h4> <p><small>Ячейки помеченые <span class="orange">*</span> обязательны для заполнения</small></p>
+	
+	
+<div class="form-group">
+    <label for="fusername" class="col-sm-2 control-label">Логин <span class="orange">*</span></label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="fusername" name="username" placeholder="login" value="[+username+]">
+    </div>
+  </div>	
+	
+  <div class="form-group">
+    <label for="ffullname" class="col-sm-2 control-label">Ф.И.О</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="ffullname" name="fullname" placeholder="Иванов Иван Иванович" value="[+fullname+]">
+    </div>
+  </div>
+	
+  <div class="form-group">
+    <label for="fphone" class="col-sm-2 control-label">Телефон</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="fphone" name="phone" placeholder="" value="[+phone+]">
+    </div>
+  </div>
+	
+  <div class="form-group">
+    <label for="fpassword" class="col-sm-2 control-label">Пароль <span class="orange">*</span></label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="fpassword" name="password" placeholder="Password">
+    </div>
+  </div>	
+	
+  <div class="form-group">
+    <label for="fconfirmpassword" class="col-sm-2 control-label">Пароль <span class="orange">*</span></label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="fconfirmpassword" name="confirmpassword" placeholder="Password">
+    </div>
+  </div>	
+	
+  <div class="form-group">
+    <label for="femail" class="col-sm-2 control-label">Email <span class="orange">*</span></label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="femail" name="email" placeholder="email@email.com" value="[+email+]">
+    </div>
+  </div>
+	
+  <div class="form-group">
+    <label for="femail" class="col-sm-2 control-label">Код проверки </label>
+    <div class="col-sm-10">
+      <a href="[+action+]"><img align="top" src="[+manager_folder+]/includes/veriword.php" width="148" height="60" alt="Если еcть проблемы с отображением кода, кликните по нему для генерации нового кода." style="border: 1px solid #039" /></a>
+    </div>
+  </div>
+	
+  <div class="form-group">
+    <label for="fformcode" class="col-sm-2 control-label">Введите код <span class="orange">*</span></label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="fformcode" name="formcode" placeholder="" value="">
+    </div>
+  </div>
+	
 
-<tr>
-<td>Телефон</td>
-<td><span class="orange"></span></td>
-<td><input type="text" class="text" name="phone" id="phone" size="20" maxlength="100" value="[+phone+]" /></td>
-</tr>
-<tr>
-<td>Пароль</td>
-<td><span class="orange">*</span></td>
-<td><input type="password" name="password" class="text" id="password" size="20" /></td>
-</tr>
-<tr>
-<td>Пароль</td>
-<td><span class="orange">*</span></td>
-<td><input type="password" class="text" name="confirmpassword" id="confirmpassword" size="20" /></td>
-</tr>
-
-<tr>
-<td>E-mail</td>
-<td width="5"><span class="orange">*</span></td>
-<td><input type="text" name="email" class="text" id="email" size="20" value="[+email+]" /></td>
-</tr>
-
-<tr>
-<td>Код проверки</td>
-<td><span class="orange">*</span></td>
-<td><a href="[+action+]"><img align="top" src="[+manager_folder+]/includes/veriword.php" style="border: 1px solid rgb(187, 187, 187); width="148" height="60" alt="Если емть проблемы с отображением кода, кликните по нему для генерации нового кода." style="border: 1px solid #039" /></a></td>
-</tr>
-
-<tr>
-<td>Введите код</td>
-<td><span class="orange">*</span></td>
-<td><input class="text" type="text" name="formcode" class="text" size="20" /></td>
-</tr>
-
-<tr>
-<td> </td>
-<td></td>
-<td align="right"><input type="submit" class="button" value="Регистрация" name="cmdwebsignup" /></td>
-</tr>
-</table>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Запомнить меня
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" name="cmdwebsignup">Регистрация</button>
+    </div>
+  </div>
 </fieldset>
 </form>
 
@@ -80,5 +102,5 @@
 </script>
 <hr>
 <!-- notification section -->
-<div class="success">Заполнение завершено! Ваш аккаунт создан. К вам на почту отправлено письмо с регистрационными данными. Теперь вы можете войти, воспользовавшись вышеприведенной формой.</p>
+<div class="success  alert alert-success">Заполнение завершено! Ваш аккаунт создан. К вам на почту отправлено письмо с регистрационными данными. Теперь вы можете войти, воспользовавшись вышеприведенной формой.</p>
 </div>
