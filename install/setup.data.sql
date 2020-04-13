@@ -163,6 +163,8 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty'
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1036','TSVshopOnUserFormFieldsRender', 6, 'TSVshop');
 
+REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1037','TSVshopOnBeforeTplCartRender', 6, 'TSVshop');
+
 REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (38, 'TSVshop');
 
 

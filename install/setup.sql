@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIX}shop_order_detail` (
   `icon` varchar(255) NOT NULL,
   `options` varchar(200) NOT NULL,
   `typeitem` varchar(10) NOT NULL DEFAULT 'physical',
+  `info` text,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 
@@ -163,6 +164,8 @@ REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1032','TSVshopOnGetPriceItemCa
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1034','TSVshopOnClearCart', 6, 'TSVshop');
 
 REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1035','TSVshopOnChangeItemQty', 6, 'TSVshop');
+
+REPLACE INTO `{PREFIX}system_eventnames` VALUES ('1036','TSVshopOnBeforeTplCartRender', 6, 'TSVshop');
 
 REPLACE INTO `{PREFIX}categories` (`id`, `category`) VALUES (38, 'TSVshop');
 
