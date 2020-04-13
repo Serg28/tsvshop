@@ -111,6 +111,7 @@ function AJAXInteraction(url, callback) {
     };
     this.doPost = function(body) {
         request.open("POST", url, true);
+        request.setRequestHeader("X-Requested-With", "xmlhttprequest");
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         request.send(body);
     };
@@ -219,7 +220,9 @@ function USelect(ID_NUM, form) {
 }
 
 function Ucalc(ID_NUM) {
-    var thisForm = document.getElementById('Tovar' + ID_NUM);
+    var thisForm = document.getElementsByName('Tovar' + ID_NUM);
+    thisForm = thisForm[0];
+    //var thisForm = document.getElementById('Tovar' + ID_NUM);
     USelect(ID_NUM, thisForm);
     try {
         elem = findElementByID(thisForm, "price" + ID_NUM);
@@ -408,7 +411,7 @@ function HideWindow(result, text) {
 
 function RemoveFromCart(i) {
     if (confirm(strRemove)) {
-        location.href = location.href + get + "a=del&num=" + i;
+        location.href = location.href + get + "a=del&num=" + i+"&c="+Date.now();
     } else {
         return false;
     }
@@ -422,7 +425,7 @@ function ChangeQuantity(i, q) {
             q = 1;
             this.value = q;
         }
-        location.href = location.href + get + "a=chq&num=" + i + "&qnt=" + q;
+        location.href = location.href + get + "a=chq&num=" + i + "&qnt=" + q+"&c="+Date.now();
     }
 }
 
@@ -430,23 +433,26 @@ function AddToCart(ID_NUM, dataset) {
 
     var dataset = typeof dataset !== 'undefined' ? '&' + dataset : false; //v5.4.5 - теперь можем передать в POST Дополнительные параметры
     if (DisplayNotice) ShowWindow(strAddLoading, load);
-    var thisForm = getId('Tovar' + ID_NUM);
+    //var thisForm = getId('Tovar' + ID_NUM);
+    //var thisForm = document.forms['Tovar' + ID_NUM];
+    var thisForm = document.getElementsByName('Tovar' + ID_NUM);
+    thisForm = thisForm[0];
     USelect(ID_NUM, thisForm);
-    //USelect(ID_NUM, document.forms['Tovar' + ID_NUM]);
-    //var thisForm = document.forms['Tovar' + ID_NUM][0];
-    var cart_icon = (ci = thisForm.elements['cart_icon']) ? ci.value : '';
-    var typeitem = (ti = thisForm.elements['typeitem']) ? ti.value : '';
-    var q = (thisForm.elements['qty']) ? parseInt(thisForm.elements['qty'].value) : 1;
-    var notice = "";
+    
+    //var cart_icon = (ci = thisForm.elements['cart_icon']) ? ci.value : '';
+    //var typeitem = (ti = thisForm.elements['typeitem']) ? ti.value : '';
+    //var q = (thisForm.elements['qty']) ? parseInt(thisForm.elements['qty'].value) : 1;
+    
+    var cart_icon = (ci = thisForm.cart_icon) ? ci.value : '';
+    var typeitem = (ti = thisForm.typeitem) ? ti.value : 'virtual';
+    var q = (thisForm.qty) ? parseInt(thisForm.qty.value) : 1;
+    
     strADDTLINFO = "";
     var strCART_ICON = "";
-    var strQuant = "";
-    var errornan = false;
     if (isNaN(q) || !q) {
         alert(strErrQty);
         //thisForm.elements['qty'].value=1;
         HideWindow(err, strErrQty);
-        errornan = true;
     } else {
         //thisForm.elements['qty'].value=q;
         strQUANTITY = q;
@@ -466,10 +472,50 @@ function AddToCart(ID_NUM, dataset) {
         var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
         param = (dataset) ? param + dataset : param; //v5.4.5 добавляем дополнительные параметры из атрибутов data
         var add = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', AddSuccess);
-        add.doPost('mode=additem' + param);
+        add.doPost('mode=additem' + param+'&c='+Date.now());
     }
     return false;
 }
+
+
+/* Изменение кол-ва товара в корзине. На событие onchange поля name="qty", напр., onChange="changeQTY([+id+],this);return false" */
+function changeQTY(ID_NUM, id) {
+    if (DisplayNotice) ShowWindow(strAddLoading, load);
+    var thisForm = document.getElementsByName('Tovar' + ID_NUM);
+    thisForm = thisForm[0];
+    USelect(ID_NUM, thisForm);
+    
+    //var cart_icon = (ci = thisForm.elements['cart_icon']) ? ci.value : '';
+    //var typeitem = (ti = thisForm.elements['typeitem']) ? ti.value : '';
+    //var q = (thisForm.elements['qty']) ? parseInt(thisForm.elements['qty'].value) : 1;
+    
+    var cart_icon = (ci = thisForm.cart_icon) ? ci.value : '';
+    var typeitem = (ti = thisForm.typeitem) ? ti.value : 'virtual';
+    //var q = (thisForm.qty) ? parseInt(thisForm.qty.value) : 1;
+	var q = (id) ? parseInt(id.value) : 1;
+    
+    strADDTLINFO = "";
+    var strCART_ICON = "";
+    if (isNaN(q)) {
+        alert(strErrQty);
+        //thisForm.elements['qty'].value=1;
+        HideWindow(err, strErrQty);
+    } else {
+        //thisForm.elements['qty'].value=q;
+        strQUANTITY = q;
+        strID_NUM = (!ID_NUM) ? "" : ID_NUM;
+        //добавлено разделение названия и опций
+        strNAME = (selOptKo.length) ? " ldquo" + selOptTXT + "rdquo" : "";
+        strCART_ICON = (cart_icon) ? cart_icon : "";
+        var param = '&idnum=' + ID_NUM + '&name=' + strNAME + '&qty=' + strQUANTITY + '&opt=' + selOptKo + '&icon=' + strCART_ICON + '&typeitem=' + typeitem;
+        //param = (dataset) ? param + dataset : param; //v5.4.5 добавляем дополнительные параметры из атрибутов data
+        var add = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', AddSuccess);
+        add.doPost('mode=changeqty' + param+'&c='+Date.now());
+    }
+    return false;
+}
+
+
 /*
 function AddSuccess(success) {
     if (success) {
@@ -538,32 +584,38 @@ function GetInfoblock(report, type) {
     if (!report) {
         if (getId('infoblock_cont')) loading('infoblock_cont');
         var ib = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php', GetInfoblock);
-        ib.doPost('mode=info&type=' + type);
+        ib.doPost('mode=info&type=' + type+'&c='+Date.now());
     } else {
         if (getId('infoblock_cont')) {
             loading('infoblock_cont');
             getId('infoblock_cont').innerHTML = report;
+            //5.4.5 после обновления инфоблока можно задать срабатывание функции TSVshopOnInfoblockUpdate (получает ответ с разметкой инфоблока)
+            if(typeof(TSVshopOnInfoblockUpdate)=='function') TSVshopOnInfoblockUpdate(report);
         }
     }
 }
 
 function GetBasket(report) {
     if (!report) {
-        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=basket', GetBasket);
+        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=basket&c='+Date.now(), GetBasket);
         b.doGet();
     } else {
         getId('basket_cont').innerHTML = report;
+        //5.4.5 после обновления корзины можно задать срабатывание функции TSVshopOnBasketUpdate (получает ответ с разметкой корзины)
+        if(typeof(TSVshopOnBasketUpdate)=='function') TSVshopOnBasketUpdate(report);
     }
 }
 
 function recalcCheckout(report) {
     if (!report) {
         loading('checkout_table');
-        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=checkout&act=recalc', recalcCheckout);
+        var b = new AJAXInteraction(TSVSHOP_URL + 'include/ajax.php?mode=checkout&act=recalc&c='+Date.now(), recalcCheckout);
         b.doGet();
     } else {
         loading('checkout_table');
         getId('checkout_table').innerHTML = report;
+        //5.4.5 после обновления корзины (пересчета) можно задать срабатывание функции TSVshopOnCheckoutRecalc (получает ответ с разметкой корзины)
+        if(typeof(TSVshopOnCheckoutRecalc)=='function') TSVshopOnCheckoutRecalc(report);
     }
 }
 

@@ -24,6 +24,7 @@
       
       http_request.onreadystatechange = alertContents;
       http_request.open('POST', url, true);
+      http_request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       http_request.setRequestHeader("Content-length", parameters.length);
       http_request.setRequestHeader("Connection", "close");
