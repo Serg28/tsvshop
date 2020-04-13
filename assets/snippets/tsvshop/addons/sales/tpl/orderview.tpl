@@ -186,12 +186,16 @@
                         <td colspan="5" align="left" class="gridAltItem" ><div style="margin-top:8px; float:left">[+sales_discount+]</div> <span style="float:right"><input type="text" name="discount" value="[+discount+]" style="width:80%;">[+discountsymb+]</span></td>
                         <td class="gridAltItem" align="center"> <input type="text" name="discountsize" disabled value="[+discountsize+]" style="width:80%;"></td>
                     </tr>
+                     <tr>
+                        <td colspan="5" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
+                        <td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" align="center"><input type="text" name="total" disabled value="[+total+]" style="width:80%;"></td>
+                    </tr>
                     <tr>
 			<td colspan="5" align="left" class="gridAltItem" >[+sales_paidsum+]</td>
 			<td class="gridAltItem"  align="center"><input type="text" value="[+paidsum+]" disabled style="width:80%;"></td>
 		    </tr>
                     <tr>
-                        <td colspan="5" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_total+]</td>
+                        <td colspan="5" align="left" class="gridAltItem" style="border-bottom:1px solid #D0D0D0">[+sales_topay+]</td>
                         <td class="gridAltItem" style="border-bottom:1px solid #D0D0D0" align="center"><input type="text" name="topay" disabled value="[+topay+]" style="width:80%;"></td>
                     </tr>
                 </table>        
