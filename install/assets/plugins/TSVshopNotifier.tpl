@@ -12,7 +12,7 @@
  * @internal  @installset base
  */
 
-$e = &$modx->Event;
+$e = &$modx->event;
 switch($e->name){
     case 'OnManagerWelcomeHome':
 		$count = $modx->db->getValue(
