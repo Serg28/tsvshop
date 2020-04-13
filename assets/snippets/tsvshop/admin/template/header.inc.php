@@ -6,33 +6,40 @@ $output .= '
 		<head>
         <title>'.$shop_lang['modulename'].'</title>
         <link rel="stylesheet" type="text/css" href="media/style' . $theme . '/style.css" />
+
+<script type="text/javascript">
+    var moduleid = ' . $_GET['id'] . ';
+    var modulea = ' . $_GET['a'] . ';
+    var base_url = '.MODX_BASE_URL.';
+</script>
 		
-        <!-- jeasyui -->
-        <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/js/easy-ui/themes/modxevo/easyui.css">
-	    <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/js/easy-ui/themes/icon.css">     
-	    <script type="text/javascript" src="'.MODX_BASE_URL.'assets/js/jquery.min.js" language="javascript" ></script> 	
+<!-- jeasyui -->
+        <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/js/easy-ui/themes/evo/easyui.css?лkл2вув2ц">
+	    <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/js/easy-ui/themes/icon.css">
+	   <script type="text/javascript" src="'.MODX_BASE_URL.'assets/js/jquery.min.js" language="javascript" ></script>
+
 	    <script type="text/javascript" src="'.MODX_BASE_URL.'assets/js/easy-ui/locale/easyui-lang-ru.js"></script>
 	    <script type="text/javascript" src="'.MODX_BASE_URL.'assets/js/easy-ui/jquery.easyui.min.js"></script>
 	    <script type="text/javascript" src="'.MODX_BASE_URL.'assets/js/easy-ui/plugins/jquery.edatagrid.js"></script>
 
 
         <script type="text/javascript" src="media/script/tabpane.js"></script>
-		<link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datetimepicker/css/datepicker.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="../assets/snippets/tsvshop/admin/libs/datetimepicker/css/datepicker.css"/> 
 
         <script type="text/javascript" src="media/script/mootools/mootools.js"></script>
 
         <script type="text/javascript" src="media/script/mootools/moodx.js"></script>
-        <script type="text/javascript" src="media/calendar/datepicker.js"></script>
-        <script src="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datagrid/tablefilter_all_min.js" language="javascript" type="text/javascript"></script>
+        <script type="text/javascript" src="media/calendar/datepicker.js"></script>-->
+        <script src="../assets/snippets/tsvshop/admin/libs/datagrid/tablefilter_all_min.js" language="javascript" type="text/javascript"></script>
         <!-- Additional imported module needed for this demo  -->
-        <script src="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datagrid/sortabletable.js" language="javascript" type="text/javascript"></script>
-        <script src="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datagrid/tfAdapter.sortabletable.js" language="javascript" type="text/javascript"></script>
-        <script src="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datagrid/TF_Modules/tf_paging.js" language="javascript" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/libs/datagrid/filtergrid.css">
-        <link rel="stylesheet" type="text/css" href="'.MODX_BASE_URL.'assets/snippets/tsvshop/admin/template/themes/'.$moduletheme.'.css" />
+        <script src="../assets/snippets/tsvshop/admin/libs/datagrid/sortabletable.js" language="javascript" type="text/javascript"></script>
+        <!--<script src="../assets/snippets/tsvshop/admin/libs/datagrid/tfAdapter.sortabletable.js" language="javascript" type="text/javascript"></script>-->
+        <script src="../assets/snippets/tsvshop/admin/libs/datagrid/TF_Modules/tf_paging.js" language="javascript" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="../assets/snippets/tsvshop/admin/libs/datagrid/filtergrid.css">
+        <link rel="stylesheet" type="text/css" href="../assets/snippets/tsvshop/admin/template/themes/'.$moduletheme.'.css" />
 
         <!-- /grid -->
-		<script type="text/javascript" src="'.MODX_BASE_URL.'assets/snippets/tsvshop/js/core.js"></script>
+		<script type="text/javascript" src="../assets/snippets/tsvshop/js/core.js"></script>
 
 		</head>
         <body>

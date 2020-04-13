@@ -11,20 +11,27 @@ if (!function_exists("getConf")) {
     {
         global $modx;
         $query = "SELECT name, value FROM " . $modx->getFullTableName('shop_conf') . " WHERE module='" . $module . "'";
-        if ($name != '') $query.= " AND name='" . $name . "'";
-        if (!$result = $modx->db->query($query)) exit('Query failed: ' . mysql_error());
-        if ($name != '')
-        if ($modx->db->getRecordCount($result) == 1) {
-            $row = $modx->db->getRow($result, 'num');
-            return $row[1];
+        if ($name != '') {
+            $query .= " AND name='" . $name . "'";
         }
-        else return FALSE;
+        if (!$result = $modx->db->query($query)) {
+            exit('Query failed: ' . mysql_error());
+        }
+        if ($name != '') {
+            if ($modx->db->getRecordCount($result) == 1) {
+                $row = $modx->db->getRow($result, 'num');
+                return $row[1];
+            } else {
+                return FALSE;
+            }
+        }
 
         // else, return an associative array for the module
 
         $ret = FALSE;
-        while ($row = $modx->db->getRow($result, 'num'));
-        $ret[$row[0]] = $row[1];
+        while ($row = $modx->db->getRow($result, 'num')){
+            $ret[$row[0]] = $row[1];
+        }
         return $ret;
     }
 }
