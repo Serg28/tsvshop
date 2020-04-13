@@ -38,7 +38,11 @@ $moduleid = $_GET['id'];
 $modulea = $_GET['a'];
 $act = $_GET['act'];
 include_once (TSVSHOP_PATH.'admin/lang/' . $modx->config['manager_language'] . '.inc.php');
-require_once ($basePath.MGR_DIR.'/includes/protect.inc.php');
+if (file_exists($basePath.MGR_DIR.'/includes/protect.inc.php')) {
+	require_once ($basePath.MGR_DIR.'/includes/protect.inc.php');
+} else {
+	require_once ($basePath.'core/includes/protect.inc.php');
+}
 if (!file_exists(TSVSHOP_PATH.'include/config.inc.php')) {
 	rename(TSVSHOP_PATH.'include/config.inc.blank.php', TSVSHOP_PATH.'include/config.inc.php');
 }
