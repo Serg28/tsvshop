@@ -1,35 +1,39 @@
 <!-- #declare:separator <hr> -->
 <!-- login form section-->
 <fieldset>
-<form method="post" name="webprofilefrm" action="[+action+]" style="margin: 0px; padding: 0px;">
-<table border="0" cellpadding="2">
-<tr>
-<td>
-<table border="0" width="100%">
-<tr>
-<td width="170">Ф.И.О:</td>
-<td>
-<input type="text" class="text" name="fullname" class="inputBox" style="width:300px" size="20" maxlength="100" value="[+fullname+]"></td>
-</tr>
-<tr>
-<td>Email:</td>
-<td>
-<input type="text" class="text" name="email" class="inputBox" style="width:300px" size="20" value="[+email+]"></td>
-</tr>
-<tr>
-<td>Новый пароль:</td>
-<td>
-<input type="password" class="text" name="password" class="inputBox" style="width:300px" size="20"></td>
-</tr>
-<tr>
-<td>Еще раз новый пароль:</td>
-<td>
-<input type="password" class="text" name="confirmpassword" class="inputBox" style="width:300px" size="20"></td>
-</tr>
-
-<tr>
-<td>Страна:</td>
-<td><select size="1" name="country" style="width:300px">
+<form method="post" name="webprofilefrm" action="[+action+]" class="form-horizontal">
+	<div class="form-group">
+		<label for="fullname" class="col-sm-2 control-label">Ф.И.О:</label>
+		<div class="col-sm-10">
+		  <input type="text" name="fullname" class="form-control" id="fullname" value="[+fullname+]" placeholder="Иванов Иван Иванович">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="email" class="col-sm-2 control-label">Email:</label>
+		<div class="col-sm-10">
+		  <input type="email" name="email" class="form-control" id="email" value="[+email+]" placeholder="email@email.com">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label">Новый пароль:</label>
+		<div class="col-sm-10">
+		  <input type="password" name="password" class="form-control" id="password"  >
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="confirmpassword" class="col-sm-2 control-label">Еще раз новый пароль:</label>
+		<div class="col-sm-10">
+		  <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" >
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label for="country" class="col-sm-2 control-label">Страна:</label>
+		<div class="col-sm-10">
+		  <select size="1" name="country" class="form-control">
 <option value="" selected>&nbsp;</option>
 <option value="1">Afghanistan</option>
 <option value="2">Albania</option>
@@ -270,38 +274,44 @@
 <option value="237">Zaire</option>
 <option value="238">Zambia</option>
 <option value="239">Zimbabwe</option>
-</select></td>
-</tr>
-<tr>
-<td>Индекс:</td>
-<td>
-<input type="text" class="text" name="zip" class="inputBox" style="width:300px" size="20" maxlength="50" value="[+zip+]"></td>
-</tr>
-<tr>
-<td>Факс:</td>
-<td>
-<input type="text" class="text" name="fax" class="inputBox" style="width:300px" size="20" maxlength="50" value="[+fax+]"></td>
-</tr>
-<tr>
-<td>Область/район:</td>
-<td>
-<input type="text" class="text" name="state" class="inputBox" style="width:300px" size="20" maxlength="50" value="[+state+]"></td>
-</tr>
-<tr>
-<td>Телефон:</td>
-<td>
-<input type="text" class="text" name="phone" class="inputBox" style="width:300px" size="20" maxlength="50" value="[+phone+]"></td>
-</tr>
-</table>
-</td>
-</tr>
-<tr>
-<td align="right">
-<input type="submit" value="Применить" name="cmdwebeditprofile" class="button" />
-<input type="reset" value="Очистить" name="cmdreset" class="button"  />
-</td>
-</tr>
-</table>
+</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="zip" class="col-sm-2 control-label">Индекс:</label>
+		<div class="col-sm-10">
+		  <input type="text" name="zip" class="form-control" id="zip" value="[+zip+]" placeholder="12345">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="fax" class="col-sm-2 control-label">Факс:</label>
+		<div class="col-sm-10">
+		  <input type="text" name="fax" class="form-control" id="fax" value="[+fax+]" placeholder="">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="state" class="col-sm-2 control-label">Область/район:</label>
+		<div class="col-sm-10">
+		  <input type="text" name="state" class="form-control" id="state" value="[+state+]" placeholder="">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="phone" class="col-sm-2 control-label">Телефон:</label>
+		<div class="col-sm-10">
+		  <input type="text" name="phone" class="form-control" id="phone" value="[+phone+]" placeholder="">
+		</div>
+	</div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" name="cmdwebeditprofile">Применить</button>
+    </div>
+  </div>
+
 </form>
 </fieldset>
 	<script language="javascript" type="text/javascript">
@@ -312,7 +322,7 @@
 	</script>
 <hr>
 <!-- notification section -->
-<div class="success">Профиль и Пароль успешно изменены. Ваш аккаунт обновлен.
+<div class="success alert alert-success">Профиль и Пароль успешно изменены. Ваш аккаунт обновлен.
 Копия вашей регистрационной информации отправлена вам на email адрес.</div>
 <hr>
-<div class="success">Профиль изменен. Ваш аккаунт обновлен.</div>
+<div class="success alert alert-success">Профиль изменен. Ваш аккаунт обновлен.</div>

@@ -1,4 +1,4 @@
-<table class="border tsvshop">
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th width="5%"><b>№</b></th>
